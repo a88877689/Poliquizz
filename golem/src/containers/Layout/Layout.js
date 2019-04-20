@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Navbar from '@/components/Navbar/Navbar';
 import Home from '@/components/Home/Home';
@@ -7,7 +7,7 @@ import Listing from '@/containers/Quizz/Listing';
 
 const layout = (props) => {
     return (
-        <Router className='golem-container'>
+        <div className='golem-container'>
             <header className='golem-header'>
                 <Navbar />
             </header>
@@ -17,12 +17,12 @@ const layout = (props) => {
 
                 <main className='golem-main-view'>
                     <Switch>
-                        <Route path='/' exact component={Home} />
-                        <Route path='/quizz/listing' exact component={Listing} />
+                        <Route path='/quizz/listing' component={Listing} />
+                        <Route path='/' component={Home} />
                     </Switch>
                 </main>
             </div>
-        </Router>
+        </div>
     );
 }
 
