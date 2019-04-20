@@ -6,12 +6,12 @@ import UserPhoto from '@/assets/default-user-photo.svg';
 const navbar = () => {
     return (
         <Aux>
-            <img src={Logo} alt='golem logo' class='golem-logo' />
+            <img src={Logo} alt='golem logo' className='golem-logo' />
             
-            <nav class='golem-user-nav'>
-                <div class='golem-user-nav__user'>
-                    <span class='golem-user-nav__user-name'>Username</span>
-                    <img src={UserPhoto} class='golem-user-nav__user-photo' alt='user-photo' />
+            <nav className='golem-user-nav'>
+                <div className='golem-user-nav__user'>
+                    <span className='golem-user-nav__user-name'>Username</span>
+                    <img src={UserPhoto} className='golem-user-nav__user-photo' alt='user' />
                 </div>
             </nav>
         </Aux>

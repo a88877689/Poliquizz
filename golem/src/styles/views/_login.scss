@@ -1,0 +1,76 @@
+.golem-login-background {
+    height: 100vh;
+    background-image: linear-gradient(
+        to right bottom,
+        $color-alpha-green-light,
+        $color-alpha-green-dark),
+        url("./../assets/login-background.jpg");
+    background-size: cover;
+    background-position: top;
+    position: relative;
+}
+
+.golem-login-box {
+    position: absolute;
+    height: 34%;
+    width: 37.5%;
+    top: 59%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $color-alpha-grey-light;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+.golem-text-box {
+    position: absolute;
+    top: 32.5%;
+    left: 51%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+}
+
+.golem-heading-primary {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-between;
+    color: #fff;
+    text-transform: uppercase;
+    backface-visibility: hidden;
+    margin-bottom: 5rem;
+}
+
+.golem-heading-primary-main {
+    font-size: 300%;
+    font-weight: 400;
+    letter-spacing: 3rem;
+    animation: moveInLeft 1.5s ease-out;
+}
+
+.golem-heading-primary-sub {
+    font-size: 120%;
+    font-weight: 700;
+    letter-spacing: 24px;
+    animation: moveInRight 1.5s ease-out;
+}
+
+.golem-btn {
+    margin-bottom: 0 !important;
+}
+
+.golem-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+}
+
+.golem-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+}
+
