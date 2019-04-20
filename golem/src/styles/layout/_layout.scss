@@ -1,0 +1,26 @@
+.golem-container {
+    max-width: 100%;
+    background: $color-grey-light-3;
+    min-height: 50rem;
+}
+
+.golem-content {
+    display: flex;
+}
+
+.golem-header {
+    font-size: 1.4rem;
+    height: 7rem;
+    background-color: #fff;
+    border-bottom: var(--grey-light-2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.golem-main-view {
+    height: 90.4vh;
+    width: 100%;
+    display: flex;
+    background: $color-grey-light-3;
+}
