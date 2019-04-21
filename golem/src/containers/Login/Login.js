@@ -4,7 +4,7 @@ import './Login.scss';
 
 const login = (props) => {
     let handleLogin = () => {
-        props.history.replace('/home');
+        props.history.replace('/');
     }
 
     return (

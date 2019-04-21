@@ -13,7 +13,6 @@
 .golem-login-box {
     position: absolute;
     height: 38%;
-    width: 37.5%;
     top: 59%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -23,13 +22,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
 }
 
 .golem-text-box {
     position: absolute;
     top: 30%;
-    left: 51%;
     transform: translate(-50%, -50%);
     text-align: center;
     width: 100%;
@@ -47,16 +44,13 @@
 }
 
 .golem-heading-primary-main {
-    font-size: 300%;
     font-weight: 400;
     letter-spacing: 3rem;
     animation: moveInLeft-2 1.5s ease-out;
 }
 
 .golem-heading-primary-sub {
-    font-size: 120%;
     font-weight: 700;
-    letter-spacing: 24px;
     animation: moveInRight-2 1.5s ease-out;
 }
 
@@ -74,3 +68,50 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
+@media only screen and (max-width: 600px) {
+    .golem-login-box {
+        width: 40rem;
+    }
+    .golem-text-box {
+        left: 53%;
+    }
+    .golem-heading-primary-main {
+        font-size: 4.5rem;
+    }
+    .golem-heading-primary-sub {
+        font-size: 140%;
+        letter-spacing: 15.5px;
+    }
+} 
+
+@media only screen and (min-width: 600px) {
+    .golem-login-box {
+        width: 50rem;
+    }
+    .golem-text-box {
+        left: 52%;
+    }
+    .golem-heading-primary-main {
+        font-size: 6rem;
+    }
+    .golem-heading-primary-sub {
+        font-size: 120%;
+        letter-spacing: 24px;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .golem-login-box {
+        width: 50rem;
+    }
+    .golem-text-box {
+        left: 51%;
+    }
+    .golem-heading-primary-main {
+        font-size: 6rem;
+    }
+    .golem-heading-primary-sub {
+        font-size: 120%;
+        letter-spacing: 24px;
+    }
+}

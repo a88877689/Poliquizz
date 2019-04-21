@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Navbar from '@/components/Navbar/Navbar';
 import Home from '@/components/Home/Home';
-import Listing from '@/containers/Quizz/Listing';
+import { Create, Listing } from '@/containers/Quizz/index';
 
 const layout = (props) => {
     return (
@@ -18,6 +18,7 @@ const layout = (props) => {
                 <main className='golem-main-view'>
                     <div className='golem-main-view-container'>
                         <Switch>
+                            <Route path='/quizz/create' component={Create} />
                             <Route path='/quizz/listing' component={Listing} />
                             <Route path='/' exact component={Home} />
                         </Switch>

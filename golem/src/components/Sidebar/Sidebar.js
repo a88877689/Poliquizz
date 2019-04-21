@@ -16,14 +16,12 @@ const sidebar = () => {
                         <span>Home</span>
                     </Link>
                 </li>
-                {/*
                 <li className='golem-sidenav__item'>
-                    <Link className='golem-sidenav__link'>
+                    <Link to='/quizz/create' className='golem-sidenav__link'>
                         <FontAwesomeIcon icon='home' className='golem-sidenav__icon' />
                         <span>Create Quizz</span>
                     </Link>
                 </li>
-                */}
                 <li className='golem-sidenav__item'>
                     <Link to='/quizz/listing' className='golem-sidenav__link'>
                         <FontAwesomeIcon icon='home' className='golem-sidenav__icon' />
