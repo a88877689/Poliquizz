@@ -16,6 +16,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    animation: moveInTop 1.5s ease-out;
 }
 
 .golem-main-view {
@@ -23,4 +24,12 @@
     width: 100%;
     display: flex;
     background: $color-grey-light-3;
+}
+
+.golem-main-view-container {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: scroll;
+    margin: 3rem;
 }

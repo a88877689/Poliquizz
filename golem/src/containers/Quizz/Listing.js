@@ -31,7 +31,7 @@ const listing = () => {
             {
                 label: "Date",
                 prop: "date",
-                width: 240,
+                width: 180,
                 render(data){
                     return <span>{data.date}</span>
                 }
@@ -93,14 +93,13 @@ const listing = () => {
     };
 
     return (
-        <div style={{margin: '30px'}}>
-            <Table
-                style={{width: '100%'}}
-                columns={state.columns}
-                data={state.data}
-                highlightCurrentRow={true}
-                onRowClick={handleRowClick} />
-        </div>
+        <Table
+            style={{width: '100%'}}
+            columns={state.columns}
+            data={state.data}
+            highlightCurrentRow={true}
+            onRowClick={handleRowClick} />
+        
     )
 }
 
