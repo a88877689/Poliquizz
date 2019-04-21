@@ -1,35 +1,32 @@
 .golem-container {
-    max-width: 100%;
+    display: flex;
+    flex-direction: column;
     background: $color-grey-light-3;
-    min-height: 50rem;
+    height: 100%;
+    
 }
 
 .golem-content {
     display: flex;
+    flex: 1;
 }
 
 .golem-header {
-    font-size: 1.4rem;
-    height: 7rem;
-    background-color: #fff;
-    border-bottom: var(--grey-light-2);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #fff;
     animation: moveInTop 1.5s ease-out;
+    font-size: 1.4rem;
 }
 
 .golem-main-view {
-    height: 90.4vh;
-    width: 100%;
-    display: flex;
     background: $color-grey-light-3;
+    overflow: scroll;
 }
 
 .golem-main-view-container {
-    position: relative;
-    box-sizing: border-box;
-    width: 100%;
-    overflow: scroll;
+    animation: moveInRight-1 1.5s ease-out;
+    background-color: white;
     margin: 3rem;
 }

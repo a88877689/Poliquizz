@@ -16,12 +16,12 @@ const layout = (props) => {
                 <Sidebar />
 
                 <main className='golem-main-view'>
-                    <Switch>
-                        <div className='golem-main-view-container'>
+                    <div className='golem-main-view-container'>
+                        <Switch>
                             <Route path='/quizz/listing' component={Listing} />
-                            <Route path='/' component={Home} />
-                        </div>
-                    </Switch>
+                            <Route path='/' exact component={Home} />
+                        </Switch>
+                    </div>
                 </main>
             </div>
         </div>

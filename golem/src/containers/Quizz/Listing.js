@@ -1,5 +1,6 @@
 import { Button, Table } from 'element-react';
 import React, { useState } from 'react';
+import './Listing.scss';
 
 const listing = () => {
     const [state, setState] = useState({
@@ -15,7 +16,7 @@ const listing = () => {
             {
                 label: "Name",
                 prop: "name",
-                width: 150,
+                width: 200,
                 render(data){
                     return <span>{data.name}</span>
                 }
@@ -94,7 +95,6 @@ const listing = () => {
 
     return (
         <Table
-            style={{width: '100%'}}
             columns={state.columns}
             data={state.data}
             highlightCurrentRow={true}
