@@ -2,4 +2,4 @@
 
 ## golem: Front-end.
 
-## megaminion: Back-end.
+## valkyrie: Back-end.
