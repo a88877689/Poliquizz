@@ -1,12 +1,17 @@
 package controllers;
 
 import com.opensymphony.xwork2.Action;
-import com.opensymphony.xwork2.ValidationAwareSupport;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import dao.implementation.UserDaoImpl;
 import model.User;
+import org.apache.struts2.convention.annotation.AllowedMethods;
+import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.apache.struts2.rest.DefaultHttpHeaders;
+import org.apache.struts2.rest.HttpHeaders;
+import org.apache.struts2.rest.RestActionSupport;
 
-public class LoginController extends ValidationAwareSupport {
+@AllowedMethods({"options", "execute"})
+public class LoginController extends RestActionSupport {
     private UserDaoImpl userDaoImpl = new UserDaoImpl();
 
     private String username;
@@ -31,9 +36,12 @@ public class LoginController extends ValidationAwareSupport {
     }
 
     public String create() {
-        validate();
-
         return Action.SUCCESS;
+    }
+
+    @SkipValidation
+    public HttpHeaders options() {
+        return super.options();
     }
 
     public void validate() {

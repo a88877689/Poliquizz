@@ -1,34 +1,87 @@
 import { Form, Button, Input } from 'element-react';
-import React from 'react';
+import React, { Component } from 'react';
+import { loginAction } from '@/api/login';
 import './Login.scss';
 
-const login = (props) => {
-    let handleLogin = () => {
-        props.history.replace('/');
+class Login extends Component {
+    state = {
+        form: {
+            username: '',
+            password: '' 
+        },
+        rules: {
+            username: [{ required: true, message: 'Please enter your username.', trigger: 'blur' }],
+            password: [{ required: true, message: 'Please enter your password.', trigger: 'blur' }]
+        },
+        errors: null
+    };
+
+    onChange(key, value){
+        this.setState({
+            form: Object.assign({}, this.state.form, { [key]: value })
+        });
     }
 
-    return (
-        <div className="golem-login-background">
-            <div className="golem-text-box">
-                <h1 className="golem-heading-primary">
-                    <span className="golem-heading-primary-main">welcome</span>
-                    <span className="golem-heading-primary-sub">to poli-quizz</span>
-                </h1>
+    handleLogin(e){
+        e.preventDefault();
+
+        let data = this.state.form;
+        this.refs.form.validate(async (valid) => {
+            if (valid) {
+                this.setState({ errors: null });
+                
+                const response = await loginAction(data);
+
+                this.props.history.replace('/');
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+        });
+    }
+
+    render() {
+        return (
+            <div className="golem-login-background">
+                <div className="golem-heading-primary">
+                    <h1 className="golem-heading-primary-main">welcome</h1>
+                    <h2 className="golem-heading-primary-sub">to poli-quizz</h2>
+                </div>
+                
+                <Form
+                    ref="form"
+                    model={this.state.form}
+                    rules={this.state.rules}
+                    className="golem-login-box" >
+                    <Form.Item prop="username">
+                        <Input
+                            value={this.state.form.username}
+                            onChange={this.onChange.bind(this, 'username')}
+                            placeholder="Username"
+                            autoComplete="off"
+                        />
+                    </Form.Item>
+                    <Form.Item prop="password">
+                        <Input
+                            value={this.state.form.password}
+                            onChange={this.onChange.bind(this, 'password')}
+                            placeholder="Username"
+                            autoComplete="off"
+                            type="password"
+                        />
+                    </Form.Item>
+                    <Form.Item className="golem-btn">
+                        <Button 
+                            onClick={this.handleLogin.bind(this)}
+                            size="large"
+                        >
+                            Login
+                        </Button>
+                    </Form.Item>
+                </Form>
             </div>
-            
-            <Form className="golem-login-box">
-                <Form.Item>
-                    <Input placeholder="Username"></Input>
-                </Form.Item>
-                <Form.Item>
-                    <Input type="password" placeholder="Password"></Input>
-                </Form.Item>
-                <Form.Item className="golem-btn">
-                    <Button onClick={handleLogin} size="large">Login</Button>
-                </Form.Item>
-            </Form>
-        </div>
-    );
+        );
+    }
 }
 
-export default login;
+export default Login;

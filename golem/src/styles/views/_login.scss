@@ -1,5 +1,5 @@
 .golem-login-background {
-    height: 100vh;
+    display: flex;
     background-image: linear-gradient(
         to right bottom,
         $color-alpha-green-light,
@@ -7,15 +7,13 @@
         url("./../assets/login-background.jpg");
     background-size: cover;
     background-position: top;
-    position: relative;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .golem-login-box {
-    position: absolute;
-    height: 38%;
-    top: 59%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background: $color-alpha-grey-light;
     padding: 20px;
     border-radius: 20px;
@@ -24,34 +22,26 @@
     justify-content: space-between;
 }
 
-.golem-text-box {
-    position: absolute;
-    top: 30%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: 100%;
-}
-
 .golem-heading-primary {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: space-between;
     color: #fff;
     text-transform: uppercase;
-    backface-visibility: hidden;
     margin-bottom: 5rem;
+    text-align: center;
+    font-size: 1.8rem;
+    padding-left: .9em;
 }
 
 .golem-heading-primary-main {
-    font-weight: 400;
-    letter-spacing: 3rem;
     animation: moveInLeft-2 1.5s ease-out;
+    font-weight: 400;
+    letter-spacing: .45em;
 }
 
 .golem-heading-primary-sub {
-    font-weight: 700;
     animation: moveInRight-2 1.5s ease-out;
+    font-size: .75em;
+    font-weight: 600;
+    letter-spacing: 1em;
 }
 
 .golem-btn {
@@ -68,6 +58,17 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
+@media only screen and (min-width: 768px) {
+    .golem-login-box .el-input {
+        min-width: 45rem;
+    }
+
+    .golem-heading-primary {
+        font-size: 3.2rem;
+    }
+}
+
+/*
 @media only screen and (max-width: 600px) {
     .golem-login-box {
         width: 40rem;
@@ -83,7 +84,6 @@
         letter-spacing: 15.5px;
     }
 } 
-
 @media only screen and (min-width: 600px) {
     .golem-login-box {
         width: 50rem;
@@ -114,4 +114,4 @@
         font-size: 120%;
         letter-spacing: 24px;
     }
-}
+}*/
