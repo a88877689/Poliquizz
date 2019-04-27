@@ -1,20 +1,22 @@
-import React from 'react';
-import { Form, Input } from 'element-react';
+import React, { Component } from 'react';
+import { Input, Form, Button } from 'element-react';
 
-const create = () => {
-    return (
-        <Form>
-            <label>Quizz:</label>
-            <Form.Item>
-                <Input></Input>
-            </Form.Item>
-            <label>Description:</label>
-            <Form.Item>
-                <Input type="textarea"></Input>
-            </Form.Item>
-        </Form>
-
-    );
+class Create extends Component {
+    render() {
+        return (
+            <Form>
+                <Form.Item>
+                    <Input placeholder="Quizz" />
+                </Form.Item>
+                <Form.Item>
+                    <Input type="textfield" placeholder="Description" />
+                </Form.Item>
+                <Form.Item>
+                    <Button>Create</Button>
+                </Form.Item>
+            </Form>
+        );
+    }
 }
 
-export default create;
+export default Create;

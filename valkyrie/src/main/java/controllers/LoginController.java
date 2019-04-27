@@ -13,7 +13,6 @@ import org.apache.struts2.rest.RestActionSupport;
 @AllowedMethods({"options", "execute"})
 public class LoginController extends RestActionSupport {
     private UserDaoImpl userDaoImpl = new UserDaoImpl();
-
     private String username;
     private String password;
 
@@ -44,11 +43,12 @@ public class LoginController extends RestActionSupport {
         return super.options();
     }
 
+    /*
     public void validate() {
         User user = userDaoImpl.findByUsernameAndPassword(this.username, this.password);
-
         if(user == null) {
             addFieldError("password", "Invalid credentials.");
         }
     }
+     */
 }

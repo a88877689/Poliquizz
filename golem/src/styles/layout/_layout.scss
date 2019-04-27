@@ -22,7 +22,9 @@
 
 .golem-main-view {
     background: $color-grey-light-3;
-    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .golem-main-view-container {

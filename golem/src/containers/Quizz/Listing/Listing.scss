@@ -1,6 +1,12 @@
-.el-button {
-    width: auto !important;
-    height: auto !important;
+.golem-listing-custom-btn {
+    .el-button {
+        width: 100% !important;
+        background: #EB2F64 !important;
+        border-radius: 10px !important;
+        color: #eee !important;
+        text-decoration: none !important;
+        border: 0 !important;
+    }
 }
 
 span {

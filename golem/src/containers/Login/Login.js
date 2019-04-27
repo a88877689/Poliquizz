@@ -29,9 +29,8 @@ class Login extends Component {
         this.refs.form.validate(async (valid) => {
             if (valid) {
                 this.setState({ errors: null });
-                
                 const response = await loginAction(data);
-
+                console.log(response);
                 this.props.history.replace('/');
             } else {
                 console.log('error submit!!');
@@ -42,7 +41,7 @@ class Login extends Component {
 
     render() {
         return (
-            <div className="golem-login-background">
+            <div className="golem-login-background golem-login">
                 <div className="golem-heading-primary">
                     <h1 className="golem-heading-primary-main">welcome</h1>
                     <h2 className="golem-heading-primary-sub">to poli-quizz</h2>

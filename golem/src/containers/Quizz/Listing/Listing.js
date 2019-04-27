@@ -94,11 +94,14 @@ const listing = () => {
     };
 
     return (
-        <Table
-            columns={state.columns}
-            data={state.data}
-            highlightCurrentRow={true}
-            onRowClick={handleRowClick} />
+        <div class="golem-listing-custom-btn">
+            <Table
+                columns={state.columns}
+                data={state.data}
+                highlightCurrentRow={true}
+                onRowClick={handleRowClick}
+            />
+        </div>
         
     )
 }
