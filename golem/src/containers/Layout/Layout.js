@@ -19,7 +19,7 @@ const layout = (props) => {
                     <div className='golem-main-view-container'>
                         <Switch>
                             <Route path='/quizz/create' component={Create} />
-                            <Route path='/quizz/listing' component={Listing} />
+                            <Route path='/quizz' component={Listing} exact />
                             <Route path='/' exact component={Home} />
                         </Switch>
                     </div>

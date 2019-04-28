@@ -2,9 +2,10 @@ import React from 'react';
 import { Link }  from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faFileAlt } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faHome);
+library.add(faFileAlt);
 
 const sidebar = () => {
     return (
@@ -17,15 +18,9 @@ const sidebar = () => {
                     </Link>
                 </li>
                 <li className='golem-sidenav__item'>
-                    <Link to='/quizz/create' className='golem-sidenav__link'>
-                        <FontAwesomeIcon icon='home' className='golem-sidenav__icon' />
-                        <span>Create Quizz</span>
-                    </Link>
-                </li>
-                <li className='golem-sidenav__item'>
-                    <Link to='/quizz/listing' className='golem-sidenav__link'>
-                        <FontAwesomeIcon icon='home' className='golem-sidenav__icon' />
-                        <span>List Quizz</span>
+                    <Link to='/quizz' className='golem-sidenav__link'>
+                        <FontAwesomeIcon icon='file-alt' className='golem-sidenav__icon' />
+                        <span>Quizz</span>
                     </Link>
                 </li>
                 

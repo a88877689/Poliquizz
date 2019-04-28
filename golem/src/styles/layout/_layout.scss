@@ -29,6 +29,26 @@
 
 .golem-main-view-container {
     animation: moveInRight-1 1.5s ease-out;
-    background-color: white;
     margin: 3rem;
+}
+
+.m-b-sm {
+    margin-bottom: 1rem;
+}
+
+.m-b {
+    margin-bottom: 2rem;
+}
+
+.m-b-lg {
+    margin-bottom: 4rem;
+}
+
+.pull-right {
+    display: block;
+    float: right;
+}
+
+.text-right {
+    text-align: right;
 }

@@ -1,8 +1,11 @@
-import { Button, Table } from 'element-react';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Layout, Table } from 'element-react';
 import './Listing.scss';
+import { } from '@/components/PageTitle/PageTitle';
+import PageTitle from '../../../components/PageTitle/PageTitle';
 
-const listing = () => {
+const listing = props => {
     const [state, setState] = useState({
         columns: [
             {
@@ -94,16 +97,30 @@ const listing = () => {
     };
 
     return (
-        <div class="golem-listing-custom-btn">
-            <Table
-                columns={state.columns}
-                data={state.data}
-                highlightCurrentRow={true}
-                onRowClick={handleRowClick}
+        <React.Fragment>
+            <PageTitle
+                title="Quizz"
+                pages={[
+                    { title: 'Quizz' }
+                ]}
             />
-        </div>
-        
-    )
+            <div className="text-right m-b">
+                <Link to={`${props.match.url}/create`}>
+                    <Button type="success" size="small">Create quizz</Button>
+                </Link>
+            </div>
+            <Layout.Row>
+                <Layout.Col>
+                    <Table
+                        columns={state.columns}
+                        data={state.data}
+                        highlightCurrentRow={true}
+                        onRowClick={handleRowClick}
+                    />
+                </Layout.Col>
+            </Layout.Row>
+        </React.Fragment>
+    );
 }
 
 export default listing;
