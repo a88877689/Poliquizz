@@ -8,20 +8,19 @@ class SelectMenu extends Component {
     }
 
     onChange(value) {
-        this.state.options = value;
+        // this.state.options = value;
         
         console.log(this.content);
     }
 
     render() {
-        let content = null;
-        content = (
-            <div>
-                {[...Array(this.state.options - 1).keys()].map((_, i) => {
-                    return <Input />;
-                })}
-            </div>
-        );
+        // content = (
+        //     <div>
+        //         {[...Array(this.state.options - 1).keys()].map((_, i) => {
+        //             return <Input />;
+        //         })}
+        //     </div>
+        // );
 
         return (
             <Aux>
@@ -31,8 +30,6 @@ class SelectMenu extends Component {
                     defaultValue={this.state.options}
                     onChange={this.onChange.bind(this)}
                 />
-                {this.content}
-
                 <Input type="textarea" placeholder="Feedback" />
             </Aux>
         );

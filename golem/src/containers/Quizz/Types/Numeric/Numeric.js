@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, InputNumber } from 'element-react';
+import { Form, Input, InputNumber } from 'element-react';
 import Aux from '@/high-order-components/Aux';
 
 const numeric = () => {
@@ -10,7 +10,10 @@ const numeric = () => {
 
     return (
         <Aux>
-            <Input placeholder="Quizz" />
+            <Form.Item label="Quizz">
+                <Input type="textarea" placeholder="Ex.: What is the pH of a 0.1M solution?" />
+            </Form.Item>
+
 
             <div>
                 <label>Response</label>

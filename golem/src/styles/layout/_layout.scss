@@ -1,9 +1,8 @@
 .golem-container {
+    background: $color-grey-light-3;
     display: flex;
     flex-direction: column;
-    background: $color-grey-light-3;
     height: 100%;
-    
 }
 
 .golem-content {
@@ -12,12 +11,12 @@
 }
 
 .golem-header {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: #fff;
     animation: moveInTop 1.5s ease-out;
+    background-color: #fff;
+    display: flex;
     font-size: 1.4rem;
+    justify-content: space-between;
 }
 
 .golem-main-view {

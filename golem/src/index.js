@@ -4,6 +4,13 @@ import 'element-theme-default';
 import '@/styles/main.scss';
 import App from '@/App';
 import * as serviceWorker from '@/serviceWorker';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faHome, faFileAlt, faQuestionCircle, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faHome);
+library.add(faFileAlt);
+library.add(faQuestionCircle);
+library.add(faCaretDown);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

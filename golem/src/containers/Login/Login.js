@@ -1,4 +1,5 @@
-import { Form, Button, Input } from 'element-react';
+import { Form, Button } from 'element-react';
+import { Field, reduxForm } from 'redux-form';
 import React, { Component } from 'react';
 import { loginAction } from '@/api/login';
 import './Login.scss';
@@ -40,6 +41,8 @@ class Login extends Component {
     }
 
     render() {
+        const { handleSubmit } = this.props;
+
         return (
             <div className="golem-login-background golem-login">
                 <div className="golem-heading-primary">
@@ -50,29 +53,36 @@ class Login extends Component {
                 <Form
                     ref="form"
                     model={this.state.form}
-                    rules={this.state.rules}
-                    className="golem-login-box" >
+                    className="golem-login-box"
+                >
                     <Form.Item prop="username">
-                        <Input
-                            value={this.state.form.username}
-                            onChange={this.onChange.bind(this, 'username')}
-                            placeholder="Username"
-                            autoComplete="off"
-                        />
+                        <div className="el-input">
+                            <Field
+                                component="input"
+                                name="username"
+                                placeholder="Username"
+                                autoComplete="off"
+                                className="el-input__inner"
+                            />
+                        </div>
                     </Form.Item>
                     <Form.Item prop="password">
-                        <Input
-                            value={this.state.form.password}
-                            onChange={this.onChange.bind(this, 'password')}
-                            placeholder="Username"
-                            autoComplete="off"
-                            type="password"
-                        />
+                        <div className="el-input">
+                            <Field
+                                component="input"
+                                name="password"
+                                placeholder="Password"
+                                autoComplete="off"
+                                type="password"
+                                className="el-input__inner"
+                            />
+                        </div>
                     </Form.Item>
                     <Form.Item className="golem-btn">
                         <Button 
-                            onClick={this.handleLogin.bind(this)}
+                            onClick={handleSubmit}
                             size="large"
+                            type="submit"
                         >
                             Login
                         </Button>
@@ -83,4 +93,9 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default reduxForm({
+    form: 'login',
+    onSubmit: values => {
+        console.log(values);
+    }
+})(Login);

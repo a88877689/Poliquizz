@@ -6,7 +6,7 @@ const PageTitle = ({title, pages}) => (
     <React.Fragment>
         <h1 className="m-b-sm">{title}</h1>
         <Breadcrumb separator="/" className="m-b">
-            <Breadcrumb.Item><Link to="/">Inicio</Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
             {pages.slice(0, -1).map(({ to, title }, idx) => (
                 <Breadcrumb.Item key={idx}>
                     <Link to={to}>{title}</Link>

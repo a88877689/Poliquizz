@@ -24,3 +24,11 @@ hr {
     margin: 1rem 0;
     border: 1px solid rgba($color: #000000, $alpha: 0.045);
 }
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    color: #000000;
+}

@@ -1,6 +1,15 @@
-.golem-logo {
-    height: 3.25rem;
-    margin-left: 3rem;
+.golem-logo-content {
+    display: flex;
+    &__logo {
+        height: 3.25rem;
+        margin-left: 3rem;
+    }
+    &__title {
+        color: $color-rose-primary;
+        font-size: 2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
 }
 
 .golem-user-nav {
@@ -14,7 +23,7 @@
         height: 100%;
         display: flex;
         align-items: center;
-        padding: 1rem 2rem;   
+        padding: 18px 18px 9px;
     }
 
     & > *:hover {
@@ -22,9 +31,19 @@
     }
 
     &__user-photo {
-        height: 3.75rem;
+        height: 40px;
         border-radius: 50%;
         margin-right: 1rem;
         margin-left: 1rem;
+        margin-top: -9px;
+        float: left;
     }
+
+    &__user-name {
+        margin-right: 1rem;
+    }
+}
+
+.el-dropdown-menu {
+    padding: 0;
 }

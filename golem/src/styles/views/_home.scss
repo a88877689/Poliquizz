@@ -1,0 +1,18 @@
+.golem-home{
+    position: relative;
+
+    &__welcome {
+        color: $color-rose-primary-dark;
+        font-family: bold;
+        font-size: 5rem;
+    }
+
+    &__github {
+        animation: github-wave 560ms ease-in-out;
+        height: 8rem;
+        margin-left: 8rem;
+        position: absolute;
+        top: -3rem;
+        right: -3rem;
+    }
+}
