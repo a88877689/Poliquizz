@@ -4,7 +4,7 @@ import Documentation from '@/components/Documentation/Documentation';
 import Home from '@/components/Home/Home';
 import Navbar from '@/components/Navbar/Navbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import { Create, Listing } from '@/containers/Quizz/index';
+import { Create, Update, Listing } from '@/containers/Quizz/index';
 
 const layout = (props) => {
     return (
@@ -17,14 +17,13 @@ const layout = (props) => {
                 <Sidebar />
 
                 <main className='golem-main-view'>
-                    <div className='golem-main-view-container'>
-                        <Switch>
-                            <Route path='/documentation' component={Documentation} />
-                            <Route path='/quizz/create' component={Create} />
-                            <Route path='/quizz' component={Listing} exact />
-                            <Route path='/' exact component={Home} />
-                        </Switch>
-                    </div>
+                    <Switch>
+                        <Route path='/documentation' component={Documentation} />
+                        <Route path='/quizz/create' component={Create} />
+                        <Route path='/quizz/edit/:id' component={Update}/>
+                        <Route path='/quizz' component={Listing} exact />
+                        <Route path='/' exact component={Home} />
+                    </Switch>
                 </main>
             </div>
         </div>

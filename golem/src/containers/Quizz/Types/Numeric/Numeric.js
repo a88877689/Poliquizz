@@ -1,40 +1,63 @@
-import React, { useState } from 'react';
-import { Form, Input, InputNumber } from 'element-react';
-import Aux from '@/high-order-components/Aux';
+import React from 'react';
+import { Field } from 'redux-form';
+import { Form, Layout } from 'element-react';
 
-const numeric = () => {
-    let [state, setState] = useState({
-        response: 0,
-        errorRange: 0
-    });
-
+const Numeric = (props) => {
     return (
-        <Aux>
+        <React.Fragment>
             <Form.Item label="Quizz">
-                <Input type="textarea" placeholder="Ex.: What is the pH of a 0.1M solution?" />
+                <div className="el-textarea">
+                    <Field
+                        component="textarea"
+                        placeholder="Ex.: How many champion leagues BarcelonaFC has won?"
+                        name={`${props.field}.quizzNumeric`}
+                        className="el-textarea__inner"
+                    />
+                </div>
             </Form.Item>
 
+            <Layout.Row gutter="24">
+                <Layout.Col span="8">
+                    <Form.Item label="Answer">
+                        <div className="el-input">
+                            <Field
+                                component="input"
+                                placeholder="Ex.: 4"
+                                name={`${props.field}.answer`}
+                                className="el-input__inner"
+                            />
+                        </div>
+                    </Form.Item>
+                </Layout.Col>
 
-            <div>
-                <label>Response</label>
-                <InputNumber
-                    min={-1 * Infinity}
-                    placeholder="Response"
-                    defaultValue={state.response}
-                />
-            </div>
+                <Layout.Col span="8">
+                    <Form.Item label="Error range (%)">
+                        <div className="el-input">
+                            <Field
+                                component="input"
+                                placeholder="Ex.: 25"
+                                name={`${props.field}.errorRange`}
+                                className="el-input__inner"
+                            />
+                        </div>
+                    </Form.Item>
+                </Layout.Col>
 
-            <div>
-                <label>Error range</label>
-                <InputNumber
-                    placeholder="Error range"
-                    defaultValue={state.errorRange}
-                />
-            </div>
-
-            <Input type="textarea" placeholder="Feedback" />
-        </Aux>
+                <Layout.Col span="8">
+                    <Form.Item label="Weighing (%)">
+                        <div className="el-input">
+                            <Field
+                                component="input"
+                                placeholder="Ex.: 33.33"
+                                name={`${props.field}.weighing`}
+                                className="el-input__inner"
+                            />
+                        </div>
+                    </Form.Item>
+                </Layout.Col>
+            </Layout.Row>
+        </React.Fragment>
     );
 }
 
-export default numeric;
+export default Numeric;

@@ -1,22 +1,39 @@
 import React from 'react';
-import { Input, Switch } from 'element-react';
-import Aux from '@/high-order-components/Aux';
+import { Field } from 'redux-form';
+import { Form, Layout } from 'element-react';
 
-const trueFalse = () => {
+const TrueFalse = (props) => {
     return (
-        <Aux>
-            <Input placeholder="Quizz" />
+        <React.Fragment>
+            <Layout.Row gutter="24">
+                <Layout.Col span="18">
+                    <Form.Item label="Quizz">
+                        <div className="el-textarea">
+                            <Field
+                                component="textarea"
+                                placeholder="Ex.: Is Michael Jordan one of the best basketball players of all time?"
+                                name={`${props.field}.quizzTrueFalse`}
+                                className="el-textarea__inner"
+                            />
+                        </div>
+                    </Form.Item>
+                </Layout.Col>
 
-            <Switch
-                onColor="#EB2F64"
-                offColor="#999"
-                onValue="True"
-                offValue="False"
-            />
-
-            <Input type="textarea" placeholder="Feedback" />
-        </Aux>
+                <Layout.Col span="6">
+                    <Form.Item label="True or False">
+                        <div className="switch">
+                            <Field
+                                component='input'
+                                type='checkbox'
+                                name={`${props.field}.trueFalse`}
+                            />
+                            <span className="slider round" />
+                        </div>
+                    </Form.Item>
+                </Layout.Col>
+            </Layout.Row>
+        </React.Fragment>
     );
 }
 
-export default trueFalse;
+export default TrueFalse;

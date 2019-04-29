@@ -1,6 +1,22 @@
 
-const initialState = {};
+const initialState = {
+    quizz: null,
+    quizzes: []
+};
 
 export default function reducer(state = initialState, action) {
-    return state;
+    switch (action.type) {
+        case 'quizz':
+            return {
+                ...state,
+                quizz: action.quizz,
+            };
+        case 'quizzes':
+            return {
+                ...state,
+                quizzes: action.quizzes
+            }
+        default:
+            return state;
+    }
 };

@@ -4,7 +4,7 @@ import GithubLogo from '@/assets/github-corner.png';
 
 const Home = () => {
     return (
-        <React.Fragment>
+        <div className='golem-main-view-container'>
             <div className='golem-home'>
                 <span className='golem-home__welcome'>Welcome!</span>
                 <a
@@ -18,7 +18,7 @@ const Home = () => {
                         className='golem-home__github' />
                 </a>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 

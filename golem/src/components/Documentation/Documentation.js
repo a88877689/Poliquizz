@@ -3,14 +3,14 @@ import PageTitle from '@/components/PageTitle/PageTitle';
 
 const Documentation = () => {
     return (
-        <React.Fragment>
+        <div className='golem-main-view-container'>
             <PageTitle
                 title="Documentation"
                 pages={[
                     { to: '/documentation', title: 'Documentation'},
                 ]}
             />
-        </React.Fragment>
+        </div>
     );
 }
 

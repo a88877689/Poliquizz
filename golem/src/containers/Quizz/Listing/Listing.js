@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, Layout, Loading, Table } from 'element-react';
+import { loadQuizzes } from '@/actions/quizz';
+import PageTitle from '@/components/PageTitle/PageTitle';
 import { Link } from 'react-router-dom';
-import { Button, Layout, Table } from 'element-react';
+import { connect } from 'react-redux';
 import './Listing.scss';
-import { } from '@/components/PageTitle/PageTitle';
-import PageTitle from '../../../components/PageTitle/PageTitle';
 
-const listing = props => {
-    const [state, setState] = useState({
+const Listing = (props) => {
+    let fetchData = () => {
+        props.dispatch(loadQuizzes());
+    }
+
+    useEffect(() => {        
+        fetchData();
+    }, []);
+
+    const [listingState] = useState({
         columns: [
             {
                 label: "ID",
@@ -19,25 +29,40 @@ const listing = props => {
             {
                 label: "Name",
                 prop: "name",
-                width: 200,
+                width: 220,
                 render(data){
                     return <span>{data.name}</span>
                 }
             },
             {
-                label: "Quizz",
-                prop: "quizz",
-                width: 400,
+                label: "Type",
+                prop: "type",
+                width: 360,
                 render(data){
-                    return <span>{data.quizz}</span>
+                    return <span>{data.type}</span>
                 }
             },
             {
                 label: "Date",
                 prop: "date",
-                width: 180,
+                width: 140,
                 render(data){
                     return <span>{data.date}</span>
+                }
+            },
+            {
+                label: "XML",
+                width: 70,
+                render: function(data) {
+                    return (
+                        <span>
+                            <a href={data.url} target="_blank" rel="noopener noreferrer">
+                                <Button type="primary" size="small">
+                                    <FontAwesomeIcon icon="download" />
+                                </Button>
+                            </a>
+                        </span>
+                    )
                 }
             },
             {
@@ -45,82 +70,67 @@ const listing = props => {
                 render: function() {
                     return (
                         <span>
-                            <Button type="danger" size="small">Delete</Button>
+                            <Button type="danger" size="small">
+                                <FontAwesomeIcon icon="trash" />
+                            </Button>
                         </span>
                     )
                 }
             }
         ],
-        data: [{
-            id: '1',
-            name: 'Presidents',
-            quizz: 'Who is the current president of México?',
-            date: '2016-05-03',
-            type: 'Drag and drop'
-        }, {
-            id: '2',
-            name: 'Movies',
-            quizz: 'Match the movie with its grossing',
-            date: '2016-05-03',
-            type: 'Matching'
-        }, {
-            id: '3',
-            name: 'Maths',
-            quizz: 'Result of this Laplace Transform',
-            date: '2016-05-03',
-            type: 'Calculated'
-        }, {
-            id: '4',
-            name: 'Programming',
-            quizz: 'Is this app made with ReactJS?',
-            date: '2016-05-03',
-            type: 'True or false'
-        }]
+        data: props.quizzes
     });
 
     const handleDelete = (row) => {
-        let columns = state.columns
-        let data = state.data.filter(x => x.id !== row.id);
-        setState({
-            columns: columns,
-            data: data
-        });
         console.log(row);
     }
 
     const handleRowClick = (row, event, column) => {
-        if(column.label) {
-            console.log(row.name);
+        if(column.label && column.label !== 'XML') {
+            props.history.replace('/quizz/edit/' + row.id);
+            console.log(row.id);
+        } 
+        if(column.label === 'XML'){
+
         } else {
             handleDelete(row);
         }
     };
 
     return (
-        <React.Fragment>
-            <PageTitle
-                title="Quizz"
-                pages={[
-                    { title: 'Quizz' }
-                ]}
-            />
-            <div className="text-right m-b">
-                <Link to={`${props.match.url}/create`}>
-                    <Button type="success" size="small">Create quizz</Button>
-                </Link>
+        <Loading
+            loading={props.loading}
+            text='Downloading quizzes...'>
+            <div className='golem-main-view-container'>
+                <PageTitle
+                    title="Quizz"
+                    pages={[
+                        { title: 'Quizz' }
+                    ]}
+                />
+                <div className="text-right m-b">
+                    <Link to={`${props.match.url}/create`}>
+                        <Button type="success" size="small">Create quizz</Button>
+                    </Link>
+                </div>
+                <Layout.Row>
+                    <Layout.Col>
+                        <Table
+                            columns={listingState.columns}
+                            data={props.quizzes}
+                            highlightCurrentRow={true}
+                            onRowClick={handleRowClick}
+                        />
+                    </Layout.Col>
+                </Layout.Row>
             </div>
-            <Layout.Row>
-                <Layout.Col>
-                    <Table
-                        columns={state.columns}
-                        data={state.data}
-                        highlightCurrentRow={true}
-                        onRowClick={handleRowClick}
-                    />
-                </Layout.Col>
-            </Layout.Row>
-        </React.Fragment>
+        </Loading>
     );
 }
 
-export default listing;
+export default connect(
+    state => ({
+        ...state.loader,
+        ...state.quizz
+    }),
+)(Listing);

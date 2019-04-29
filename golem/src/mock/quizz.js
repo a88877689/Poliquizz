@@ -1,4 +1,4 @@
-import instance from './axios';
+import instance from './mock';
 
 const BASE_PATH = '/quizz';
 

@@ -20,6 +20,7 @@
 }
 
 .golem-main-view {
+    animation: moveInRight-1 1.5s ease-out;
     background: $color-grey-light-3;
     display: flex;
     flex-direction: column;
@@ -27,7 +28,6 @@
 }
 
 .golem-main-view-container {
-    animation: moveInRight-1 1.5s ease-out;
     margin: 3rem;
 }
 

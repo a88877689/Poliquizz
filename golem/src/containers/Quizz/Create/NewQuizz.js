@@ -1,65 +1,49 @@
 import React from 'react';
-import { Field } from 'redux-form';
-import { Form, Layout, Input, Dropdown, Button } from 'element-react';
+import { Dropdown, Button } from 'element-react';
+import { Numeric, SelectMenu, TrueFalse } from '@/containers/Quizz/Types/index';
 
 const NewQuizz = ({ fields }) => (
     <React.Fragment>
-        {fields.map((field, idx) => (
-            <React.Fragment key={idx}>
-                <Form.Item label="Quizz">
-                    <div className="el-textarea">
-                        <Field
-                            component="textarea"
-                            placeholder="Ex.: What is the pH of a 0.1M solution?"
-                            name={`${field}.quizz`}
-                            className="el-textarea__inner"
-                        />
-                    </div>
-                </Form.Item>
+        {fields.map((field, idx, fields) => {
+            const { type } = fields.get(idx);
+            let quizz = null;
 
-                <Layout.Row gutter="24">
-                    <Layout.Col span="8">
-                        <Form.Item label="Answer">
-                            <div className="el-input">
-                                <Field
-                                    component="input"
-                                    placeholder="Ex.: 3.1416"
-                                    name={`${field}.answer`}
-                                    className="el-input__inner"
-                                />
-                            </div>
-                        </Form.Item>
-                    </Layout.Col>
+            switch(type) {
+                case 'Numeric':
+                    quizz = <Numeric field={field} />
+                    break;
+                case 'SelectMenu':
+                    quizz = <SelectMenu field={field} />
+                    break;
+                default:
+                    quizz = <TrueFalse field={field} />
+                    break;
+            }
 
-                    <Layout.Col span="8">
-                        <Form.Item label="Error range">
-                            <Input placeholder="Ex.: 15%" />
-                        </Form.Item>
-                    </Layout.Col>
-
-                    <Layout.Col span="8">
-                        <Form.Item label="Weighing">
-                            <Input placeholder="Ex.: 33.33%" />
-                        </Form.Item>
-                    </Layout.Col>
-                </Layout.Row>
-            </React.Fragment>
-        ))}
+            return (
+                <React.Fragment key={idx}>
+                    {quizz}
+                    <hr />
+                </React.Fragment>
+            );
+        })}
 
         <div className="text-right">
             <Dropdown
                 menu={(
                     <Dropdown.Menu>
-                        <Dropdown.Item>Numeric</Dropdown.Item>
-                        <Dropdown.Item>Multiresponse</Dropdown.Item>
-                        <Dropdown.Item>Select Menu</Dropdown.Item>
-                        <Dropdown.Item>True or False</Dropdown.Item>
+                        <Dropdown.Item command='Numeric'>Numeric</Dropdown.Item>
+                        <Dropdown.Item command='SelectMenu'>Select Menu</Dropdown.Item>
+                        <Dropdown.Item command='TrueFalse'>True/False</Dropdown.Item>
                     </Dropdown.Menu>
                 )}
-                onCommand={() => fields.push({})}
+                onCommand={command => {
+                    fields.push({ type: command });
+                }}
             >
                 <Button type="success" size="small">
-                    Add Quizz Type <i className="el-icon-caret-bottom el-icon--right"></i> 
+                    <span>Add Quizz Type</span>
+                    <i className="el-icon-caret-bottom el-icon--right"></i> 
                 </Button>
             </Dropdown>
         </div>
