@@ -19,7 +19,7 @@
     <filter-mapping>
         <filter-name>cors</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>r
+    </filter-mapping>
     <filter-mapping>
         <filter-name>struts2</filter-name>
         <url-pattern>/*</url-pattern>
