@@ -1,5 +1,7 @@
 package model;
 
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+
 import java.io.Serializable;
 import javax.persistence.*;
 
