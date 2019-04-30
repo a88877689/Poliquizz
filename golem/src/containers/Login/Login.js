@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { login } from '@/mock/login';
 import { authToken } from '@/actions/auth';
+import { Message } from 'element-react';
 import Swal from 'sweetalert2';
 // import { loginAction } from '@/api/login';
 import './Login.scss';
@@ -70,18 +71,14 @@ export default compose(
     reduxForm({
         form: 'login',
         onSubmit: async (values, dispatch, props) => {
-            console.log(values);
             dispatch(showLoader());
             try {
                 let response = await login(values);
+                console.log(response);
                 dispatch(authToken(response.data.token));
                 props.history.replace('/');
             } catch(err) {
-                Swal({
-                    message: err.response.data.fieldError,
-                    type: 'error'
-                })
-                console.log(err.response);
+                alert('Invalid credentials');
             } finally {
                 dispatch(hideLoader());
             }

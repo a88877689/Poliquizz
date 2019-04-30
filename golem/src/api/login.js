@@ -1,6 +1,6 @@
 import instance from './axios';
 
-export function loginAction(data) {
+export function login(data) {
     return instance({
         url: '/login',
         method: 'post',

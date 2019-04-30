@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Layout, Loading, Table } from 'element-react';
-import { loadQuizzes } from '@/actions/quizz';
+import { deleteQuizzAction, getQuizzesAction } from '@/actions/quizz';
 import PageTitle from '@/components/PageTitle/PageTitle';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Listing.scss';
 
 const Listing = (props) => {
-    let fetchData = () => {
-        props.dispatch(loadQuizzes());
-    }
-
-    useEffect(() => {        
-        fetchData();
-    }, []);
-
     const [listingState] = useState({
         columns: [
             {
@@ -77,22 +69,28 @@ const Listing = (props) => {
                     )
                 }
             }
-        ],
-        data: props.quizzes
+        ]
     });
 
+    let fetchData = () => {
+        props.dispatch(getQuizzesAction());
+    }
+
+    useEffect(() => {        
+        fetchData();
+    }, []);
+
     const handleDelete = (row) => {
-        console.log(row);
+        const index = props.quizzes.findIndex(element => element.id === row.id);
+        props.dispatch(deleteQuizzAction(row.id));
+        //props.quizzes.splice(index, 1);
     }
 
     const handleRowClick = (row, event, column) => {
         if(column.label && column.label !== 'XML') {
-            props.history.replace('/quizz/edit/' + row.id);
-            console.log(row.id);
+            props.history.replace(`/quizz/edit/${row.id}`);
         } 
-        if(column.label === 'XML'){
-
-        } else {
+        if(!column.label) {
             handleDelete(row);
         }
     };

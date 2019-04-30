@@ -1,7 +1,7 @@
-import { getQuizz, getQuizzes } from '@/mock/quizz';
+import { deleteQuizz, getQuizz, getQuizzes } from '@/mock/quizz';
 import { showLoader, hideLoader } from './loader';
 
-export function loadQuizz(id) {
+export function getQuizzAction(id) {
     return async dispatch => {
         const response = await getQuizz(id);
         dispatch({
@@ -11,7 +11,7 @@ export function loadQuizz(id) {
     }
 }
 
-export function loadQuizzes(id) {
+export function getQuizzesAction(id) {
     return async dispatch => {
         dispatch(showLoader());
         const response = await getQuizzes();
@@ -20,5 +20,14 @@ export function loadQuizzes(id) {
             type: 'quizzes',
             quizzes: response.data
         });
+    }
+}
+
+export function deleteQuizzAction(id) {
+    return async dispatch => {
+        dispatch(showLoader());
+        const response = await deleteQuizz(id);
+        dispatch(hideLoader());
+        console.log(response);
     }
 }

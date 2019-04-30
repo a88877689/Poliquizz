@@ -1,11 +1,11 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import PageTitle from '@/components/PageTitle/PageTitle';
-import { loadQuizz } from '@/actions/quizz';
-import { connect } from 'react-redux';
 import { compose, lifecycle, branch, renderComponent } from 'recompose';
-import QuizzForm from './QuizzForm';
+import PageTitle from '@/components/PageTitle/PageTitle';
+import { getQuizzAction } from './../../../actions/quizz';
 import Loader from '@/components/Loader/Loader';
+import { connect } from 'react-redux';
+import QuizzForm from './QuizzForm';
 import './Create.scss';
 
 const Update = ({ quizz }) => (
@@ -34,8 +34,7 @@ export default compose(
     lifecycle({
         async componentDidMount() {
             const { match, dispatch } = this.props;
-
-            dispatch(loadQuizz(match.params.id));
+            dispatch(getQuizzAction(match.params.id));
         }
     }),
     branch(

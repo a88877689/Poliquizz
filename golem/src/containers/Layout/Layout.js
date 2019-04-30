@@ -23,6 +23,7 @@ const layout = (props) => {
                         <Route path='/quizz/edit/:id' component={Update}/>
                         <Route path='/quizz' component={Listing} exact />
                         <Route path='/' exact component={Home} />
+                        <Route path='*' component={Home} />
                     </Switch>
                 </main>
             </div>
