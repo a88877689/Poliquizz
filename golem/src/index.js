@@ -5,7 +5,15 @@ import '@/styles/main.scss';
 import App from '@/App';
 import * as serviceWorker from '@/serviceWorker';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome, faFileAlt, faQuestionCircle, faCaretDown, faDownload, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+    faHome,
+    faFileAlt,
+    faQuestionCircle,
+    faCaretDown,
+    faDownload,
+    faTrash,
+    faPencilRuler
+} from '@fortawesome/free-solid-svg-icons';
 
 library.add(faHome);
 library.add(faFileAlt);
@@ -13,6 +21,7 @@ library.add(faQuestionCircle);
 library.add(faCaretDown);
 library.add(faDownload);
 library.add(faTrash);
+library.add(faPencilRuler);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

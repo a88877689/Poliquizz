@@ -1,34 +1,49 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Documentation from '@/components/Documentation/Documentation';
 import Home from '@/components/Home/Home';
 import Navbar from '@/components/Navbar/Navbar';
+import ResponsiveSidebar from '@/components/Sidebar/ResponsiveSidebar';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import { Create, Update, Listing } from '@/containers/Quizz/index';
+import { CreateQuizz, UpdateQuizz, ListingQuizz } from '@/containers/Quizz/index';
+import { CreateExam, UpdateExam, ListingExam } from '@/containers/Exam/index';
 
-const layout = (props) => {
-    return (
-        <div className='golem-container'>
-            <header className='golem-header'>
-                <Navbar />
-            </header>
+class Layout extends Component {
+    render() {
+        let sidebar = null;
+        if(window.screen.width <= 800) {            
+            sidebar = (<ResponsiveSidebar />);
+        } else {
+            sidebar = (<Sidebar />);
+        }
+        
+        return (
+            
+            <div className='golem-container'>
+                <header className='golem-header'>
+                    <Navbar />
+                </header>
 
-            <div className='golem-content'>
-                <Sidebar />
+                <div className='golem-content'>
+                    { sidebar }
 
-                <main className='golem-main-view'>
-                    <Switch>
-                        <Route path='/documentation' component={Documentation} />
-                        <Route path='/quizz/create' component={Create} />
-                        <Route path='/quizz/edit/:id' component={Update}/>
-                        <Route path='/quizz' component={Listing} exact />
-                        <Route path='/' exact component={Home} />
-                        <Route path='*' component={Home} />
-                    </Switch>
-                </main>
+                    <main className='golem-main-view'>
+                        <Switch>
+                            <Route path='/documentation' component={Documentation} />
+                            <Route path='/quizz/create' component={CreateQuizz} />
+                            <Route path='/quizz/edit/:id' component={UpdateQuizz}/>
+                            <Route path='/quizz' component={ListingQuizz} exact />
+                            <Route path='/exams/create' component={CreateExam} exact />
+                            <Route path='/exams/edit/:id' component={UpdateExam} exact />
+                            <Route path='/exams' component={ListingExam} exact />
+                            <Route path='/' exact component={Home} />
+                            <Route path='*' component={Home} />
+                        </Switch>
+                    </main>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
-export default layout;
+export default Layout;

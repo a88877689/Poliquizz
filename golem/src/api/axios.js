@@ -20,4 +20,4 @@ instance.interceptors.response.use(
     response => response
 )
 
-export default instance;s
+export default instance;

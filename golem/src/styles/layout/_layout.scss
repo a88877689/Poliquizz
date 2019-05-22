@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow: hidden;
 }
 
 .golem-content {
@@ -25,6 +26,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    overflow: scroll;
 }
 
 .golem-main-view-container {
