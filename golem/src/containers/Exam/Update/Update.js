@@ -5,7 +5,7 @@ import PageTitle from '@/components/PageTitle/PageTitle';
 import { getQuizzAction } from './../../../actions/quizz';
 import Loader from '@/components/Loader/Loader';
 import { connect } from 'react-redux';
-import QuizzForm from './../Create/ExamForm';
+import ExamForm from './../Create/ExamForm';
 import './Create.scss';
 
 const Update = ({ quizz }) => (
@@ -18,7 +18,7 @@ const Update = ({ quizz }) => (
             ]}
         />
         <div className="golem-quizz-container">
-            <QuizzForm />
+            <ExamForm />
         </div>
     </div>
 );

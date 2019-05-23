@@ -5,8 +5,8 @@ import PageTitle from '@/components/PageTitle/PageTitle';
 import { getQuizzAction } from './../../../actions/quizz';
 import Loader from '@/components/Loader/Loader';
 import { connect } from 'react-redux';
-import QuizzForm from './QuizzForm';
-import './Create.scss';
+import QuizzForm from './../Create/QuizzForm';
+import './../Create/Create.scss';
 
 const Update = ({ quizz }) => (
     <div className='golem-main-view-container'>

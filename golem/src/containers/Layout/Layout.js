@@ -31,10 +31,10 @@ class Layout extends Component {
                         <Switch>
                             <Route path='/documentation' component={Documentation} />
                             <Route path='/quizz/create' component={CreateQuizz} />
-                            <Route path='/quizz/edit/:id' component={UpdateQuizz}/>
+                            <Route path='/quizz/update/:id' component={UpdateQuizz}/>
                             <Route path='/quizz' component={ListingQuizz} exact />
                             <Route path='/exams/create' component={CreateExam} exact />
-                            <Route path='/exams/edit/:id' component={UpdateExam} exact />
+                            <Route path='/exams/update/:id' component={UpdateExam} exact />
                             <Route path='/exams' component={ListingExam} exact />
                             <Route path='/' exact component={Home} />
                             <Route path='*' component={Home} />

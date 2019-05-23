@@ -9,13 +9,6 @@ import ExamForm from './ExamForm';
 import './Create.scss';
 
 class Create extends Component {
-    state = {
-        numericQuizz: {
-            response: 0,
-            errorRange: 0
-        }        
-    }
-
     render() {
         return (
             <Loading

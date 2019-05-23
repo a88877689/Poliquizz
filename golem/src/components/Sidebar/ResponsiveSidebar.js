@@ -11,11 +11,11 @@ const sidebar = () => {
                         <FontAwesomeIcon icon='home' className='golem-sidenav__icon' />
                     </Link>
                 </li>
-                <li className='golem-sidenav__item'>
+                {/* <li className='golem-sidenav__item'>
                     <Link to='/quizz' className='golem-sidenav__link'>
                         <FontAwesomeIcon icon='question-circle' className='golem-sidenav__icon' />
                     </Link>
-                </li>
+                </li> */}
                 <li className='golem-sidenav__item'>
                     <Link to='/exams' className='golem-sidenav__link'>
                         <FontAwesomeIcon icon='pencil-ruler' className='golem-sidenav__icon' />

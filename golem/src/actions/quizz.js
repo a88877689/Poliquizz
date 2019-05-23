@@ -4,6 +4,7 @@ import { showLoader, hideLoader } from './loader';
 export function getQuizzAction(id) {
     return async dispatch => {
         const response = await getQuizz(id);
+        console.log(response)
         dispatch({
             type: 'quizz',
             quizz: response.data

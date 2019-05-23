@@ -5,21 +5,21 @@ import { Form, Layout } from 'element-react';
 const TrueFalse = (props) => {
     return (
         <React.Fragment>
-            <Layout.Row gutter="24">
-                <Layout.Col span="18">
+            <Layout.Row gutter="24" style={{marginTop: "20px"}}>
+                <Layout.Col lg="18" xs="24">
                     <Form.Item label="Quizz">
                         <div className="el-textarea">
                             <Field
                                 component="textarea"
                                 placeholder="Ex.: Is Michael Jordan one of the best basketball players of all time?"
-                                name={`${props.field}.quizzTrueFalse`}
+                                name={`${props.field}.quizz`}
                                 className="el-textarea__inner"
                             />
                         </div>
                     </Form.Item>
                 </Layout.Col>
 
-                <Layout.Col span="6">
+                <Layout.Col lg="6" xs="24">
                     <Form.Item label="True or False">
                         <div className="switch">
                             <Field

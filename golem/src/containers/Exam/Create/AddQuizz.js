@@ -4,6 +4,26 @@ import { Numeric, SelectMenu, TrueFalse } from '@/containers/Quizz/Types/index';
 
 const AddQuizz = ({ fields }) => (
     <React.Fragment>
+        <div className="text-right">
+            <Dropdown
+                menu={(
+                    <Dropdown.Menu>
+                        <Dropdown.Item command='Numeric'>Numeric</Dropdown.Item>
+                        <Dropdown.Item command='SelectMenu'>Select Menu</Dropdown.Item>
+                        <Dropdown.Item command='TrueFalse'>True/False</Dropdown.Item>
+                    </Dropdown.Menu>
+                )}
+                onCommand={command => {
+                    fields.push({ type: command });
+                }}
+            >
+                <Button type="success">
+                    <span>Add Quizz</span>
+                    <i className="el-icon-caret-bottom el-icon--right"></i> 
+                </Button>
+            </Dropdown>
+        </div>
+        
         {fields.map((field, idx, fields) => {
             const { type } = fields.get(idx);
             let quizz = null;
@@ -27,26 +47,6 @@ const AddQuizz = ({ fields }) => (
                 </React.Fragment>
             );
         })}
-
-        <div className="text-right">
-            <Dropdown
-                menu={(
-                    <Dropdown.Menu>
-                        <Dropdown.Item command='Numeric'>Numeric</Dropdown.Item>
-                        <Dropdown.Item command='SelectMenu'>Select Menu</Dropdown.Item>
-                        <Dropdown.Item command='TrueFalse'>True/False</Dropdown.Item>
-                    </Dropdown.Menu>
-                )}
-                onCommand={command => {
-                    fields.push({ type: command });
-                }}
-            >
-                <Button type="success" size="small">
-                    <span>Add Quizz</span>
-                    <i className="el-icon-caret-bottom el-icon--right"></i> 
-                </Button>
-            </Dropdown>
-        </div>
     </React.Fragment>
 );
 

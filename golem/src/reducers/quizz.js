@@ -5,6 +5,7 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
+    console.log("action", action.quizz)
     switch (action.type) {
         case 'quizz':
             return {

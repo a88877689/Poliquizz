@@ -81,13 +81,13 @@ const Listing = (props) => {
 
     const handleDelete = (row) => {
         const index = props.quizzes.findIndex(element => element.id === row.id);
-        props.dispatch(deleteQuizzAction(row.id));
-        //props.quizzes.splice(index, 1);
+        //props.dispatch(deleteQuizzAction(row.id));
+        props.quizzes.splice(index, 1);
     }
 
     const handleRowClick = (row, event, column) => {
         if(column.label && column.label !== 'XML') {
-            props.history.replace(`/exams/edit/${row.id}`);
+            props.history.replace(`/exams/update/${row.id}`);
         } 
         if(!column.label) {
             handleDelete(row);

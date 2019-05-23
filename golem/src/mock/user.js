@@ -1,8 +1,8 @@
 import instance from './mock';
 
-export function getUser(id) {
+export function getMeUser(id) {
     return instance({
-        url: '/user',
+        url: '/user/me',
         method: 'get'
     })
 }

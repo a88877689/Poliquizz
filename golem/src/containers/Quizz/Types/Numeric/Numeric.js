@@ -10,14 +10,14 @@ const Numeric = (props) => {
                     <Field
                         component="textarea"
                         placeholder="Ex.: How many champion leagues BarcelonaFC has won?"
-                        name={`${props.field}.quizzNumeric`}
+                        name={`${props.field}.quizz`}
                         className="el-textarea__inner"
                     />
                 </div>
             </Form.Item>
 
             <Layout.Row gutter="24">
-                <Layout.Col span="8">
+                <Layout.Col xs="24" lg="12">
                     <Form.Item label="Answer">
                         <div className="el-input">
                             <Field
@@ -30,7 +30,7 @@ const Numeric = (props) => {
                     </Form.Item>
                 </Layout.Col>
 
-                <Layout.Col span="8">
+                <Layout.Col xs="24" lg="12">
                     <Form.Item label="Error range (%)">
                         <div className="el-input">
                             <Field
@@ -43,14 +43,14 @@ const Numeric = (props) => {
                     </Form.Item>
                 </Layout.Col>
 
-                <Layout.Col span="8">
-                    <Form.Item label="Weighing (%)">
-                        <div className="el-input">
+                <Layout.Col sm="24">
+                    <Form.Item label="Feedback">
+                        <div className="el-textarea">
                             <Field
-                                component="input"
-                                placeholder="Ex.: 33.33"
-                                name={`${props.field}.weighing`}
-                                className="el-input__inner"
+                                component="textarea"
+                                placeholder=""
+                                name={`${props.field}.feedback`}
+                                className="el-textarea__inner"
                             />
                         </div>
                     </Form.Item>

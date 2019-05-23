@@ -5,9 +5,9 @@ import DefaultImage from '@/assets/default-image.gif';
 // import { deleteToken } from '@/actions/auth';
 import { Dropdown } from 'element-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getUser } from '@/mock/user';
+import { getMeUser } from '@/mock/user';
 import { Message } from 'element-react';
-import { defaultProps } from 'recompose';
+// import { defaultProps } from 'recompose';
 
 const navbar = (props) => {
     let [navState, setNavState] = useState({
@@ -16,7 +16,7 @@ const navbar = (props) => {
 
     let fetchData = async () => {
         try {
-            let response = await getUser();
+            let response = await getMeUser();
             console.log(response)
             setNavState({ username: response.data.username })
         } catch(err) {
@@ -32,9 +32,9 @@ const navbar = (props) => {
     }, []);
 
     let handleLogout = () => {
-        console.log('hola');
         localStorage.clear()
     }
+    
     return (
         <React.Fragment>
             <Link to="/">

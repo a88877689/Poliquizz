@@ -10,7 +10,7 @@ const SelectMenu = (props) => {
                     <Field
                         component="textarea"
                         placeholder="Ex.: Who bit Evander Holyfield?"
-                        name={`${props.field}.quizzSelectMenu`}
+                        name={`${props.field}.quizz`}
                         className="el-textarea__inner"
                     />
                 </div>
@@ -60,6 +60,27 @@ const SelectMenu = (props) => {
                 </div>
             </Form.Item>
 
+            <Form.Item label="Feedback">
+                <div className="el-textarea">
+                    <Field
+                        component="textarea"
+                        placeholder=""
+                        name={`${props.field}.feedback`}
+                        className="el-textarea__inner"
+                    />
+                </div>
+            </Form.Item>
+
+            <Form.Item label="Answer">
+                <div className="el-input">
+                    <Field
+                        component="input"
+                        placeholder="Ex.: 4"
+                        name={`${props.field}.answer`}
+                        className="el-input__inner"
+                    />
+                </div>
+            </Form.Item>
         </React.Fragment>
     );
 }

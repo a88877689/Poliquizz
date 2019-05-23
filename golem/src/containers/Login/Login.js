@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { login } from '@/mock/login';
 import { authToken } from '@/actions/auth';
-import { Message } from 'element-react';
+// import { Message } from 'element-react';
 import Swal from 'sweetalert2';
 // import { loginAction } from '@/api/login';
 import './Login.scss';
@@ -73,10 +73,13 @@ export default compose(
         onSubmit: async (values, dispatch, props) => {
             dispatch(showLoader());
             try {
-                let response = await login(values);
-                console.log(response);
-                dispatch(authToken(response.data.token));
-                props.history.replace('/');
+                if(values.username === 'David' && values.password === "password") {
+                    let response = await login(values);
+                    dispatch(authToken(response.data.token));
+                    props.history.replace('/');
+                } else {
+                    alert('Invalid credentials');
+                }
             } catch(err) {
                 alert('Invalid credentials');
             } finally {

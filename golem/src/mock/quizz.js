@@ -1,6 +1,6 @@
 import instance from './mock';
 
-const BASE_PATH = '/quizz';
+const BASE_PATH = '/exam';
 
 export function createQuizz(data) {
     return instance({
