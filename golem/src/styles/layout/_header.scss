@@ -1,0 +1,12 @@
+.golem-header {
+    background-color: $color-grey-light-2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    &__logo {
+        border-radius: 100px;
+        margin-right: 2rem;
+        height: 40px;
+    }
+}

@@ -1,40 +1,52 @@
-import React from 'react';
-import { Link }  from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Footer from "./Footer";
+import Logo from "./Logo";
 
-const sidebar = () => {
+const Sidebar = (props) => {
     return (
-        <nav className='golem-sidebar'>
-            <ul className='golem-sidenav'>
-                <li className='golem-sidenav__item'>
-                    <Link to='/' className='golem-sidenav__link'>
-                        <FontAwesomeIcon icon='home' className='golem-sidenav__icon' />
-                        <span>Home</span>
-                    </Link>
-                </li>
-                {/* <li className='golem-sidenav__item'>
-                    <Link to='/quizz' className='golem-sidenav__link'>
-                        <FontAwesomeIcon icon='question-circle' className='golem-sidenav__icon' />
-                        <span>Quizz</span>
-                    </Link>
-                </li> */}
-                <li className='golem-sidenav__item'>
-                    <Link to='/exams' className='golem-sidenav__link'>
-                        <FontAwesomeIcon icon='pencil-ruler' className='golem-sidenav__icon' />
-                        <span>Exams</span>
-                    </Link>
-                </li>
-                <li className='golem-sidenav__item'>
-                    <Link to='/documentation' className='golem-sidenav__link'>
-                        <FontAwesomeIcon icon='file-alt' className='golem-sidenav__icon' />
-                        <span>Documentation</span>
-                    </Link>
-                </li>
-            </ul>
+        <React.Fragment>
+            <div className="golem-sidebar">
+                <Logo />
+            </div>
 
-            <div className='golem-legal'>2019 © All right reserved.</div>
-        </nav>
+            <nav className="golem-space-between-wrapper">
+                <ul className="golem-sidenav">
+                    <li className="golem-sidenav__item">
+                        <Link to="/" className="golem-sidenav__link">
+                            <FontAwesomeIcon icon="home" className="golem-sidenav__icon" />
+                            {!props.isCollapsed ? <span>Home</span> : null }
+                        </Link>
+                    </li>
+                    <li className="golem-sidenav__item">
+                        <Link to="/" className="golem-sidenav__link">
+                            <FontAwesomeIcon icon="pencil-ruler" className="golem-sidenav__icon" />
+                            {!props.isCollapsed ? <span>Exams</span> : null }
+                        </Link>
+                    </li>
+                    <li className="golem-sidenav__item">
+                        <Link to="/" className="golem-sidenav__link">
+                            <FontAwesomeIcon icon="file-alt" className="golem-sidenav__icon" />
+                            {!props.isCollapsed ? <span>Documentation</span> : null }
+                        </Link>
+                    </li>
+                </ul>
+
+                <Footer />
+            </nav>
+        </React.Fragment>
     );
 }
 
-export default sidebar;
+const mapStateToProps = state => {
+    return {
+        ...state.sidebar,
+        ...state.device
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(Sidebar);

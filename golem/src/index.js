@@ -1,31 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'element-theme-default';
-import '@/styles/main.scss';
-import App from '@/App';
-import * as serviceWorker from '@/serviceWorker';
-import { library } from '@fortawesome/fontawesome-svg-core'
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import * as serviceWorker from "./serviceWorker";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/main.scss";
 import {
     faHome,
+    faChevronLeft,
+    faChevronRight,
+    faPencilRuler,
     faFileAlt,
-    faQuestionCircle,
-    faCaretDown,
-    faDownload,
-    faTrash,
-    faPencilRuler
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
 library.add(faHome);
-library.add(faFileAlt);
-library.add(faQuestionCircle);
-library.add(faCaretDown);
-library.add(faDownload);
-library.add(faTrash);
+library.add(faChevronLeft);
+library.add(faChevronRight);
 library.add(faPencilRuler);
+library.add(faFileAlt);
 
-ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById("root"));
 serviceWorker.unregister();

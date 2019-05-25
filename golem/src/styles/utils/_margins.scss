@@ -1,0 +1,59 @@
+.golem-margin {
+    &__large {
+        margin: 3rem;
+    }
+    &__medium {
+        margin: 2rem;
+    }
+    &__small {
+        margin: 1rem;
+    }
+}
+
+.golem-margin-top {
+    &__large {
+        margin-top: 3rem;
+    }
+    &__medium {
+        margin-top: 2rem;
+    }
+    &__small {
+        margin-top: 1rem;
+    }
+}
+
+.golem-margin-bottom {
+    &__large {
+        margin-bottom: 3rem;
+    }
+    &__medium {
+        margin-bottom: 2rem;
+    }
+    &__small {
+        margin-bottom: 1rem;
+    }
+}
+
+.golem-margin-right {
+    &__large {
+        margin-right: 3rem;
+    }
+    &__medium {
+        margin-right: 2rem;
+    }
+    &__small {
+        margin-right: 1rem;
+    }
+}
+
+.golem-margin-left {
+    &__large {
+        margin-left: 3rem;
+    }
+    &__medium {
+        margin-left: 2rem;
+    }
+    &__small {
+        margin-left: 1rem;
+    }
+}

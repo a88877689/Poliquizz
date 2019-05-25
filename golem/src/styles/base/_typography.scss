@@ -1,0 +1,71 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+.golem-font-size {
+    &__ten {
+        font-size: 1rem;
+    }
+    &__twelve {
+        font-size: 1.2rem;
+    }
+    &__fourteen {
+        font-size: 1.4rem;
+    }
+    &__sixteen {
+        font-size: 1.6rem;
+    }
+    &__eighteen {
+        font-size: 1.8rem;
+    }
+    &__title {
+        font-size: 2.4rem;
+    }
+    &__subtitle {
+        font-size: 2.2rem;
+    }
+}
+
+.golem-font-type {
+    &__bold {
+        font-weight: 700;
+    }
+    &__medium {
+        font-weight: 500;
+    }
+    &__regular {
+        font-weight: 400;
+    }
+    &__light {
+        font-weight: 300;
+    }
+    &__light-italic {
+        font-style: italic;
+        font-weight: 300;
+    }
+}
+
+.golem-font-color {
+    &__rose {
+        color: $color-rose-primary;
+    }
+    &__light-grey {
+        color: $color-grey-dark-1;
+    }
+    &__medium-grey {
+        color: $color-grey-dark-2;
+    }
+    &__dark-grey {
+        color: $color-grey-dark-3;
+    }
+    &__black {
+        color: #000;
+    }
+}
+
+.golem-font-spacing {
+    &__one {
+        letter-spacing: 1rem;
+    }
+}

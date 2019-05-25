@@ -1,54 +1,30 @@
 .golem-container {
-    background: $color-grey-light-3;
     display: flex;
-    flex-direction: column;
     height: 100%;
 }
 
-.golem-content {
-    display: flex;
-    flex: 1;
-}
-
-.golem-header {
-    align-items: center;
-    animation: moveInTop 1.5s ease-out;
-    background-color: #fff;
-    display: flex;
-    font-size: 1.4rem;
-    justify-content: space-between;
-}
-
-.golem-main-view {
-    animation: moveInRight-1 1.5s ease-out;
-    background: $color-grey-light-3;
+.golem-sidebar-container {
+    background-color: $color-grey-dark-3;
     display: flex;
     flex-direction: column;
-    flex: 1;
-    overflow: scroll;
+    width: 250px;
 }
 
-.golem-main-view-container {
-    margin: 3rem;
+.golem-sidebar-collapse-container {
+    background-color: $color-grey-dark-3;
+    display: flex;
+    flex-direction: column;
+    width: 50px;
 }
 
-.m-b-sm {
-    margin-bottom: 1rem;
-}
+.golem-main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 
-.m-b {
-    margin-bottom: 2rem;
-}
-
-.m-b-lg {
-    margin-bottom: 4rem;
-}
-
-.pull-right {
-    display: block;
-    float: right;
-}
-
-.text-right {
-    text-align: right;
+    &__component {
+        height: 100%;
+        width: 100%;
+    }
 }
