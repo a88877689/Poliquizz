@@ -18,7 +18,7 @@ const Header = (props) => {
                     src={DefaultImage}
                     alt="default" /> : null}
                 <span className="golem-font-type__bold golem-font-size__twelve">
-                    David Martinez
+                    David Martínez
                 </span>
                 <Button
                     onClick={handleLogout}
