@@ -1,5 +1,4 @@
 const persistToken = (payload) => {
-    console.log("payload", payload)
     return { type: "PERSIST_TOKEN", token: payload }
 }
 

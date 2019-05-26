@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import { compose, lifecycle } from 'recompose';
 import Sidebar from "./../components/Sidebar/Sidebar";
 import Header from "./../components/Header/Header";
 import Title from "./../components/Title/Title";
+import * as tokenActions from "./../redux/actions/token";
 
 const Layout = (props) => {
     let sidebarClass = props.isCollapsed ? "golem-sidebar-collapse-container" : "golem-sidebar-container";
@@ -32,6 +34,26 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(
-    mapStateToProps
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onPersistToken: (payload) => dispatch(tokenActions.persistToken(payload)),
+        onLoadToken: () => dispatch(tokenActions.loadToken()), 
+    }
+}
+
+export default compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    lifecycle({
+        componentDidMount() {
+            const token = localStorage.getItem("token");
+            if(!token) {
+                this.props.history.replace("/login");
+            } else {
+                this.props.onLoadToken();
+            }
+        }
+    })
 )(Layout);

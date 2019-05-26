@@ -3,7 +3,6 @@ const initState = {
 }
 
 const reducer = (state=initState, action) => {
-    console.log("action", action)
     switch(action.type) {
         case "PERSIST_TOKEN":
             localStorage.setItem("token", action.token);
@@ -13,7 +12,6 @@ const reducer = (state=initState, action) => {
             return { ...state, token: null };
         case "LOAD_TOKEN":
             const token = localStorage.getItem("token");
-            console.log("load_token", token)
             return { ...state, token: token };
         default:
             return state;
