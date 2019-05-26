@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -7,6 +8,7 @@ app.config['SECRET_KEY'] = 'thisissecret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@localhost/lightning'
 
 db = SQLAlchemy(app)
+CORS(app)
 
 
 ###########################################
@@ -139,20 +141,20 @@ def delete_user(current_user, id):
 ###########################################
 
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    auth: Union[Dict, None] = request.authorization
+    auth: Union[Dict, None] = request.get_json()
     if not auth or not auth['username'] or not auth['password']:
-        return make_response('Invalid credentials', 401)
-    user: Union[User, None] = User.query.filter_by(username=auth.username).first()
+        return jsonify({ 'message': 'Invalid credentials' }), 401
+    user: Union[User, None] = User.query.filter_by(username=auth['username']).first()
     if not user:
-        return make_response('Invalid credentials', 401)
-    if check_password_hash(user.password, auth.password):
+        return jsonify({ 'message': 'Invalid credentials' }), 401
+    if check_password_hash(user.password, auth['password']):
         token: str = jwt.encode({ 'id': user.id },
                                 app.config['SECRET_KEY'],
                                 algorithm='HS256')
         return jsonify({ 'message': 'Welcome!', 'token': token.decode('UTF-8') })
-    return make_response('Invalid credentials', 401)
+    return jsonify({ 'message': 'Invalid credentials' }), 401
 
 
 if __name__ == '__main__':

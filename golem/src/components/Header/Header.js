@@ -2,11 +2,12 @@ import React from "react";
 import { withRouter } from 'react-router';
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
+import * as tokenActions from "./../../redux/actions/token";
 import DefaultImage from "./../../assets/default-image.gif";
 
 const Header = (props) => {
     const handleLogout = () => {
-        console.log("handleLogout");
+        props.onDeleteToken();
         props.history.replace("/login");
     }
     
@@ -38,8 +39,15 @@ const mapStateToProps = (state) => {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onDeleteToken: () => dispatch(tokenActions.deleteToken())
+    }
+}
+
 export default withRouter(
     connect(
-        mapStateToProps
+        mapStateToProps,
+        mapDispatchToProps
     )(Header)
 );

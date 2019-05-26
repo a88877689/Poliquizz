@@ -1,7 +1,10 @@
-import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { compose } from 'recompose';
-import { Button, Col, Form } from 'react-bootstrap';
+import React from "react";
+import { Field, reduxForm } from "redux-form";
+import { compose, lifecycle } from "recompose";
+import { connect } from "react-redux";
+import { Button, Col, Form } from "react-bootstrap";
+import * as tokenActions from "./../../redux/actions/token";
+import { login } from "./../../api/login";
 
 const Login = (props) => {
     const { handleSubmit } = props;
@@ -54,12 +57,44 @@ const Login = (props) => {
     );
 }
 
+const mapStateToProps = (state) => {
+    return {
+        ...state.token
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onPersistToken: (payload) => dispatch(tokenActions.persistToken(payload)),
+        onLoadToken: () => dispatch(tokenActions.loadToken()), 
+    }
+}
+
 export default compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    lifecycle({
+        componentDidMount() {
+            const token = localStorage.getItem("token");
+            if(token) {
+                this.props.onLoadToken();
+                this.props.history.replace("/");
+            }            
+        }
+    }),
     reduxForm({
-        form: 'login',
-        onSubmit: (values, dispatch, props) => {
-            console.log(values)
-            props.history.replace("/")
+        form: "login",
+        onSubmit: async (values, dispatch, props) => {
+            try {
+                const response = await login(values);
+                props.onPersistToken(response.data.token);
+                props.history.replace("/");
+            } catch(error){
+                alert(error.response.data.message);
+            }
+            
         }
     })
 )(Login);
