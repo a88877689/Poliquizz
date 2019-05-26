@@ -51,8 +51,8 @@ def token_required(f):
             return jsonify({ 'message': 'Token is missing' }), 401
         try:
             data: Dict = jwt.decode(token,
-                                   app.config['SECRET_KEY'],
-                                   algorithms=['HS256'])
+                                    app.config['SECRET_KEY'],
+                                    algorithms=['HS256'])
             current_user: User = User.query.filter_by(id=data['id']).first()
         except:
             return jsonify({ 'message': 'Invalid token' }), 401
@@ -62,6 +62,15 @@ def token_required(f):
 
 ###########################################
 
+
+@app.route('/user/me', methods=['GET'])
+@token_required
+def get_user_me(current_user):
+    response: Dict = {}
+    response['username'] = current_user.username
+    response['name'] = current_user.name
+    response['lastname'] = current_user.lastname
+    return jsonify({ "me": response })
 
 @app.route('/user', methods=['GET'])
 @token_required

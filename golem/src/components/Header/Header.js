@@ -1,9 +1,11 @@
 import React from "react";
 import { withRouter } from 'react-router';
+import { compose, lifecycle } from "recompose";
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
 import * as tokenActions from "./../../redux/actions/token";
 import DefaultImage from "./../../assets/default-image.gif";
+import { getUserMe } from "./../../api/user";
 
 const Header = (props) => {
     const handleLogout = () => {
@@ -46,8 +48,20 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
+    compose(
+        connect(
+            mapStateToProps,
+            mapDispatchToProps
+        ),
+        lifecycle({
+            async componentDidUpdate() {
+                try {
+                    const response = await getUserMe();
+                    console.log(response);
+                } catch(error) {
+                    console.log(error);
+                }
+            }
+        })
     )(Header)
 );
