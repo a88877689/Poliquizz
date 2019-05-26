@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from 'react-router';
-import { compose, lifecycle } from "recompose";
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
 import * as tokenActions from "./../../redux/actions/token";
@@ -8,6 +7,20 @@ import DefaultImage from "./../../assets/default-image.gif";
 import { getUserMe } from "./../../api/user";
 
 const Header = (props) => {
+    let [ userMe, setUserMe ] = useState({})
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getUserMe();
+                setUserMe(response.data.me);
+            } catch(error) {
+                console.log(error.response);
+            }
+        }
+        fetchData();
+    }, []);
+    
     const handleLogout = () => {
         props.onDeleteToken();
         props.history.replace("/login");
@@ -21,7 +34,7 @@ const Header = (props) => {
                     src={DefaultImage}
                     alt="default" /> : null}
                 <span className="golem-font-type__bold golem-font-size__twelve">
-                    David Martínez
+                    {`${userMe.name} ${userMe.lastname}`}
                 </span>
                 <Button
                     onClick={handleLogout}
@@ -48,20 +61,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(
-    compose(
-        connect(
-            mapStateToProps,
-            mapDispatchToProps
-        ),
-        lifecycle({
-            async componentDidUpdate() {
-                try {
-                    const response = await getUserMe();
-                    console.log(response);
-                } catch(error) {
-                    console.log(error);
-                }
-            }
-        })
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
     )(Header)
 );
