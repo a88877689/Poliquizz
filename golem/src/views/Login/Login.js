@@ -2,7 +2,10 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { compose, lifecycle } from "recompose";
 import { connect } from "react-redux";
+import CircleLoader from "react-spinners/CircleLoader";
 import { Button, Col, Form } from "react-bootstrap";
+import LoadingOverlay from "react-loading-overlay";
+import * as loaderActions from "./../../redux/actions/loader";
 import * as tokenActions from "./../../redux/actions/token";
 import { login } from "./../../api/login";
 
@@ -10,7 +13,10 @@ const Login = (props) => {
     const { handleSubmit } = props;
 
     return (
-        <React.Fragment>
+        <LoadingOverlay
+            active={props.loading}
+            spinner={<CircleLoader color={"#EB2F64"} />}
+        >
             <div className="golem-login-container">
                 <div className="golem-login-heading">
                     <h1 className="golem-login-heading__primary">welcome</h1>
@@ -53,20 +59,22 @@ const Login = (props) => {
                     </Form>
                 </div>
             </div>
-        </React.Fragment>
+        </LoadingOverlay>
     );
 }
 
 const mapStateToProps = (state) => {
     return {
-        ...state.token
+        ...state.token,
+        ...state.loader
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onPersistToken: (payload) => dispatch(tokenActions.persistToken(payload)),
-        onLoadToken: () => dispatch(tokenActions.loadToken()), 
+        onShowLoader: () => dispatch(loaderActions.showLoader()),
+        onHideLoader: () => dispatch(loaderActions.hideLoader())
     }
 }
 
@@ -76,23 +84,28 @@ export default compose(
         mapDispatchToProps
     ),
     lifecycle({
-        componentDidMount() {
-            const token = localStorage.getItem("token");
-            if(token) {
-                this.props.onLoadToken();
+        componentDidUpdate() {
+            if(this.props.token) {
                 this.props.history.replace("/");
-            }            
+            }         
         }
     }),
     reduxForm({
         form: "login",
         onSubmit: async (values, dispatch, props) => {
             try {
+                props.onShowLoader();
                 const response = await login(values);
                 props.onPersistToken(response.data.token);
+                props.onHideLoader();
                 props.history.replace("/");
             } catch(error){
-                alert(error.response.data.message);
+                props.onHideLoader();
+                if(error.response)  {
+                    alert(error.response.data.message);
+                } else {
+                    alert("Server internal error")
+                }
             }
             
         }

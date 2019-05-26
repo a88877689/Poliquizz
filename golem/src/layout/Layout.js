@@ -30,14 +30,14 @@ const Layout = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        ...state.sidebar
+        ...state.sidebar,
+        ...state.token
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onPersistToken: (payload) => dispatch(tokenActions.persistToken(payload)),
-        onLoadToken: () => dispatch(tokenActions.loadToken()), 
+        onPersistToken: (payload) => dispatch(tokenActions.persistToken(payload))
     }
 }
 
@@ -47,12 +47,9 @@ export default compose(
         mapDispatchToProps
     ),
     lifecycle({
-        componentDidMount() {
-            const token = localStorage.getItem("token");
-            if(!token) {
+        componentDidUpdate() {
+            if(!this.props.token) {
                 this.props.history.replace("/login");
-            } else {
-                this.props.onLoadToken();
             }
         }
     })

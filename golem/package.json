@@ -13,10 +13,12 @@
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
+    "react-loading-overlay": "^1.0.1",
     "react-redux": "^7.0.3",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
+    "react-spinners": "^0.5.4",
     "recompose": "^0.30.0",
     "redux": "^4.0.1",
     "redux-form": "^8.2.1"
