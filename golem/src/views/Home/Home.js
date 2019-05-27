@@ -25,11 +25,11 @@ const Home = () => {
                     xs={{ span: 8, offset: 2 }}
                     md={{ span: 6, offset: 3 }}
                 >
-                    <Figure.Image
+                    {/* <Figure.Image
                         src={Welcome}
                         width={400}
                         height={400}
-                    />
+                    /> */}
                 </Col>
             </Row>
         </React.Fragment>
