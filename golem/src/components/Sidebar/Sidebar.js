@@ -12,7 +12,7 @@ const Sidebar = (props) => {
                 <Logo />
             </div>
 
-            <nav className="golem-space-between-wrapper">
+            <nav className="golem-space-between-wrapper__column">
                 <ul className="golem-sidenav">
                     <li className="golem-sidenav__item">
                         <Link to="/" className="golem-sidenav__link">
@@ -21,7 +21,7 @@ const Sidebar = (props) => {
                         </Link>
                     </li>
                     <li className="golem-sidenav__item">
-                        <Link to="/" className="golem-sidenav__link">
+                        <Link to="/exam" className="golem-sidenav__link">
                             <FontAwesomeIcon icon="pencil-ruler" className="golem-sidenav__icon" />
                             {!props.isCollapsed ? <span>Exams</span> : null }
                         </Link>

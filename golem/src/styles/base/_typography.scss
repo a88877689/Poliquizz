@@ -64,6 +64,18 @@ body {
     }
 }
 
+.golem-text-align {
+    &__center {
+        text-align: center;
+    }
+    &__right {
+        text-align: right;
+    }
+    &__left {
+        text-align: left;
+    }
+}
+
 .golem-font-spacing {
     &__one {
         letter-spacing: 1rem;

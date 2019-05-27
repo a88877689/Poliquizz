@@ -2,9 +2,9 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { compose, lifecycle } from "recompose";
 import { connect } from "react-redux";
-import CircleLoader from "react-spinners/CircleLoader";
 import { Button, Col, Form } from "react-bootstrap";
 import LoadingOverlay from "react-loading-overlay";
+import CircleLoader from "react-spinners/CircleLoader";
 import * as loaderActions from "./../../redux/actions/loader";
 import * as tokenActions from "./../../redux/actions/token";
 import { login } from "./../../api/login";
@@ -85,9 +85,9 @@ export default compose(
     ),
     lifecycle({
         componentDidUpdate() {
-            if(this.props.token) {
-                this.props.history.replace("/");
-            }         
+            // if(this.props.token) {
+            //     this.props.history.replace("/");
+            // }         
         }
     }),
     reduxForm({

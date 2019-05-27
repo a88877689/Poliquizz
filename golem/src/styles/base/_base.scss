@@ -32,3 +32,12 @@ a {
 a:visited {
     color: #000;
 }
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+th {
+    font-size: 12px;
+    font-weight: 700;
+}
