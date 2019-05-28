@@ -1,15 +1,15 @@
 import React from "react";
-import { compose } from "recompose";
+import { compose, lifecycle } from "recompose";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Button, Col, Form } from 'react-bootstrap';
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
 import Title from "./../../../components/Title/Title";
-import { createExam } from "./../../../api/exam";
 import * as loaderActions from "./../../../redux/actions/loader";
+import * as examActions from "./../../../redux/actions/exam";
 
-const Create = (props) => {
+const Update = (props) => {
     const { handleSubmit } = props;
 
     return (
@@ -18,11 +18,11 @@ const Create = (props) => {
             spinner={<CircleLoader color={"#EB2F64"} />}
         >
             <Title
-                title="Create New Exam"
+                title="Update Exam"
                 pages={[
                     { to: "/", pageName: "Home" },
                     { to: "/exam", pageName: "Exam" },
-                    { pageName: "Create" }
+                    { pageName: "Update" }
                 ]}
             />
             <Form onSubmit={handleSubmit} className="golem-margin__medium">
@@ -54,7 +54,7 @@ const Create = (props) => {
                     type="submit"
                     sm="12"
                 >
-                    Create Exam
+                    Update Exam
                 </Button>
             </Form>
         </LoadingOverlay>
@@ -63,14 +63,17 @@ const Create = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        ...state.loader
+        ...state.loader,
+        ...state.exam,
+        initialValues: state.exam.exam
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onShowLoader: () => dispatch(loaderActions.showLoader()),
-        onHideLoader: () => dispatch(loaderActions.hideLoader())
+        onHideLoader: () => dispatch(loaderActions.hideLoader()),
+        onGetExam: (id) => dispatch(examActions.getExamAction(id))
     }
 }
 
@@ -79,22 +82,16 @@ export default compose(
         mapStateToProps,
         mapDispatchToProps
     ),
+    lifecycle({
+        async componentDidMount() {
+            const { match } = this.props;
+            this.props.onGetExam(match.params.id)
+        }
+    }),
     reduxForm({
-        form: "create:exam",
+        form: "update:exam",
         onSubmit: async (values, dispatch, props) => {
-            if(!values.feedback) {
-                values.feedback = "";
-            }
-            try {
-                props.onShowLoader();
-                const response = await createExam(values);
-                alert(response.data.message);
-                props.onHideLoader();
-                props.history.replace(`/exam/update/${response.data.id}`);
-            } catch(error) {
-                alert(error.message);
-                props.onHideLoader()
-            }
+            // TODO: Update request to server.
         }
     })
-)(Create);
+)(Update);

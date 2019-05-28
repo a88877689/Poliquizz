@@ -1,7 +1,6 @@
 import React from "react";
-import { Col, Figure, Jumbotron, Row } from "react-bootstrap";
+import { Col, Jumbotron, Row } from "react-bootstrap";
 import Title from "./../../components/Title/Title";
-import Welcome from "./../../assets/welcome-logo.png";
 
 const Home = () => {
     return (
@@ -25,11 +24,7 @@ const Home = () => {
                     xs={{ span: 8, offset: 2 }}
                     md={{ span: 6, offset: 3 }}
                 >
-                    {/* <Figure.Image
-                        src={Welcome}
-                        width={400}
-                        height={400}
-                    /> */}
+                    {/* TODO: Insert content here */}
                 </Col>
             </Row>
         </React.Fragment>

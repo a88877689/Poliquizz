@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { compose, lifecycle } from 'recompose';
 import Sidebar from "./../components/Sidebar/Sidebar";
 import Header from "./../components/Header/Header";
-import { Create, Listing } from "./../views/Exam/index";
+import { Create, Listing, Update } from "./../views/Exam/index";
 import Home from "./../views/Home/Home";
 import * as tokenActions from "./../redux/actions/token";
 
@@ -18,6 +18,7 @@ const Layout = (props) => {
                 <Header />
                 <div className="golem-main-container">
                     <Switch>
+                        <Route path="/exam/update/:id" component={Update} />
                         <Route path="/exam/create" component={Create} />
                         <Route path="/exam" component={Listing} />
                         <Route path="/" component={Home} />

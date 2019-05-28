@@ -4,56 +4,28 @@ import { Button, Col, Row } from "react-bootstrap";
 import Title from "./../../../components/Title/Title";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BootstrapTable from "react-bootstrap-table-next";
-import { getAllExams } from "./../../../mock/exam";
+import { getAllExams, deleteExam } from "./../../../api/exam";
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
 import * as loaderActions from "./../../../redux/actions/loader";
 
-const fakeData = [
-    {
-        id: 1,
-        name: "Sports",
-        date: "2019",
-        // xml: (<Button variant="primary"><FontAwesomeIcon icon="download" /></Button>),
-        // delete: (<Button variant="danger"><FontAwesomeIcon icon="trash" /></Button>)
-    },
-    {
-        id: 2,
-        name: "Python",
-        date: "2019",
-        // xml: (<Button variant="primary"><FontAwesomeIcon icon="download" /></Button>),
-        // delete: (<Button variant="danger"><FontAwesomeIcon icon="trash" /></Button>)
-    },
-    {
-        id: 3,
-        name: "WAD",
-        date: "2019",
-        // xml: (<Button variant="primary"><FontAwesomeIcon icon="download" /></Button>),
-        // delete: (<Button variant="danger"><FontAwesomeIcon icon="trash" /></Button>)
-    },
-];
-
 const Listing = (props) => {
-    const [ ignored, forceUpdate ] = useReducer(x => x + 1, 0);
+    const [ forceUpdate ] = useReducer(x => x + 1, 0);
     let [ examState, setExamState ] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                props.onShowLoader();
-                // const response = await getAllExams();
-                // const data = response.data;
-                const data = fakeData;
+                const response = await getAllExams();
+                const data = response.data.exams;
                 data.map(element => {
                     element.xml = (<Button variant="primary"><FontAwesomeIcon icon="download" /></Button>);
                     element.delete = (<Button variant="danger"><FontAwesomeIcon icon="trash" /></Button>);
                     return element
                 });
                 setExamState(data);
-                props.onHideLoader();
             } catch(error) {
-                console.log(error);
-                props.onHideLoader();
+                alert(error.response.message);
             }
         }
         fetchData();
@@ -64,17 +36,22 @@ const Listing = (props) => {
     }
 
     const handleUpdate = (row) => {
-        console.log("handleUpdate", row);
+        props.history.replace(`/exam/update/${row.id}`);
     }
 
-    const handleDelete = (rowIndex) => {
+    const handleDelete = async (row, rowIndex) => {
         try {
+            props.onShowLoader()
+            const response = await deleteExam(row.id);
+            alert(response.data.message);
             let data = examState;
             data.splice(rowIndex, 1);
             setExamState(data);
             forceUpdate();
+            props.onHideLoader()
         } catch(error) {
-            console.log(error);
+            alert(error.response);
+            props.onHideLoader()
         }
     }
 
@@ -124,7 +101,7 @@ const Listing = (props) => {
             text: "",
             events: {
                 onClick(event, column, columnIndex, row, rowIndex) {
-                    handleDelete(rowIndex);
+                    handleDelete(row, rowIndex);
                 }
             }
         }
