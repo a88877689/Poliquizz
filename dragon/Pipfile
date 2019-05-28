@@ -8,6 +8,7 @@ flake8 = "*"
 mypy = "*"
 autopep8 = "*"
 pylint-flask = "*"
+pylint = "*"
 
 [packages]
 flask = "*"

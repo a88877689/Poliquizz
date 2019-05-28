@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+import datetime
 
 app = Flask(__name__)
 
@@ -16,11 +17,21 @@ CORS(app)
 
 class User(db.Model):
     __tablename__ = 'user'
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100))
     password = db.Column(db.String(100))
     name = db.Column(db.String(50))
     lastname = db.Column(db.String(50))
+
+
+class Exam(db.Model):
+    __tablename__ = 'exam'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    date = db.Column(db.Date)
+    feedback = db.Column(db.String(10000))
 
 
 ###########################################
@@ -76,7 +87,6 @@ def get_user_me(current_user):
 @token_required
 def get_all_users(current_user):
     users: List = User.query.all()
-    column_names: List = User.__table__.columns.keys()
     response: List = []
     for user in users:
         temp: Dict = {}
@@ -164,6 +174,66 @@ def login():
                                 algorithm='HS256')
         return jsonify({ 'message': 'Welcome!', 'token': token.decode('UTF-8') })
     return jsonify({ 'message': 'Invalid credentials' }), 401
+
+
+
+###########################################
+
+
+@app.route('/exam', methods=['GET'])
+@token_required
+def get_all_exams(current_user):
+    exams: List = Exam.query.all()
+    response: List = []
+    for exam in exams:
+        temp: Dict = {}
+        temp['id'] = exam.id
+        temp['name'] = exam.name
+        temp['date'] = exam.date
+        temp['feedback'] = exam.feedback
+        response.append(temp)
+    if not response:
+        return jsonify({ 'message': 'You have no exams, create one.', 'exams': response })
+    return jsonify({ 'message': 'Exams found', 'exams': response })
+
+@app.route('/exam/<id>', methods=['GET'])
+@token_required
+def get_exam(current_user, id):
+    exam: Union[Exam, None] = Exam.query.filter_by(id=id).first()
+    if exam:
+        response: Dict = {}
+        response['id'] = exam.id
+        response['name'] = exam.name
+        response['feedback'] = exam.feedback
+        return jsonify({ 'message': 'Exam found', 'exam': response })
+    return jsonify({ 'message': 'Exam not found' })
+
+@app.route('/exam', methods=['POST'])
+@token_required
+def create_exam(current_user):
+    data: Dict = request.get_json()
+    date: str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    print(date)
+    exam: Exam = Exam(name=data['name'],
+                      date=date,
+                      feedback=data['feedback'])
+    db.session.add(exam)
+    db.session.commit()
+
+    exam: Union[Exam, None] = Exam.query.filter_by(name=data['name']).first()
+    id_exam = exam.id
+    return jsonify({ 'message': 'Exam succesfully created', 'id': id_exam })
+
+
+@app.route('/exam/<id>', methods=['DELETE'])
+@token_required
+def delete_exam(current_user, id):
+    exam: Union[Exam, None] = Exam.query.filter_by(id=id).first()
+    if exam:
+        db.session.delete(exam)
+        db.session.commit()
+        return jsonify({ 'message': 'Exam deleted succesfully' })
+    return jsonify({ 'message': 'Exam not found' })
 
 
 if __name__ == '__main__':
