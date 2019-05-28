@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { compose } from "recompose";
 import { reducer as form } from 'redux-form';
 import sidebar from "./reducers/sidebar";
 import device from "./reducers/device";
@@ -16,9 +17,10 @@ const store = createStore(
         token,
         exam
     }),
-    // window.__REDUX_DEVTOOLS_EXTENSION__()
-    applyMiddleware(
-        thunk
+    (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose)(
+        applyMiddleware(
+            thunk
+        )
     )
 )
 
