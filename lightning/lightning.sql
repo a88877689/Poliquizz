@@ -28,7 +28,7 @@ CREATE TABLE `exam` (
   `date` date NOT NULL,
   `feedback` varchar(10000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `exam` (
 
 LOCK TABLES `exam` WRITE;
 /*!40000 ALTER TABLE `exam` DISABLE KEYS */;
-INSERT INTO `exam` VALUES (2,'Python Basics','2019-05-27',''),(3,'React Basics','2019-05-27','Answer to all the question, you can use your notes as help.'),(8,'Vue Basics','2019-05-27',''),(9,'Docker Basics','2019-05-28','');
+INSERT INTO `exam` VALUES (15,'ReactJS','2019-05-29','You can use the React documentation if you have any doubts.'),(16,'Docker','2019-05-29',''),(17,'Maths','2019-05-29','');
 /*!40000 ALTER TABLE `exam` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,13 +51,12 @@ DROP TABLE IF EXISTS `quizz`;
 CREATE TABLE `quizz` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idExam` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
   `type` varchar(50) NOT NULL,
   `quizz` json NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idExam` (`idExam`),
   CONSTRAINT `quizz_ibfk_1` FOREIGN KEY (`idExam`) REFERENCES `exam` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +65,7 @@ CREATE TABLE `quizz` (
 
 LOCK TABLES `quizz` WRITE;
 /*!40000 ALTER TABLE `quizz` DISABLE KEYS */;
+INSERT INTO `quizz` VALUES (5,15,'TrueFalse','{\"name\": \"Is React a Javascript Framework?\", \"type\": \"TrueFalse\", \"answer\": \"true\", \"errorFeedback\": \"False: Is JavaScript library for building user interfaces\"}'),(6,16,'TrueFalse','{\"name\": \"Is Docker used to deploy app in containers?\", \"type\": \"TrueFalse\", \"answer\": \"true\", \"errorFeedback\": \"The correct answer is true\"}'),(7,17,'Numeric','{\"name\": \"How much is 10 + 10?\", \"type\": \"Numeric\", \"answer\": \"20\", \"errorFeedback\": \"The correct answer is 20\"}'),(8,15,'SelectMenu','{\"name\": \"Who develop React?\", \"type\": \"SelectMenu\", \"answer\": \"option4\", \"option1\": \"Apple\", \"option2\": \"Google\", \"option3\": \"Microsoft\", \"option4\": \"Facebook\", \"errorFeedback\": \"The correct answer is Facebook.\"}'),(9,15,'MultiSelect','{\"name\": \"which of this are web mapping technologies?\", \"type\": \"MultiSelect\", \"answer\": [\"option2\", \"option3\", \"option4\"], \"option1\": \"Docker\", \"option2\": \"OpenStreetMap\", \"option3\": \"MapBox\", \"option4\": \"GoogleMaps\", \"errorFeedback\": \"OpenStreetMap, GoogleMaps and MapBox are mapping technologies\"}');
 /*!40000 ALTER TABLE `quizz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,8 +82,9 @@ CREATE TABLE `user` (
   `password` varchar(100) DEFAULT NULL,
   `name` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
+  `role` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +93,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (6,'Davestring','sha256$3PtNy6wV$8e21ea511f8ec7a4a9adb71506f5c72413a44281061449eba97fc98733901875','David','Martinez'),(8,'Chernandez','sha256$Ppb097nt$cf0523de5e9cbee65cb59d8f2a4f43a1dc939feda78388aa880c86db5bac90f2','Carlos','Hernandez');
+INSERT INTO `user` VALUES (9,'davestring','sha256$iZjZJNBi$1cb1533017f342a60de6f99166010d87a25860cf922942429cb3792a59335cbf','David','Martinez','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -105,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-28  3:21:51
+-- Dump completed on 2019-05-29  3:49:58
