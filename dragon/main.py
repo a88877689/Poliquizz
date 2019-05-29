@@ -23,6 +23,7 @@ class User(db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(50))
     lastname = db.Column(db.String(50))
+    role = db.Column(db.String(10))
 
 
 class Exam(db.Model):
@@ -90,6 +91,7 @@ def get_user_me(current_user):
     response['username'] = current_user.username
     response['name'] = current_user.name
     response['lastname'] = current_user.lastname
+    response['role'] = current_user.role
     return jsonify({ "me": response })
 
 @app.route('/user', methods=['GET'])
@@ -104,6 +106,7 @@ def get_all_users(current_user):
         temp['password'] = user.password
         temp['name'] = user.name
         temp['lastname'] = user.lastname
+        temp['role'] = user.role
         response.append(temp)
     return jsonify({ 'message': 'Users found', 'users': response })
 
@@ -119,20 +122,22 @@ def get_user(current_user, id):
         response['password'] = user.password
         response['name'] = user.name
         response['lastname'] = user.lastname
+        temp['role'] = user.role
         return jsonify({ 'message': 'User found', 'user': response })
     return jsonify({ 'message': 'User not found' })
 
 
 @app.route('/user', methods=['POST'])
-@token_required
-def create_user(current_user):
+
+def create_user():
     data: Dict = request.get_json()
     hashed_password: str = generate_password_hash(data['password'],
                                                   method='sha256')
     user: User = User(username=data['username'],
                       password=hashed_password,
                       name=data['name'],
-                      lastname=data['lastname'])
+                      lastname=data['lastname'],
+                      role=data['role'])
     db.session.add(user)
     db.session.commit()
     return jsonify({ 'message': 'User succesfully created' })
@@ -150,6 +155,7 @@ def update_user(current_user, id):
         user.password = hashed_password
         user.name = data['name']
         user.lastname = data['lastname']
+        user.role = data['role']
         db.session.commit()
         return jsonify({ 'message': 'The user has been updated' })
     return jsonify({ 'message': 'User not found' })
@@ -221,7 +227,7 @@ def get_exam(current_user, id):
 @token_required
 def create_exam(current_user):
     data: Dict = request.get_json()
-    date: str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    date: str = datetime.datetime.now().strftime('%Y-%m-%d')
     exam: Exam = Exam(name=data['name'],
                       date=date,
                       feedback=data['feedback'])
@@ -232,6 +238,17 @@ def create_exam(current_user):
     id_exam = exam.id
     return jsonify({ 'message': 'Exam succesfully created', 'id': id_exam })
 
+@app.route('/exam/<id>', methods=['PUT'])
+@token_required
+def update_exam(current_user, id):
+    data: Dict = request.get_json()
+    exam: Union[Exam, None] = Exam.query.filter_by(id=id).first()
+    if exam:
+        exam.name = data['name']
+        exam.feedback = data['feedback']
+        db.session.commit()
+        return jsonify({ 'message': 'The exam has been updated' })
+    return jsonify({ 'message': 'Exam not found' })
 
 @app.route('/exam/<id>', methods=['DELETE'])
 @token_required
@@ -246,6 +263,34 @@ def delete_exam(current_user, id):
 
 ###########################################
 
+@app.route('/quizz', methods=['GET'])
+@token_required
+def get_all_quizzes(current_user):
+    quizzes: List = Quizz.query.all()
+    response: List = []
+    for quizz in quizzes:
+        temp: Dict = {}
+        temp['id'] = quizz.id
+        temp['idExam'] = quizz.idExam
+        temp['type'] = quizz.type
+        temp['quizz'] = quizz.quizz
+        response.append(temp)
+    if not response:
+        return jsonify({ 'message': 'You have no quizz, create one.', 'quizzes': response })
+    return jsonify({ 'message': 'Quizzes found', 'quizzes': response })
+
+@app.route('/quizz/<id>', methods=['GET'])
+@token_required
+def get_quizz(current_user, id):
+    quizz: Union[Quizz, None] = Quizz.query.filter_by(id=id).first()
+    if quizz:
+        response: Dict = {}
+        response['id'] = quizz.id
+        response['idExam'] = quizz.idExam
+        response['type'] = quizz.type
+        response['quizz'] = quizz.quizz
+        return jsonify({ 'message': 'Quizz found', 'quizz': response })
+    return jsonify({ 'message': 'Quizz not found' })
 
 @app.route('/quizz', methods=['POST'])
 @token_required
@@ -258,6 +303,26 @@ def create_quizz(current_user):
     db.session.commit()
     return jsonify({ 'message': 'Quizz succesfully created' })
 
+@app.route('/quizz/<id>', methods=['PUT'])
+@token_required
+def update_quizz(current_user, id):
+    data: Dict = request.get_json()
+    quizz: Union[Quizz, None] = Quizz.query.filter_by(id=id).first()
+    if quizz:
+        quizz.quizz = data['quizz']
+        db.session.commit()
+        return jsonify({ 'message': 'The quizz has been updated' })
+    return jsonify({ 'message': 'Quizz not found' })
+
+@app.route('/quizz/<id>', methods=['DELETE'])
+@token_required
+def delete_quizz(current_user, id):
+    quizz: Union[Quizz, None] = Quizz.query.filter_by(id=id).first()
+    if quizz:
+        db.session.delete(quizz)
+        db.session.commit()
+        return jsonify({ 'message': 'Quizz deleted succesfully' })
+    return jsonify({ 'message': 'Quizz not found' })
 
 if __name__ == '__main__':
     app.run(debug=True)
