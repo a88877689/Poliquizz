@@ -6,6 +6,7 @@ import sidebar from "./reducers/sidebar";
 import device from "./reducers/device";
 import loader from "./reducers/loader";
 import token from "./reducers/token";
+import quizz from "./reducers/quizz";
 import exam from "./reducers/exam";
 
 const store = createStore(
@@ -15,6 +16,7 @@ const store = createStore(
         device,
         loader,
         token,
+        quizz,
         exam
     }),
     (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose)(

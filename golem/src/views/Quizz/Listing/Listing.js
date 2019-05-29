@@ -1,64 +1,57 @@
 import React, { useEffect, useState, useReducer } from "react";
 import { connect } from "react-redux";
 import { Button, Col, Row } from "react-bootstrap";
-import Title from "./../../../components/Title/Title";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BootstrapTable from "react-bootstrap-table-next";
-import { getAllExams, deleteExam } from "./../../../api/exam";
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import Title from "./../../../components/Title/Title";
+import { getAllQuizzes, deleteQuizz } from "./../../../api/quizz";
 import * as loaderActions from "./../../../redux/actions/loader";
 
 const Listing = (props) => {
     const [ forceUpdate ] = useReducer(x => x + 1, 0);
-    let [ examState, setExamState ] = useState([]);
+    let [ quizzState, setQuizzState ] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 // props.onShowLoader();
-                const response = await getAllExams();
-                const data = response.data.exams;
+                const response = await getAllQuizzes();
+                const data = response.data.quizzes;
                 data.map(element => {
-                    element.xml = (<Button variant="primary"><FontAwesomeIcon icon="download" /></Button>);
                     element.delete = (<Button variant="danger"><FontAwesomeIcon icon="trash" /></Button>);
                     return element
                 });
-                setExamState(data);
+                console.log(response.data.message)
+                setQuizzState(data);
                 // props.onHideLoader();
             } catch(error) {
-                alert(error.response.message);
+                console.log(error);
             }
         }
         fetchData();
     }, []);
 
-    const downloadXML = (row) => {
-        console.log("downloadXML", row);
-    }
-
     const handleUpdate = (row) => {
-        props.history.replace(`/exam/update/${row.id}`);
+        props.history.replace(`/quizz/update/${row.id}`);
     }
 
     const handleDelete = async (row, rowIndex) => {
         try {
             props.onShowLoader()
-            const response = await deleteExam(row.id);
-            alert(response.data.message);
-            let data = examState;
+            const response = await deleteQuizz(row.id);
+            console.log("handle delete", response.data.message);
+            let data = quizzState;
             data.splice(rowIndex, 1);
-            setExamState(data);
+            setQuizzState(data);
             forceUpdate();
             props.onHideLoader()
         } catch(error) {
-            alert(error.response);
+            console.log(error.response);
             props.onHideLoader()
         }
-    }
-
-    const onCreateNewExam = () => {
-        props.history.replace("/exam/create")
     }
 
     const columns = [
@@ -72,8 +65,9 @@ const Listing = (props) => {
             }
         },
         {
-            dataField: "name",
-            text: "Name",
+            dataField: "idExam",
+            text: "Exam ID",
+            filter: textFilter(),
             events: {
                 onClick(event, column, columnIndex, row, rowIndex) {
                     handleUpdate(row);
@@ -81,20 +75,11 @@ const Listing = (props) => {
             }
         },
         {
-            dataField: "date",
-            text: "Date",
+            dataField: "type",
+            text: "Type",
             events: {
                 onClick(event, column, columnIndex, row, rowIndex) {
                     handleUpdate(row);
-                }
-            }
-        },
-        {
-            dataField: "xml",
-            text: "XML",
-            events: {
-                onClick(event, column, columnIndex, row, rowIndex) {
-                    downloadXML(row);
                 }
             }
         },
@@ -112,24 +97,12 @@ const Listing = (props) => {
     return (
         <React.Fragment>
             <Title
-                title="Exams Listing"
+                title="Quizz Listing"
                 pages={[
                     { to: "/", pageName: "Home" },
-                    { pageName: "Exam" }
+                    { pageName: "Quizz" }
                 ]}
             />
-            <Row>
-                <Col>
-                    <Button
-                        size="lg"
-                        onClick={onCreateNewExam}
-                        className="golem-margin-left__medium golem-margin-top__small"
-                        variant="success"
-                    >
-                        Create New Exam
-                    </Button>
-                </Col>
-            </Row>
             <Row>
                 <Col xs={12}>
                     <div className="golem-margin__medium golem-text-align__center">
@@ -139,9 +112,10 @@ const Listing = (props) => {
                         >
                             <BootstrapTable
                                 keyField="id"
-                                data={ examState }
+                                data={ quizzState }
                                 columns={ columns }
                                 noDataIndication="Table is empty"
+                                filter={ filterFactory() }
                                 condensed
                                 striped
                                 hover

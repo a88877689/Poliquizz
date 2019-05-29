@@ -1,9 +1,10 @@
 import React from "react";
+import { withRouter } from "react-router";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import { Field, reset, reduxForm } from "redux-form";
 import { Button, Col, Form } from "react-bootstrap";
-import { createQuizz } from "./../../api/quizz";
+import { createQuizz, updateQuizz } from "./../../api/quizz";
 import * as loaderActions from "./../../redux/actions/loader";
 
 const SelectMenu = (props) => {
@@ -107,7 +108,7 @@ const SelectMenu = (props) => {
                     type="submit"
                     sm="12"
                 >
-                    Add Quizz
+                    {!props.update ? "Add Quizz" : "Update Quizz"}
                 </Button>
             </Form>
         </React.Fragment>
@@ -127,28 +128,38 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default compose(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    ),
-    reduxForm({
-        form: "selectMenu:quizz",
-        onSubmit: async (values, dispatch, props) => {
-            let data = {
-                idExam: props.id,
-                type: "SelectMenu",
-                quizz: values
+export default withRouter(
+    compose(
+        connect(
+            mapStateToProps,
+            mapDispatchToProps
+        ),
+        reduxForm({
+            form: "selectMenu:quizz",
+            onSubmit: async (values, dispatch, props) => {
+                try {
+                    props.onShowLoader();
+                    if(!props.update) {
+                        values.type = "SelectMenu";
+                        let data = {
+                            idExam: props.id,
+                            type: "SelectMenu",
+                            quizz: values
+                        }
+                        const response = await createQuizz(data);
+                        console.log(response.data.message);
+                        dispatch(reset("selectMenu:quizz"));
+                    } else {
+                        const id = props.match.params.id;
+                        const response = await updateQuizz(id, { quizz: values });
+                        console.log(response.data.message);
+                        props.history.replace("/quizz");
+                    }
+                    props.onHideLoader();
+                } catch(error) {
+                    console.log(error);
+                }
             }
-            try {
-                props.onShowLoader();
-                const response = await createQuizz(data);
-                alert(response.data.message);
-                props.onHideLoader();
-                dispatch(reset("selectMenu:quizz"));
-            } catch(error) {
-                console.log(error);
-            }
-        }
-    })
-)(SelectMenu);
+        })
+    )(SelectMenu)
+);

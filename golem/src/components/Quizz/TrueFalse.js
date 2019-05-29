@@ -1,9 +1,10 @@
 import React from "react";
+import { withRouter } from 'react-router';
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import { Field, reset, reduxForm } from "redux-form";
 import { Button, Col, Form } from "react-bootstrap";
-import { createQuizz } from "./../../api/quizz";
+import { createQuizz, updateQuizz } from "./../../api/quizz";
 import * as loaderActions from "./../../redux/actions/loader";
 
 const TrueFalse = (props) => {
@@ -62,7 +63,7 @@ const TrueFalse = (props) => {
                     type="submit"
                     sm="12"
                 >
-                    Add Quizz
+                    {!props.update ? "Add Quizz" : "Update Quizz"}
                 </Button>
             </Form>
         </React.Fragment>
@@ -82,31 +83,38 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default compose(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    ),
-    reduxForm({
-        form: "trueFalse:quizz",
-        onSubmit: async (values, dispatch, props) => {
-            if(!values.answer) {
-                values.answer = false
+export default withRouter(
+    compose(
+        connect(
+            mapStateToProps,
+            mapDispatchToProps
+        ),
+        reduxForm({
+            form: "trueFalse:quizz",
+            onSubmit: async (values, dispatch, props) => {
+                try {
+                    props.onShowLoader();
+                    if(!props.update) {
+                        values.type = "TrueFalse";
+                        let data = {
+                            idExam: props.id,
+                            type: "TrueFalse",
+                            quizz: values
+                        }
+                        const response = await createQuizz(data);
+                        console.log(response.data.message);
+                        dispatch(reset("trueFalse:quizz"));
+                    } else {
+                        const id = props.match.params.id;
+                        const response = await updateQuizz(id, { quizz: values });
+                        console.log(response.data.message);
+                        props.history.replace("/quizz");
+                    }
+                    props.onHideLoader();
+                } catch(error) {
+                    console.log(error);
+                }
             }
-            let data = {
-                idExam: props.id,
-                type: "TrueFalse",
-                quizz: values
-            }
-            try {
-                props.onShowLoader();
-                const response = await createQuizz(data);
-                alert(response.data.message);
-                props.onHideLoader();
-                dispatch(reset("trueFalse:quizz"));
-            } catch(error) {
-                console.log(error);
-            }
-        }
-    })
-)(TrueFalse);
+        })
+    )(TrueFalse)
+);

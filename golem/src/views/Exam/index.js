@@ -1,9 +1,9 @@
-import Listing from "./Listing/Listing";
-import Create from "./Create/Create";
-import Update from "./Update/Update";
+import ListingExam from "./Listing/Listing";
+import CreateExam from "./Create/Create";
+import UpdateExam from "./Update/Update";
 
 export {
-    Create,
-    Listing,
-    Update
+    CreateExam,
+    ListingExam,
+    UpdateExam
 }
