@@ -34,6 +34,15 @@ class Exam(db.Model):
     feedback = db.Column(db.String(10000))
 
 
+class Quizz(db.Model):
+    __tablename__ = 'quizz'
+
+    id = db.Column(db.Integer, primary_key=True)
+    idExam = db.Column(db.Integer, db.ForeignKey(Exam.id))
+    type = db.Column(db.String(50))
+    quizz = db.Column(db.JSON)
+
+
 ###########################################
 
 
@@ -213,7 +222,6 @@ def get_exam(current_user, id):
 def create_exam(current_user):
     data: Dict = request.get_json()
     date: str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print(date)
     exam: Exam = Exam(name=data['name'],
                       date=date,
                       feedback=data['feedback'])
@@ -234,6 +242,21 @@ def delete_exam(current_user, id):
         db.session.commit()
         return jsonify({ 'message': 'Exam deleted succesfully' })
     return jsonify({ 'message': 'Exam not found' })
+
+
+###########################################
+
+
+@app.route('/quizz', methods=['POST'])
+@token_required
+def create_quizz(current_user):
+    data: Dict = request.get_json()
+    quizz: Quizz = Quizz(idExam=data['idExam'],
+                         type=data['type'],
+                         quizz=data['quizz'])
+    db.session.add(quizz)
+    db.session.commit()
+    return jsonify({ 'message': 'Quizz succesfully created' })
 
 
 if __name__ == '__main__':
