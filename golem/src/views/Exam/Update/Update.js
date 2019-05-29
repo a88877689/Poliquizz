@@ -76,7 +76,6 @@ const Update = (props) => {
                     </Tab>
                 </Tabs>
             </div>
-            
         </LoadingOverlay>
     )
 }

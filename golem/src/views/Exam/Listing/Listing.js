@@ -16,6 +16,7 @@ const Listing = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                // props.onShowLoader();
                 const response = await getAllExams();
                 const data = response.data.exams;
                 data.map(element => {
@@ -24,6 +25,7 @@ const Listing = (props) => {
                     return element
                 });
                 setExamState(data);
+                // props.onHideLoader();
             } catch(error) {
                 alert(error.response.message);
             }

@@ -13,6 +13,7 @@ const Login = (props) => {
     const { handleSubmit } = props;
 
     return (
+        <div className="login-loader-wrapper">
         <LoadingOverlay
             active={props.loading}
             spinner={<CircleLoader color={"#EB2F64"} />}
@@ -60,6 +61,7 @@ const Login = (props) => {
                 </div>
             </div>
         </LoadingOverlay>
+        </div>
     );
 }
 
@@ -85,9 +87,9 @@ export default compose(
     ),
     lifecycle({
         componentDidUpdate() {
-            // if(this.props.token) {
-            //     this.props.history.replace("/");
-            // }         
+            if(this.props.token) {
+                this.props.history.replace("/");
+            }         
         }
     }),
     reduxForm({

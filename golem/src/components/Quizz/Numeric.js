@@ -3,7 +3,8 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import { Field, reset, reduxForm } from "redux-form";
 import { Button, Col, Form } from "react-bootstrap";
-
+import { createQuizz } from "./../../api/quizz";
+import * as loaderActions from "./../../redux/actions/loader";
 
 const Numeric = (props) => {
     const { handleSubmit } = props;
@@ -66,19 +67,41 @@ const Numeric = (props) => {
     );
 }
 
+const mapStateToProps = (state) => {
+    return {
+        ...state.loader
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onShowLoader: () => dispatch(loaderActions.showLoader()),
+        onHideLoader: () => dispatch(loaderActions.hideLoader())
+    }
+}
+
 export default compose(
     connect(
-
+        mapStateToProps,
+        mapDispatchToProps
     ),
     reduxForm({
         form: "numeric:quizz",
         onSubmit: async (values, dispatch, props) => {
-            values.idExam = props.id;
-            if(!values.answer) {
-                values.answer = false
+            let data = {
+                idExam: props.id,
+                type: "Numeric",
+                quizz: values
             }
-            console.log(values);
-            dispatch(reset("multiSelect:quizz"));
+            try {
+                props.onShowLoader();
+                const response = await createQuizz(data);
+                alert(response.data.message);
+                props.onHideLoader();
+                dispatch(reset("numeric:quizz"));
+            } catch(error) {
+                console.log(error);
+            }
         }
     })
 )(Numeric);

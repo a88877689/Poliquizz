@@ -3,6 +3,8 @@
     height: 8rem;
 }
 
-._loading_overlay_wrapper {
-    height:100%;
+.login-loader-wrapper {
+    ._loading_overlay_wrapper {
+        height: 100vh;
+    }
 }

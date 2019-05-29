@@ -49,9 +49,9 @@ export default compose(
     ),
     lifecycle({
         componentDidUpdate() {
-            // if(!this.props.token) {
-            //     this.props.history.replace("/login");
-            // }
+            if(!this.props.token) {
+                this.props.history.replace("/login");
+            }
         }
     })
 )(Layout);
