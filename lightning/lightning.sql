@@ -25,10 +25,10 @@ DROP TABLE IF EXISTS `exam`;
 CREATE TABLE `exam` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `date` date NOT NULL,
   `feedback` varchar(10000) DEFAULT NULL,
+  `date` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `exam` (
 
 LOCK TABLES `exam` WRITE;
 /*!40000 ALTER TABLE `exam` DISABLE KEYS */;
-INSERT INTO `exam` VALUES (15,'ReactJS','2019-05-29','You can use the React documentation if you have any doubts.'),(16,'Docker','2019-05-29',''),(17,'Maths','2019-05-29','');
+INSERT INTO `exam` VALUES (25,'Maths','Answer to the following questions','May 30, 2019');
 /*!40000 ALTER TABLE `exam` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,7 +56,7 @@ CREATE TABLE `quizz` (
   PRIMARY KEY (`id`),
   KEY `idExam` (`idExam`),
   CONSTRAINT `quizz_ibfk_1` FOREIGN KEY (`idExam`) REFERENCES `exam` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `quizz` (
 
 LOCK TABLES `quizz` WRITE;
 /*!40000 ALTER TABLE `quizz` DISABLE KEYS */;
-INSERT INTO `quizz` VALUES (5,15,'TrueFalse','{\"name\": \"Is React a Javascript Framework?\", \"type\": \"TrueFalse\", \"answer\": \"true\", \"errorFeedback\": \"False: Is JavaScript library for building user interfaces\"}'),(6,16,'TrueFalse','{\"name\": \"Is Docker used to deploy app in containers?\", \"type\": \"TrueFalse\", \"answer\": \"true\", \"errorFeedback\": \"The correct answer is true\"}'),(7,17,'Numeric','{\"name\": \"How much is 10 + 10?\", \"type\": \"Numeric\", \"answer\": \"20\", \"errorFeedback\": \"The correct answer is 20\"}'),(8,15,'SelectMenu','{\"name\": \"Who develop React?\", \"type\": \"SelectMenu\", \"answer\": \"option4\", \"option1\": \"Apple\", \"option2\": \"Google\", \"option3\": \"Microsoft\", \"option4\": \"Facebook\", \"errorFeedback\": \"The correct answer is Facebook.\"}'),(9,15,'MultiSelect','{\"name\": \"which of this are web mapping technologies?\", \"type\": \"MultiSelect\", \"answer\": [\"option2\", \"option3\", \"option4\"], \"option1\": \"Docker\", \"option2\": \"OpenStreetMap\", \"option3\": \"MapBox\", \"option4\": \"GoogleMaps\", \"errorFeedback\": \"OpenStreetMap, GoogleMaps and MapBox are mapping technologies\"}');
+INSERT INTO `quizz` VALUES (10,25,'TrueFalse','{\"name\": \"Is 5 + 5 equals to 10\", \"type\": \"TrueFalse\", \"answer\": \"true\", \"errorFeedback\": \"The correct answer is true\"}');
 /*!40000 ALTER TABLE `quizz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-29  3:49:58
+-- Dump completed on 2019-05-30 11:37:15
