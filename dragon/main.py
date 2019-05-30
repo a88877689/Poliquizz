@@ -179,16 +179,16 @@ def delete_user(current_user, id):
 def login():
     auth: Union[Dict, None] = request.get_json()
     if not auth or not auth['username'] or not auth['password']:
-        return jsonify({ 'message': 'Invalid credentials' }), 401
+        return jsonify({ 'message': 'Invalid credentials!' }), 401
     user: Union[User, None] = User.query.filter_by(username=auth['username']).first()
     if not user:
-        return jsonify({ 'message': 'Invalid credentials' }), 401
+        return jsonify({ 'message': 'Invalid credentials!' }), 401
     if check_password_hash(user.password, auth['password']):
         token: str = jwt.encode({ 'id': user.id },
                                 app.config['SECRET_KEY'],
                                 algorithm='HS256')
         return jsonify({ 'message': 'Welcome!', 'token': token.decode('UTF-8') })
-    return jsonify({ 'message': 'Invalid credentials' }), 401
+    return jsonify({ 'message': 'Invalid credentials!' }), 401
 
 
 
@@ -208,8 +208,8 @@ def get_all_exams(current_user):
         temp['feedback'] = exam.feedback
         response.append(temp)
     if not response:
-        return jsonify({ 'message': 'You have no exams, create one.', 'exams': response })
-    return jsonify({ 'message': 'Exams found', 'exams': response })
+        return jsonify({ 'message': 'You have no exams, create one!', 'exams': response }), 404
+    return jsonify({ 'message': 'Exams found!', 'exams': response })
 
 @app.route('/exam/<id>', methods=['GET'])
 @token_required
@@ -220,14 +220,14 @@ def get_exam(current_user, id):
         response['id'] = exam.id
         response['name'] = exam.name
         response['feedback'] = exam.feedback
-        return jsonify({ 'message': 'Exam found', 'exam': response })
-    return jsonify({ 'message': 'Exam not found' })
+        return jsonify({ 'message': 'Exam found!', 'exam': response })
+    return jsonify({ 'message': 'Exam not found!' }), 404
 
 @app.route('/exam', methods=['POST'])
 @token_required
 def create_exam(current_user):
     data: Dict = request.get_json()
-    date: str = datetime.datetime.now().strftime('%Y-%m-%d')
+    date: str = datetime.datetime.now().strftime('%b %d, %Y')
     exam: Exam = Exam(name=data['name'],
                       date=date,
                       feedback=data['feedback'])
@@ -236,7 +236,7 @@ def create_exam(current_user):
 
     exam: Union[Exam, None] = Exam.query.filter_by(name=data['name']).first()
     id_exam = exam.id
-    return jsonify({ 'message': 'Exam succesfully created', 'id': id_exam })
+    return jsonify({ 'message': 'Exam succesfully created!', 'id': id_exam })
 
 @app.route('/exam/<id>', methods=['PUT'])
 @token_required
@@ -247,8 +247,8 @@ def update_exam(current_user, id):
         exam.name = data['name']
         exam.feedback = data['feedback']
         db.session.commit()
-        return jsonify({ 'message': 'The exam has been updated' })
-    return jsonify({ 'message': 'Exam not found' })
+        return jsonify({ 'message': 'Exam succesfully updated!' })
+    return jsonify({ 'message': 'Exam not found!' }), 404
 
 @app.route('/exam/<id>', methods=['DELETE'])
 @token_required
@@ -257,8 +257,8 @@ def delete_exam(current_user, id):
     if exam:
         db.session.delete(exam)
         db.session.commit()
-        return jsonify({ 'message': 'Exam deleted succesfully' })
-    return jsonify({ 'message': 'Exam not found' })
+        return jsonify({ 'message': 'Exam succesfully deleted!' })
+    return jsonify({ 'message': 'Exam not found!' }), 404
 
 
 ###########################################
@@ -276,8 +276,8 @@ def get_all_quizzes(current_user):
         temp['quizz'] = quizz.quizz
         response.append(temp)
     if not response:
-        return jsonify({ 'message': 'You have no quizz, create one.', 'quizzes': response })
-    return jsonify({ 'message': 'Quizzes found', 'quizzes': response })
+        return jsonify({ 'message': 'You have no quizzes yet!', 'quizzes': response }), 404
+    return jsonify({ 'message': 'Quizzes found!', 'quizzes': response })
 
 @app.route('/quizz/<id>', methods=['GET'])
 @token_required
@@ -289,8 +289,8 @@ def get_quizz(current_user, id):
         response['idExam'] = quizz.idExam
         response['type'] = quizz.type
         response['quizz'] = quizz.quizz
-        return jsonify({ 'message': 'Quizz found', 'quizz': response })
-    return jsonify({ 'message': 'Quizz not found' })
+        return jsonify({ 'message': 'Quizz found!', 'quizz': response })
+    return jsonify({ 'message': 'Quizz not found!' }), 404
 
 @app.route('/quizz', methods=['POST'])
 @token_required
@@ -301,7 +301,7 @@ def create_quizz(current_user):
                          quizz=data['quizz'])
     db.session.add(quizz)
     db.session.commit()
-    return jsonify({ 'message': 'Quizz succesfully created' })
+    return jsonify({ 'message': 'Quizz succesfully created!' })
 
 @app.route('/quizz/<id>', methods=['PUT'])
 @token_required
@@ -311,8 +311,8 @@ def update_quizz(current_user, id):
     if quizz:
         quizz.quizz = data['quizz']
         db.session.commit()
-        return jsonify({ 'message': 'The quizz has been updated' })
-    return jsonify({ 'message': 'Quizz not found' })
+        return jsonify({ 'message': 'Quizz succesfully updated!' })
+    return jsonify({ 'message': 'Quizz not found!' }), 404
 
 @app.route('/quizz/<id>', methods=['DELETE'])
 @token_required
@@ -321,8 +321,8 @@ def delete_quizz(current_user, id):
     if quizz:
         db.session.delete(quizz)
         db.session.commit()
-        return jsonify({ 'message': 'Quizz deleted succesfully' })
-    return jsonify({ 'message': 'Quizz not found' })
+        return jsonify({ 'message': 'Quizz succesfully deleted!' })
+    return jsonify({ 'message': 'Quizz not found!' }), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
