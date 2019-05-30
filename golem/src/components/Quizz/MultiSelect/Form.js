@@ -4,10 +4,12 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import { Field, reset, reduxForm } from "redux-form";
 import { Button, Col, Form } from "react-bootstrap";
-import { createQuizz, updateQuizz } from "./../../api/quizz";
-import * as loaderActions from "./../../redux/actions/loader";
+import { createNotification } from 'react-redux-notify';
+import { createQuizz, updateQuizz } from "../../../api/quizz";
+import * as loaderActions from "../../../redux/actions/loader";
+import { onSuccess, onError } from "./../../../notifications/notify";
 
-const SelectMenu = (props) => {
+const MultiSelect = (props) => {
     const { handleSubmit } = props;
     
     return (
@@ -19,8 +21,9 @@ const SelectMenu = (props) => {
                             component="input"
                             name="name"
                             type="text"
-                            placeholder="Quizz: Who develop React?"
+                            placeholder="Quizz: Which of these are web mapping technologies?"
                             className="form-control form-control-lg"
+                            multiple
                             required
                         />
                     </Form.Group>
@@ -28,10 +31,12 @@ const SelectMenu = (props) => {
                         <Field
                             component="select"
                             name="answer"
-                            type="select"
+                            type="select-multiple"
                             className="form-control form-control-lg"
+                            value={[]}
+                            multiple={true}
                             required
-                        >
+                        >   
                             <option value="option1">Option 1</option>
                             <option value="option2">Option 2</option>
                             <option value="option3">Option 3</option>
@@ -39,42 +44,42 @@ const SelectMenu = (props) => {
                         </Field>
                     </Form.Group>
 
-                    <Form.Group as={Col} sm="6">
+                    <Form.Group as={Col} lg="6">
                         <Field
                             component="input"
                             name="option1"
                             type="text"
-                            placeholder="Option 1: Facebook"
+                            placeholder="Option 1: Docker"
                             className="form-control form-control-lg"
                             required
                         />
                     </Form.Group>
-                    <Form.Group as={Col} sm="6">
+                    <Form.Group as={Col} lg="6">
                         <Field
                             component="input"
                             name="option2"
                             type="text"
-                            placeholder="Option 2: Goggle"
+                            placeholder="Option 2: OpenStreetMap"
                             className="form-control form-control-lg"
                             required
                         />
                     </Form.Group>
-                    <Form.Group as={Col} sm="6">
+                    <Form.Group as={Col} lg="6">
                         <Field
                             component="input"
                             name="option3"
                             type="text"
-                            placeholder="Option 3: Microsoft"
+                            placeholder="Option 3: MapBox"
                             className="form-control form-control-lg"
                             required
                         />
                     </Form.Group>
-                    <Form.Group as={Col} sm="6">
+                    <Form.Group as={Col} lg="6">
                         <Field
                             component="input"
                             name="option4"
                             type="text"
-                            placeholder="Option 4: Apple"
+                            placeholder="Option 4: None of above"
                             className="form-control form-control-lg"
                             required
                         />
@@ -85,7 +90,7 @@ const SelectMenu = (props) => {
                             component="textarea"
                             name="feedback"
                             type="text"
-                            placeholder="Feedback: Owner left Harvard"
+                            placeholder="Feedback: There are two correct answers"
                             className="form-control form-control-lg"
                             rows="4"
                         />
@@ -124,7 +129,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onShowLoader: () => dispatch(loaderActions.showLoader()),
-        onHideLoader: () => dispatch(loaderActions.hideLoader())
+        onHideLoader: () => dispatch(loaderActions.hideLoader()),
+        onCreateNotification: (config) => dispatch(createNotification(config))
     }
 }
 
@@ -135,31 +141,33 @@ export default withRouter(
             mapDispatchToProps
         ),
         reduxForm({
-            form: "selectMenu:quizz",
+            form: "multiSelect:quizz",
             onSubmit: async (values, dispatch, props) => {
                 try {
                     props.onShowLoader();
                     if(!props.update) {
-                        values.type = "SelectMenu";
+                        values.type = "MultiSelect";
                         let data = {
                             idExam: props.id,
-                            type: "SelectMenu",
+                            type: "MultiSelect",
                             quizz: values
                         }
                         const response = await createQuizz(data);
-                        console.log(response.data.message);
-                        dispatch(reset("selectMenu:quizz"));
+                        dispatch(reset("multiSelect:quizz"));
+                        props.onCreateNotification(onSuccess(response.data.message));
                     } else {
                         const id = props.match.params.id;
                         const response = await updateQuizz(id, { quizz: values });
-                        console.log(response.data.message);
-                        props.history.replace("/quizz");
+                        props.onCreateNotification(onSuccess(response.data.message));
                     }
                     props.onHideLoader();
                 } catch(error) {
-                    console.log(error);
+                    let message = error.response.data.message;
+                    if(!message) message = "Oops! Something went wront";
+                    props.onCreateNotification(onError(message));
+                    props.onHideLoader();
                 }
             }
         })
-    )(SelectMenu)
+    )(MultiSelect)
 );

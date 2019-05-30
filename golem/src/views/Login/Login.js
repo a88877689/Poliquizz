@@ -5,15 +5,19 @@ import { connect } from "react-redux";
 import { Button, Col, Form } from "react-bootstrap";
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
+import { createNotification } from 'react-redux-notify';
+import { Notify } from 'react-redux-notify';
 import * as loaderActions from "./../../redux/actions/loader";
 import * as tokenActions from "./../../redux/actions/token";
 import { login } from "./../../api/login";
+import { onSuccess, onError } from "./../../notifications/notify";
 
 const Login = (props) => {
     const { handleSubmit } = props;
 
     return (
         <div className="golem-loader-wrapper">
+            <Notify />
             <LoadingOverlay
                 active={props.loading}
                 spinner={<CircleLoader color={"#EB2F64"} />}
@@ -76,7 +80,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onPersistToken: (payload) => dispatch(tokenActions.persistToken(payload)),
         onShowLoader: () => dispatch(loaderActions.showLoader()),
-        onHideLoader: () => dispatch(loaderActions.hideLoader())
+        onHideLoader: () => dispatch(loaderActions.hideLoader()),
+        onCreateNotification: (config) => dispatch(createNotification(config))
     }
 }
 
@@ -99,17 +104,15 @@ export default compose(
                 props.onShowLoader();
                 const response = await login(values);
                 props.onPersistToken(response.data.token);
+                props.onCreateNotification(onSuccess(response.data.message));
                 props.onHideLoader();
                 props.history.replace("/");
             } catch(error){
+                let message = error.response.data.message;
+                if(!message) message = "Oops! Something went wront";
+                props.onCreateNotification(onError(message));
                 props.onHideLoader();
-                if(error.response)  {
-                    alert(error.response.data.message);
-                } else {
-                    alert("Server internal error")
-                }
             }
-            
         }
     })
 )(Login);

@@ -4,20 +4,25 @@ import { Button, Col, Row } from "react-bootstrap";
 import Title from "./../../../components/Title/Title";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BootstrapTable from "react-bootstrap-table-next";
+import { createNotification } from 'react-redux-notify';
 import { getAllExams, deleteExam } from "./../../../api/exam";
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
 import * as loaderActions from "./../../../redux/actions/loader";
+import { onSuccess, onError } from "./../../../notifications/notify";
 
 const Listing = (props) => {
-    const [ forceUpdate ] = useReducer(x => x + 1, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const [ ignored, forceUpdate ] = useReducer(x => x, 0);
     let [ examState, setExamState ] = useState([]);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         const fetchData = async () => {
             try {
-                // props.onShowLoader();
+                props.onShowLoader();
                 const response = await getAllExams();
+                props.onCreateNotification(onSuccess(response.data.message));
                 const data = response.data.exams;
                 data.map(element => {
                     element.xml = (<Button variant="primary"><FontAwesomeIcon icon="download" /></Button>);
@@ -25,9 +30,12 @@ const Listing = (props) => {
                     return element
                 });
                 setExamState(data);
-                // props.onHideLoader();
+                props.onHideLoader();
             } catch(error) {
-                alert(error.response.message);
+                let message = error.response.data.message;
+                if(!message) message = "Oops! Something went wront";
+                props.onCreateNotification(onError(message));
+                props.onHideLoader();
             }
         }
         fetchData();
@@ -43,17 +51,19 @@ const Listing = (props) => {
 
     const handleDelete = async (row, rowIndex) => {
         try {
-            props.onShowLoader()
+            props.onShowLoader();
             const response = await deleteExam(row.id);
-            alert(response.data.message);
+            props.onCreateNotification(onSuccess(response.data.message));
             let data = examState;
             data.splice(rowIndex, 1);
             setExamState(data);
             forceUpdate();
-            props.onHideLoader()
+            props.onHideLoader();
         } catch(error) {
-            alert(error.response);
-            props.onHideLoader()
+            let message = error.response.data.message;
+            if(!message) message = "Oops! Something went wront";
+            props.onCreateNotification(onError(message));
+            props.onHideLoader();
         }
     }
 
@@ -163,7 +173,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onShowLoader: () => dispatch(loaderActions.showLoader()),
-        onHideLoader: () => dispatch(loaderActions.hideLoader())
+        onHideLoader: () => dispatch(loaderActions.hideLoader()),
+        onCreateNotification: (config) => dispatch(createNotification(config))
     }
 }
 

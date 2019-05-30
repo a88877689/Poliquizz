@@ -4,10 +4,12 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import { Field, reset, reduxForm } from "redux-form";
 import { Button, Col, Form } from "react-bootstrap";
-import { createQuizz, updateQuizz } from "./../../api/quizz";
-import * as loaderActions from "./../../redux/actions/loader";
+import { createNotification } from 'react-redux-notify';
+import { createQuizz, updateQuizz } from "../../../api/quizz";
+import * as loaderActions from "../../../redux/actions/loader";
+import { onSuccess, onError } from "./../../../notifications/notify";
 
-const MultiSelect = (props) => {
+const Numeric = (props) => {
     const { handleSubmit } = props;
     
     return (
@@ -19,76 +21,27 @@ const MultiSelect = (props) => {
                             component="input"
                             name="name"
                             type="text"
-                            placeholder="Quizz: Which of these are web mapping technologies?"
+                            placeholder="How much is 5 + 5"
                             className="form-control form-control-lg"
-                            multiple
                             required
                         />
                     </Form.Group>
                     <Form.Group as={Col} lg="6">
                         <Field
-                            component="select"
+                            component="input"
                             name="answer"
-                            type="select-multiple"
-                            className="form-control form-control-lg"
-                            value={[]}
-                            multiple={true}
-                            required
-                        >   
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
-                            <option value="option4">Option 4</option>
-                        </Field>
-                    </Form.Group>
-
-                    <Form.Group as={Col} lg="6">
-                        <Field
-                            component="input"
-                            name="option1"
-                            type="text"
-                            placeholder="Option 1: Docker"
+                            type="number"
+                            placeholder="Answer"
                             className="form-control form-control-lg"
                             required
                         />
                     </Form.Group>
-                    <Form.Group as={Col} lg="6">
-                        <Field
-                            component="input"
-                            name="option2"
-                            type="text"
-                            placeholder="Option 2: OpenStreetMap"
-                            className="form-control form-control-lg"
-                            required
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} lg="6">
-                        <Field
-                            component="input"
-                            name="option3"
-                            type="text"
-                            placeholder="Option 3: MapBox"
-                            className="form-control form-control-lg"
-                            required
-                        />
-                    </Form.Group>
-                    <Form.Group as={Col} lg="6">
-                        <Field
-                            component="input"
-                            name="option4"
-                            type="text"
-                            placeholder="Option 4: None of above"
-                            className="form-control form-control-lg"
-                            required
-                        />
-                    </Form.Group>
-
                     <Form.Group as={Col} lg="6">
                         <Field
                             component="textarea"
                             name="feedback"
                             type="text"
-                            placeholder="Feedback: There are two correct answers"
+                            placeholder="Feedback: Some clues..."
                             className="form-control form-control-lg"
                             rows="4"
                         />
@@ -98,10 +51,9 @@ const MultiSelect = (props) => {
                             component="textarea"
                             name="errorFeedback"
                             type="text"
-                            placeholder="Error Feedback: The correct answer is Facebook"
+                            placeholder="Error Feedback: The correct answer is 10"
                             className="form-control form-control-lg"
                             rows="4"
-                            required
                         />
                     </Form.Group>
                 </Form.Row>
@@ -127,7 +79,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onShowLoader: () => dispatch(loaderActions.showLoader()),
-        onHideLoader: () => dispatch(loaderActions.hideLoader())
+        onHideLoader: () => dispatch(loaderActions.hideLoader()),
+        onCreateNotification: (config) => dispatch(createNotification(config))
     }
 }
 
@@ -138,31 +91,33 @@ export default withRouter(
             mapDispatchToProps
         ),
         reduxForm({
-            form: "multiSelect:quizz",
+            form: "numeric:quizz",
             onSubmit: async (values, dispatch, props) => {
                 try {
                     props.onShowLoader();
                     if(!props.update) {
-                        values.type = "MultiSelect";
+                        values.type = "Numeric";
                         let data = {
                             idExam: props.id,
-                            type: "MultiSelect",
+                            type: "Numeric",
                             quizz: values
                         }
                         const response = await createQuizz(data);
-                        console.log(response.data.message);
-                        dispatch(reset("multiSelect:quizz"));
+                        dispatch(reset("numeric:quizz"));
+                        props.onCreateNotification(onSuccess(response.data.message));
                     } else {
                         const id = props.match.params.id;
                         const response = await updateQuizz(id, { quizz: values });
-                        console.log(response.data.message);
-                        props.history.replace("/quizz");
+                        props.onCreateNotification(onSuccess(response.data.message));
                     }
                     props.onHideLoader();
                 } catch(error) {
-                    console.log(error);
+                    let message = error.response.data.message;
+                    if(!message) message = "Oops! Something went wront";
+                    props.onCreateNotification(onError(message));
+                    props.onHideLoader();
                 }
             }
         })
-    )(MultiSelect)
+    )(Numeric)
 );

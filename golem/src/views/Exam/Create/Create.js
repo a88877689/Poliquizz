@@ -5,9 +5,11 @@ import { Field, reduxForm } from "redux-form";
 import { Button, Col, Form } from 'react-bootstrap';
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
+import { createNotification } from 'react-redux-notify';
 import Title from "./../../../components/Title/Title";
 import { createExam } from "./../../../api/exam";
 import * as loaderActions from "./../../../redux/actions/loader";
+import { onSuccess, onError } from "./../../../notifications/notify";
 
 const Create = (props) => {
     const { handleSubmit } = props;
@@ -72,7 +74,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onShowLoader: () => dispatch(loaderActions.showLoader()),
-        onHideLoader: () => dispatch(loaderActions.hideLoader())
+        onHideLoader: () => dispatch(loaderActions.hideLoader()),
+        onCreateNotification: (config) => dispatch(createNotification(config))
     }
 }
 
@@ -90,11 +93,12 @@ export default compose(
             try {
                 props.onShowLoader();
                 const response = await createExam(values);
-                alert(response.data.message);
                 props.onHideLoader();
+                props.onCreateNotification(onSuccess(response.data.message));
                 props.history.replace(`/exam/update/${response.data.id}`);
             } catch(error) {
-                alert(error.message);
+                const message = "Something went wrong!";
+                props.onCreateNotification(onError(message));
                 props.onHideLoader()
             }
         }

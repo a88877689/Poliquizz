@@ -5,11 +5,19 @@ import { Field, reduxForm } from "redux-form";
 import { Button, Col, Form, Tab, Tabs } from 'react-bootstrap';
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
+import { createNotification } from 'react-redux-notify';
 import Title from "./../../../components/Title/Title";
-import { MultiSelect, Numeric, SelectMenu, TrueFalse } from "./../../../components/Quizz/index";
 import * as loaderActions from "./../../../redux/actions/loader";
 import * as examActions from "./../../../redux/actions/exam";
 import { updateExam } from "./../../../api/exam";
+import { onSuccess, onError } from "./../../../notifications/notify";
+import {
+    MultiSelectForm,
+    NumericForm,
+    SelectMenuForm,
+    TrueFalseForm
+} from "./../../../components/Quizz/index";
+
 
 const Update = (props) => {
     const { handleSubmit } = props;
@@ -64,16 +72,16 @@ const Update = (props) => {
                 <h1 className="golem-font-type__bold">Add Your Quizz</h1><hr className="golem-margin__bottom" />
                 <Tabs className="golem-font-size__twelve" defaultActiveKey="trueFalse">
                     <Tab eventKey="trueFalse" title="True or False">
-                        <TrueFalse id={props.match.params.id} update={false} />
+                        <TrueFalseForm id={props.match.params.id} update={false} />
                     </Tab>
                     <Tab eventKey="selectMenu" title="Select Menu">
-                        <SelectMenu id={props.match.params.id} update={false} />
+                        <SelectMenuForm id={props.match.params.id} update={false} />
                     </Tab>
                     <Tab eventKey="multiSelect" title="Multi Select">
-                        <MultiSelect id={props.match.params.id} update={false} />
+                        <MultiSelectForm id={props.match.params.id} update={false} />
                     </Tab>
                     <Tab eventKey="numeric" title="Numeric">
-                        <Numeric id={props.match.params.id} update={false} />
+                        <NumericForm id={props.match.params.id} update={false} />
                     </Tab>
                 </Tabs>
             </div>
@@ -93,7 +101,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onShowLoader: () => dispatch(loaderActions.showLoader()),
         onHideLoader: () => dispatch(loaderActions.hideLoader()),
-        onGetExam: (id) => dispatch(examActions.getExamAction(id))
+        onGetExam: (id) => dispatch(examActions.getExamAction(id)),
+        onCreateNotification: (config) => dispatch(createNotification(config))
     }
 }
 
@@ -118,10 +127,12 @@ export default compose(
                 props.onShowLoader();
                 const id = props.match.params.id;
                 const response = await updateExam(id, values);
-                console.log(response.data.message);
+                props.onCreateNotification(onSuccess(response.data.message));
                 props.onHideLoader();
             } catch(error) {
-                console.log(error)
+                let message = error.response.data.message;
+                if(!message) message = "Oops! Something went wront";
+                props.onCreateNotification(onError(message));
                 props.onHideLoader();
             }
         }

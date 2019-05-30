@@ -7,6 +7,7 @@ import * as serviceWorker from "./serviceWorker";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import 'react-redux-notify/dist/ReactReduxNotify.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/main.scss";
 import {
@@ -18,7 +19,9 @@ import {
     faDownload,
     faPencilAlt,
     faTrash,
-    faQuestionCircle
+    faQuestionCircle,
+    faCheck,
+    faBomb
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faHome);
@@ -30,6 +33,8 @@ library.add(faDownload);
 library.add(faPencilAlt);
 library.add(faTrash);
 library.add(faQuestionCircle);
+library.add(faCheck);
+library.add(faBomb);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById("root"));
 serviceWorker.unregister();

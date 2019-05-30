@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { compose, lifecycle } from 'recompose';
 import Sidebar from "./../components/Sidebar/Sidebar";
 import Header from "./../components/Header/Header";
+import { Notify } from 'react-redux-notify';
 import { CreateExam, ListingExam, UpdateExam } from "./../views/Exam/index";
 import { ListingQuizz, UpdateQuizz } from "./../views/Quizz/index";
 import Home from "./../views/Home/Home";
@@ -14,6 +15,7 @@ const Layout = (props) => {
 
     return (
         <div className="golem-container">
+            <Notify />
             <div className={sidebarClass}><Sidebar /></div>
             <div className="golem-main-container">
                 <Header />

@@ -4,8 +4,10 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import { Field, reset, reduxForm } from "redux-form";
 import { Button, Col, Form } from "react-bootstrap";
-import { createQuizz, updateQuizz } from "./../../api/quizz";
-import * as loaderActions from "./../../redux/actions/loader";
+import { createNotification } from 'react-redux-notify';
+import { createQuizz, updateQuizz } from "../../../api/quizz";
+import * as loaderActions from "../../../redux/actions/loader";
+import { onSuccess, onError } from "./../../../notifications/notify";
 
 const TrueFalse = (props) => {
     const { handleSubmit } = props;
@@ -79,7 +81,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onShowLoader: () => dispatch(loaderActions.showLoader()),
-        onHideLoader: () => dispatch(loaderActions.hideLoader())
+        onHideLoader: () => dispatch(loaderActions.hideLoader()),
+        onCreateNotification: (config) => dispatch(createNotification(config))
     }
 }
 
@@ -102,17 +105,19 @@ export default withRouter(
                             quizz: values
                         }
                         const response = await createQuizz(data);
-                        console.log(response.data.message);
+                        props.onCreateNotification(onSuccess(response.data.message));
                         dispatch(reset("trueFalse:quizz"));
                     } else {
                         const id = props.match.params.id;
                         const response = await updateQuizz(id, { quizz: values });
-                        console.log(response.data.message);
-                        props.history.replace("/quizz");
+                        props.onCreateNotification(onSuccess(response.data.message));
                     }
                     props.onHideLoader();
                 } catch(error) {
-                    console.log(error);
+                    let message = error.response.data.message;
+                    if(!message) message = "Oops! Something went wront";
+                    props.onCreateNotification(onError(message));
+                    props.onHideLoader();
                 }
             }
         })

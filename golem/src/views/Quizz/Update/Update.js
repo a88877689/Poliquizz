@@ -1,26 +1,33 @@
 import React from "react";
 import { compose, lifecycle } from "recompose";
 import { connect } from "react-redux";
+import LoadingOverlay from "react-loading-overlay";
+import CircleLoader from "react-spinners/CircleLoader";
 import Title from "./../../../components/Title/Title";
-import { MultiSelect, Numeric, SelectMenu, TrueFalse } from "./../../../components/Quizz/index";
-import * as loaderActions from "./../../../redux/actions/loader";
 import * as quizzActions from "./../../../redux/actions/quizz";
+import {
+    MultiSelectForm,
+    NumericForm,
+    SelectMenuForm,
+    TrueFalseForm
+} from "./../../../components/Quizz/index";
+
 
 const Update = (props) => {
     let quizz = null;
     if(props.quizz != null) {
         switch(props.quizz.type) {
             case "MultiSelect":
-                quizz = <MultiSelect initialValues={props.initialValues} update={true} />
+                quizz = <MultiSelectForm initialValues={props.initialValues} update={true} />
                 break;
             case "Numeric":
-                quizz = <Numeric initialValues={props.initialValues} update={true} />
+                quizz = <NumericForm initialValues={props.initialValues} update={true} />
                 break;
             case "SelectMenu":
-                quizz = <SelectMenu initialValues={props.initialValues} update={true} />
+                quizz = <SelectMenuForm initialValues={props.initialValues} update={true} />
                 break;
             case "TrueFalse":
-                quizz = <TrueFalse initialValues={props.initialValues} update={true} />
+                quizz = <TrueFalseForm initialValues={props.initialValues} update={true} />
                 break;
             default:
                 quizz = null;
@@ -29,20 +36,25 @@ const Update = (props) => {
     }
     
     return (
-        <React.Fragment>
-            <Title
-                title="Quizz Update"
-                pages={[
-                    { to: "/", pageName: "Home" },
-                    { to: "/quizz", pageName: "Quizz" },
-                    { pageName: "Update" }
-                ]}
-            />
-            
-            <div className="golem-margin-left__medium golem-margin-right__medium">
-                {quizz}
-            </div>
-        </React.Fragment>
+        <div className="golem-loader-wrapper">
+            <LoadingOverlay
+                active={props.loading}
+                spinner={<CircleLoader color={"#EB2F64"} />}
+            >
+                <Title
+                    title="Quizz Update"
+                    pages={[
+                        { to: "/", pageName: "Home" },
+                        { to: "/quizz", pageName: "Quizz" },
+                        { pageName: "Update" }
+                    ]}
+                />
+                
+                <div className="golem-margin-left__medium golem-margin-right__medium">
+                    {quizz}
+                </div>
+            </LoadingOverlay>
+        </div>
     );
 }
 
@@ -56,8 +68,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onShowLoader: () => dispatch(loaderActions.showLoader()),
-        onHideLoader: () => dispatch(loaderActions.hideLoader()),
         onGetQuizz: (id) => dispatch(quizzActions.getQuizzAction(id))
     }
 }

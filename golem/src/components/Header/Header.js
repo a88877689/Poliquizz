@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { withRouter } from 'react-router';
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
+import { createNotification } from 'react-redux-notify';
 import * as tokenActions from "./../../redux/actions/token";
 import DefaultImage from "./../../assets/default-image.gif";
 import { getUserMe } from "./../../api/user";
+import { onError } from "./../../notifications/notify";
 
 const Header = (props) => {
     let [ userMe, setUserMe ] = useState({})
@@ -15,7 +17,8 @@ const Header = (props) => {
                 const response = await getUserMe();
                 setUserMe(response.data.me);
             } catch(error) {
-                console.log(error.response);
+                const message = "Oops! Something went wront";
+                props.onCreateNotification(onError(message));
             }
         }
         fetchData();
@@ -56,7 +59,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onDeleteToken: () => dispatch(tokenActions.deleteToken())
+        onDeleteToken: () => dispatch(tokenActions.deleteToken()),
+        onCreateNotification: (config) => dispatch(createNotification(config))
     }
 }
 

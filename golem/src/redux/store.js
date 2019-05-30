@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { compose } from "recompose";
 import { reducer as form } from 'redux-form';
+import notifyReducer from 'react-redux-notify';
 import sidebar from "./reducers/sidebar";
 import device from "./reducers/device";
 import loader from "./reducers/loader";
@@ -11,6 +12,7 @@ import exam from "./reducers/exam";
 
 const store = createStore(
     combineReducers({
+        notifications: notifyReducer,
         form,
         sidebar,
         device,

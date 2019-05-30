@@ -6,29 +6,40 @@ import BootstrapTable from "react-bootstrap-table-next";
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import { createNotification } from 'react-redux-notify';
 import Title from "./../../../components/Title/Title";
 import { getAllQuizzes, deleteQuizz } from "./../../../api/quizz";
 import * as loaderActions from "./../../../redux/actions/loader";
+import { onSuccess, onError } from "./../../../notifications/notify";
 
 const Listing = (props) => {
-    const [ forceUpdate ] = useReducer(x => x + 1, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const [ ignored, forceUpdate ] = useReducer(x => x + 1, 0);
     let [ quizzState, setQuizzState ] = useState([]);
 
+    
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         const fetchData = async () => {
             try {
-                // props.onShowLoader();
+                props.onShowLoader();
                 const response = await getAllQuizzes();
-                const data = response.data.quizzes;
-                data.map(element => {
-                    element.delete = (<Button variant="danger"><FontAwesomeIcon icon="trash" /></Button>);
+                props.onCreateNotification(onSuccess(response.data.message));
+                response.data.quizzes.map(element => {
+                    element.delete = (
+                        <Button variant="danger">
+                            <FontAwesomeIcon icon="trash" />
+                        </Button>
+                    );
                     return element
                 });
-                console.log(response.data.message)
-                setQuizzState(data);
-                // props.onHideLoader();
+                setQuizzState(response.data.quizzes);
+                props.onHideLoader();
             } catch(error) {
-                console.log(error);
+                let message = error.response.data.message;
+                if(!message) message = "Oops! Something went wront";
+                props.onCreateNotification(onError(message));
+                props.onHideLoader();
             }
         }
         fetchData();
@@ -42,15 +53,17 @@ const Listing = (props) => {
         try {
             props.onShowLoader()
             const response = await deleteQuizz(row.id);
-            console.log("handle delete", response.data.message);
+            props.onCreateNotification(onError(response.data.message));
             let data = quizzState;
             data.splice(rowIndex, 1);
             setQuizzState(data);
             forceUpdate();
             props.onHideLoader()
         } catch(error) {
-            console.log(error.response);
-            props.onHideLoader()
+            let message = error.response.data.message;
+            if(!message) message = "Oops! Something went wront";
+            props.onCreateNotification(onError(message));
+            props.onHideLoader();
         }
     }
 
@@ -137,7 +150,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onShowLoader: () => dispatch(loaderActions.showLoader()),
-        onHideLoader: () => dispatch(loaderActions.hideLoader())
+        onHideLoader: () => dispatch(loaderActions.hideLoader()),
+        onCreateNotification: (config) => dispatch(createNotification(config))
     }
 }
 
