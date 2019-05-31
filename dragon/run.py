@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 from app import api_bp
-from models.models import db
-from utils.compere import compere
+from models import db
+from utils import compere
 
 
 def dragon(config_filename: str):
