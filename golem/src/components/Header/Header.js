@@ -15,7 +15,7 @@ const Header = (props) => {
         const fetchData = async () => {
             try {
                 const response = await getUserMe();
-                setUserMe(response.data.me);
+                setUserMe(response.data.user);
             } catch(error) {
                 const message = "Oops! Something went wront";
                 props.onCreateNotification(onError(message));

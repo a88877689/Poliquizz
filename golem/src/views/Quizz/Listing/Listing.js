@@ -26,6 +26,7 @@ const Listing = (props) => {
                 const response = await getAllQuizzes();
                 props.onCreateNotification(onSuccess(response.data.message));
                 response.data.quizzes.map(element => {
+                    element.type = element.quizz.type;
                     element.delete = (
                         <Button variant="danger">
                             <FontAwesomeIcon icon="trash" />
