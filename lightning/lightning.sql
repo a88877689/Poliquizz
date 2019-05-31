@@ -16,6 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `alembic_version`
+--
+
+DROP TABLE IF EXISTS `alembic_version`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `alembic_version` (
+  `version_num` varchar(32) NOT NULL,
+  PRIMARY KEY (`version_num`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alembic_version`
+--
+
+LOCK TABLES `alembic_version` WRITE;
+/*!40000 ALTER TABLE `alembic_version` DISABLE KEYS */;
+INSERT INTO `alembic_version` VALUES ('61bb8d2bd0b0');
+/*!40000 ALTER TABLE `alembic_version` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `exam`
 --
 
@@ -25,10 +48,11 @@ DROP TABLE IF EXISTS `exam`;
 CREATE TABLE `exam` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `feedback` varchar(10000) DEFAULT NULL,
   `date` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `feedback` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +61,7 @@ CREATE TABLE `exam` (
 
 LOCK TABLES `exam` WRITE;
 /*!40000 ALTER TABLE `exam` DISABLE KEYS */;
-INSERT INTO `exam` VALUES (25,'Maths','Answer to the following questions','May 30, 2019');
+INSERT INTO `exam` VALUES (3,'React Basics','May 31, 2019','');
 /*!40000 ALTER TABLE `exam` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,12 +75,11 @@ DROP TABLE IF EXISTS `quizz`;
 CREATE TABLE `quizz` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idExam` int(11) NOT NULL,
-  `type` varchar(50) NOT NULL,
   `quizz` json NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idExam` (`idExam`),
   CONSTRAINT `quizz_ibfk_1` FOREIGN KEY (`idExam`) REFERENCES `exam` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +88,7 @@ CREATE TABLE `quizz` (
 
 LOCK TABLES `quizz` WRITE;
 /*!40000 ALTER TABLE `quizz` DISABLE KEYS */;
-INSERT INTO `quizz` VALUES (10,25,'TrueFalse','{\"name\": \"Is 5 + 5 equals to 10\", \"type\": \"TrueFalse\", \"answer\": \"true\", \"errorFeedback\": \"The correct answer is true\"}');
+INSERT INTO `quizz` VALUES (2,3,'{\"name\": \"hjklkh\", \"type\": \"TrueFalse\", \"answer\": \"true\", \"errorFeedback\": \"hjkl\"}');
 /*!40000 ALTER TABLE `quizz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,13 +101,14 @@ DROP TABLE IF EXISTS `user`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `name` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `role` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +117,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (9,'davestring','sha256$iZjZJNBi$1cb1533017f342a60de6f99166010d87a25860cf922942429cb3792a59335cbf','David','Martinez','admin');
+INSERT INTO `user` VALUES (1,'davestring','sha256$nl26AxS5$93df9bc33ddd326cef72dfd95830e4261ca8e8915a2d4ed5f7dc00c2a3c6a69e','David','Martinez','admin'),(7,'snaranjo','sha256$Sc00B4x1$593f768154c5eb563dbaa501bf075cc36e9d9d2d02d825bd01dbb48d0a83aa47','Said','Naranjo','student'),(8,'rgarcia','sha256$pYYuwnVU$6dd9daaf2526ed3d9f60ead3b268f23da531f2d2cbb3b9c13615da8ced7403d4','Ricardo','Garcia','admin');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -106,4 +130,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-30 11:37:15
+-- Dump completed on 2019-05-31 11:53:28
