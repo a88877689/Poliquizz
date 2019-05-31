@@ -95,9 +95,9 @@ export default compose(
                 const response = await createExam(values);
                 props.onHideLoader();
                 props.onCreateNotification(onSuccess(response.data.message));
-                props.history.replace(`/exam/update/${response.data.id}`);
+                props.history.replace(`/exam/update/${response.data.exam.id}`);
             } catch(error) {
-                const message = "Something went wrong!";
+                let message = error.response ? error.response.data.message : "Oops! Something went wront";
                 props.onCreateNotification(onError(message));
                 props.onHideLoader()
             }

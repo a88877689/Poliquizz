@@ -108,8 +108,7 @@ export default compose(
                 props.onHideLoader();
                 props.history.replace("/");
             } catch(error){
-                let message = error.response.data.message;
-                if(!message) message = "Oops! Something went wront";
+                let message = error.response ? error.response.data.message : "Oops! Something went wront";
                 props.onCreateNotification(onError(message));
                 props.onHideLoader();
             }

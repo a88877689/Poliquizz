@@ -37,8 +37,7 @@ const Listing = (props) => {
                 setQuizzState(response.data.quizzes);
                 props.onHideLoader();
             } catch(error) {
-                let message = error.response.data.message;
-                if(!message) message = "Oops! Something went wront";
+                let message = error.response ? error.response.data.message : "Oops! Something went wront";
                 props.onCreateNotification(onError(message));
                 props.onHideLoader();
             }
@@ -54,7 +53,7 @@ const Listing = (props) => {
         try {
             props.onShowLoader()
             const response = await deleteQuizz(row.id);
-            props.onCreateNotification(onError(response.data.message));
+            props.onCreateNotification(onSuccess(response.data.message));
             let data = quizzState;
             data.splice(rowIndex, 1);
             setQuizzState(data);

@@ -15,8 +15,7 @@ const getExamAction = (id) => {
                 exam: response.data.exam
             })
         } catch(error) {
-            let message = error.response.data.message;
-            if(!message) message = "Oops! Something went wront";
+            let message = error.response ? error.response.data.message : "Oops! Something went wront";
             dispatch(createNotification(onError(message)));
             dispatch(hideLoader());
         }

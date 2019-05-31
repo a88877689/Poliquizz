@@ -143,6 +143,7 @@ export default withRouter(
         reduxForm({
             form: "multiSelect:quizz",
             onSubmit: async (values, dispatch, props) => {
+                console.log(props)
                 try {
                     props.onShowLoader();
                     if(!props.update) {
@@ -162,8 +163,7 @@ export default withRouter(
                     }
                     props.onHideLoader();
                 } catch(error) {
-                    let message = error.response.data.message;
-                    if(!message) message = "Oops! Something went wront";
+                    let message = error.response ? error.response.data.message : "Oops! Something went wront";
                     props.onCreateNotification(onError(message));
                     props.onHideLoader();
                 }

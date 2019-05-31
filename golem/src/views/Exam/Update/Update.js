@@ -130,8 +130,7 @@ export default compose(
                 props.onCreateNotification(onSuccess(response.data.message));
                 props.onHideLoader();
             } catch(error) {
-                let message = error.response.data.message;
-                if(!message) message = "Oops! Something went wront";
+                let message = error.response ? error.response.data.message : "Oops! Something went wront";
                 props.onCreateNotification(onError(message));
                 props.onHideLoader();
             }

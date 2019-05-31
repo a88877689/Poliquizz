@@ -15,7 +15,7 @@ const Layout = (props) => {
 
     return (
         <div className="golem-container">
-            <Notify />
+            <Notify position="BottomRight" />
             <div className={sidebarClass}><Sidebar /></div>
             <div className="golem-main-container">
                 <Header />

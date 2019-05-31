@@ -32,8 +32,7 @@ const Listing = (props) => {
                 setExamState(data);
                 props.onHideLoader();
             } catch(error) {
-                let message = error.response;
-                message = !message ? "Oops! Something went wront" : message.data.message;
+                let message = error.response ? error.response.data.message : "Oops! Something went wront";
                 props.onCreateNotification(onError(message));
                 props.onHideLoader();
             }
