@@ -29,7 +29,7 @@ class UserResource(Resource):
             return { 'message': f'Current user found', 'user': response }, 200 
         user = User.query.filter_by(id=id).first()
         if not user:
-            return { 'message': 'User does not exist' }, 400
+            return { 'message': 'User does not exist' }, 404
         user = user_schema.dump(user).data
         return { 'message': 'User found', 'user': user }, 200
 

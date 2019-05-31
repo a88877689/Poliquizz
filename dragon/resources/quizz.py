@@ -17,6 +17,8 @@ class QuizzResource(Resource):
     def get(self, current_user: User, id: Union[str, None] = None):
         if not id:
             quizzes = Quizz.query.all()
+            if not quizzes:
+                return { 'message': 'You have no quizzes, create one!' }, 404
             quizzes = quizzes_schema.dump(quizzes).data
             return { 'message': 'Quizzes found!', 'quizzes': quizzes }, 200
         quizz = Quizz.query.filter_by(id=id).first()
@@ -43,6 +45,7 @@ class QuizzResource(Resource):
         if not quizz:
             return { 'message': 'Quizz does not exist' }, 400
         json = request.get_json(force=True)
+        json['idExam'] = quizz.idExam
         data, errors = quizz_schema.load(json)
         if errors:
             return errors, 422

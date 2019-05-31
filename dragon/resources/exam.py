@@ -18,6 +18,8 @@ class ExamResource(Resource):
     def get(self, current_user: User, id: Union[str, None] = None):
         if not id:
             exams = Exam.query.all()
+            if not exams:
+                return { 'message': 'You have no exams, create one!' }, 404
             exams = exams_schema.dump(exams).data
             return { 'message': 'Exams found!', 'exams': exams }, 200
         exam = Exam.query.filter_by(id=id).first()
