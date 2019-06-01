@@ -143,7 +143,6 @@ export default withRouter(
         reduxForm({
             form: "multiSelect:quizz",
             onSubmit: async (values, dispatch, props) => {
-                console.log(props)
                 try {
                     props.onShowLoader();
                     if(!props.update) {

@@ -7,6 +7,7 @@ import Header from "./../components/Header/Header";
 import { Notify } from 'react-redux-notify';
 import { CreateExam, ListingExam, UpdateExam } from "./../views/Exam/index";
 import { ListingQuizz, UpdateQuizz } from "./../views/Quizz/index";
+import { ListingUser } from "./../views/User/index";
 import Home from "./../views/Home/Home";
 import * as tokenActions from "./../redux/actions/token";
 
@@ -26,6 +27,7 @@ const Layout = (props) => {
                         <Route path="/exam" component={ListingExam} />
                         <Route path="/quizz/update/:id" component={UpdateQuizz} />
                         <Route path="/quizz" component={ListingQuizz} />
+                        <Route path="/user" component={ListingUser} />
                         <Route path="/" component={Home} />
                     </Switch>
                 </div>

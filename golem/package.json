@@ -23,6 +23,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
     "react-spinners": "^0.5.4",
+    "react-table": "^6.10.0",
     "recompose": "^0.30.0",
     "redux": "^4.0.1",
     "redux-form": "^8.2.1",
