@@ -31,6 +31,7 @@ class UserResource(Resource):
         if not user:
             return { 'message': 'User does not exist' }, 404
         user = user_schema.dump(user).data
+        user.pop('password')
         return { 'message': 'User found', 'user': user }, 200
 
     @token_required
@@ -55,6 +56,7 @@ class UserResource(Resource):
         if not user:
             return { 'message': 'User does not exists' }, 400
         json = request.get_json(force=True)
+        user = User.query.filter_by(username=json['username']).first()
         json['password'] = encode(json['password']) if 'password' in json else user.password
         data, errors = user_schema.load(json)
         if errors:
