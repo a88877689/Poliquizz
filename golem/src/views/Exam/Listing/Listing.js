@@ -12,12 +12,12 @@ import * as loaderActions from "./../../../redux/actions/loader";
 import { onSuccess, onError } from "./../../../notifications/notify";
 
 const Listing = (props) => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     const [ ignored, forceUpdate ] = useReducer(x => x, 0);
     let [ examState, setExamState ] = useState([]);
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line
         const fetchData = async () => {
             try {
                 props.onShowLoader();

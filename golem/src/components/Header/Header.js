@@ -12,6 +12,7 @@ const Header = (props) => {
     let [ userMe, setUserMe ] = useState({})
 
     useEffect(() => {
+        // eslint-disable-next-line
         const fetchData = async () => {
             try {
                 const response = await getUserMe();
