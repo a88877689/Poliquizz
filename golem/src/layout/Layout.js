@@ -5,9 +5,9 @@ import { compose, lifecycle } from 'recompose';
 import Sidebar from "./../components/Sidebar/Sidebar";
 import Header from "./../components/Header/Header";
 import { Notify } from 'react-redux-notify';
+import { CreateUser, ListingUser, UpdateUser } from "./../views/User/index";
 import { CreateExam, ListingExam, UpdateExam } from "./../views/Exam/index";
 import { ListingQuizz, UpdateQuizz } from "./../views/Quizz/index";
-import { ListingUser } from "./../views/User/index";
 import Home from "./../views/Home/Home";
 import * as tokenActions from "./../redux/actions/token";
 
@@ -22,12 +22,14 @@ const Layout = (props) => {
                 <Header />
                 <div className="golem-main-container">
                     <Switch>
+                        {props.user.role === "admin" ? <Route path="/user/update/:id" component={UpdateUser} /> : null}
+                        {props.user.role === "admin" ? <Route path="/user/create" component={CreateUser} /> : null}
+                        {props.user.role === "admin" ? <Route path="/user" component={ListingUser} /> : null}
                         <Route path="/exam/update/:id" component={UpdateExam} />
                         <Route path="/exam/create" component={CreateExam} />
                         <Route path="/exam" component={ListingExam} />
                         <Route path="/quizz/update/:id" component={UpdateQuizz} />
                         <Route path="/quizz" component={ListingQuizz} />
-                        <Route path="/user" component={ListingUser} />
                         <Route path="/" component={Home} />
                     </Switch>
                 </div>
@@ -39,7 +41,8 @@ const Layout = (props) => {
 const mapStateToProps = (state) => {
     return {
         ...state.sidebar,
-        ...state.token
+        ...state.token,
+        ...state.user
     }
 }
 

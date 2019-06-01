@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Button, Col, Row } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createNotification } from 'react-redux-notify';
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
@@ -10,48 +9,45 @@ import Table from "./../../../components/Table/Table";
 import * as loaderActions from "./../../../redux/actions/loader";
 import { usersColumns } from "./../../../utils/tableColumns";
 import { getAllUsers } from "./../../../api/user";
-import { onSuccess, onError } from "./../../../notifications/notify";
+import { onSuccess, onWarning, onError } from "./../../../notifications/notify";
 
 const Listing = (props) => {
     let [ userState, setUserState ] = useState([]);
+    let { onShowLoader, onHideLoader, onCreateNotification } = props;
 
     const fetchData = async () => {
         try {
-            props.onShowLoader();
+            onShowLoader();
             const response = await getAllUsers();
-            props.onCreateNotification(onSuccess(response.data.message));
-            response.data.users.map(user => {
-                user.delete = (
-                    <Button variant="danger">
-                        <FontAwesomeIcon icon="trash" />
-                    </Button>
-                );
-                return user
-            });
+            onCreateNotification(onSuccess(response.data.message));
             setUserState(response.data.users);
-            props.onHideLoader();
+            onHideLoader();
         } catch(error) {
             let message = error.response ? error.response.data.message : "Oops! Something went wront";
-            props.onCreateNotification(onError(message));
-            props.onHideLoader();
+            onCreateNotification(onError(message));
+            onHideLoader();
         }
     }
 
     useEffect(() => {
         fetchData();
-    }, [])
+    }, [onShowLoader, onHideLoader, onCreateNotification])
 
     const onCreateNewUser = () => {
-        console.log("onCreateNewUser");
+        props.history.replace("/user/create")
     }
 
     const onRowClick = (state, rowInfo, column, instance) => {
         return {
             onClick: e => {
                 if(column.Header === "") {
-                    console.log("delete");
+                    if(rowInfo.original.role === props.user.role) {
+                        onCreateNotification(onWarning("Admin users can't be deleted."));
+                    } else {
+                        onCreateNotification(onSuccess("User succesfully deleted."));
+                    }
                 } else {
-                    console.log("update");
+                    props.history.replace(`/user/update/${rowInfo.original.id}`)
                 }
             }
         }

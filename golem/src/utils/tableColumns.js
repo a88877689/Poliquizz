@@ -1,3 +1,7 @@
+import React from "react";
+import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const usersColumns = [
     {
         Header: "ID",
@@ -21,8 +25,13 @@ const usersColumns = [
     },
     {
         Header: "",
-        accessor: "delete",
-        width: 50
+        accessor: "",
+        width: 50,
+        Cell: () => (
+            <Button variant="danger">
+                <FontAwesomeIcon icon="trash" />
+            </Button>
+        )
     }
 ];
 

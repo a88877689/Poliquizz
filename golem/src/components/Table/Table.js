@@ -10,6 +10,7 @@ const Table = (props) => (
             minRows={props.data.length > 0 ? props.data.length : 4}
             noDataText="No data to show!"
             getTdProps={props.data.length > 0 ? props.clickEvent : () => ({})}
+            className="-striped -highlight"
         />
     </React.Fragment>
 );

@@ -24,6 +24,7 @@ import {
     faCheck,
     faBomb,
     faUsers,
+    faExclamation
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faHome);
@@ -38,6 +39,7 @@ library.add(faQuestionCircle);
 library.add(faCheck);
 library.add(faBomb);
 library.add(faUsers);
+library.add(faExclamation);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById("root"));
 serviceWorker.unregister();

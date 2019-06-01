@@ -1,9 +1,12 @@
 const initState = {
-    user: {}
+    user: {},
+    userToUpdate: null
 }
 
 const reducer = (state=initState, action) => {
     switch(action.type) {
+        case "GET_USER":
+            return { ...state, userToUpdate: action.userToUpdate };
         case "PERSIST_USER":
             localStorage.setItem("user", JSON.stringify(action.user));
             return { ...state, user: action.user };
