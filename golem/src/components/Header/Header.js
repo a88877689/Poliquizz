@@ -1,32 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { withRouter } from 'react-router';
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
-import { createNotification } from 'react-redux-notify';
 import * as tokenActions from "./../../redux/actions/token";
+import * as userActions from "./../../redux/actions/user";
 import DefaultImage from "./../../assets/default-image.gif";
-import { getUserMe } from "./../../api/user";
-import { onError } from "./../../notifications/notify";
 
 const Header = (props) => {
-    let [ userMe, setUserMe ] = useState({})
-
-    useEffect(() => {
-        // eslint-disable-next-line
-        const fetchData = async () => {
-            try {
-                const response = await getUserMe();
-                setUserMe(response.data.user);
-            } catch(error) {
-                let message = error.response ? error.response.data.message : "Oops! Something went wront";
-                props.onCreateNotification(onError(message));
-            }
-        }
-        fetchData();
-    }, []);
-    
     const handleLogout = () => {
         props.onDeleteToken();
+        props.onDeleteUser();
         props.history.replace("/login");
     }
     
@@ -38,7 +21,7 @@ const Header = (props) => {
                     src={DefaultImage}
                     alt="default" /> : null}
                 <span className="golem-font-type__bold golem-font-size__twelve">
-                    {`${userMe.name} ${userMe.lastname}`}
+                    {`${props.user.name} ${props.user.lastname}`}
                 </span>
                 <Button
                     onClick={handleLogout}
@@ -54,14 +37,15 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
     return { 
-        ...state.device
+        ...state.device,
+        ...state.user
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onDeleteToken: () => dispatch(tokenActions.deleteToken()),
-        onCreateNotification: (config) => dispatch(createNotification(config))
+        onDeleteUser: () => dispatch(userActions.deleteUser())
     }
 }
 

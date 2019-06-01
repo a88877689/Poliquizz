@@ -9,6 +9,7 @@ import { createNotification } from 'react-redux-notify';
 import { Notify } from 'react-redux-notify';
 import * as loaderActions from "./../../redux/actions/loader";
 import * as tokenActions from "./../../redux/actions/token";
+import * as userActions from "./../../redux/actions/user";
 import { login } from "./../../api/login";
 import { onSuccess, onError } from "./../../notifications/notify";
 
@@ -72,7 +73,8 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
     return {
         ...state.token,
-        ...state.loader
+        ...state.loader,
+        ...state.user
     }
 }
 
@@ -81,7 +83,8 @@ const mapDispatchToProps = (dispatch) => {
         onPersistToken: (payload) => dispatch(tokenActions.persistToken(payload)),
         onShowLoader: () => dispatch(loaderActions.showLoader()),
         onHideLoader: () => dispatch(loaderActions.hideLoader()),
-        onCreateNotification: (config) => dispatch(createNotification(config))
+        onPersistUser: (payload) => dispatch(userActions.persistUser(payload)),
+        onCreateNotification: (payload) => dispatch(createNotification(payload))
     }
 }
 
@@ -104,6 +107,7 @@ export default compose(
                 props.onShowLoader();
                 const response = await login(values);
                 props.onPersistToken(response.data.token);
+                props.onPersistUser(response.data.user);
                 props.onCreateNotification(onSuccess(response.data.message));
                 props.onHideLoader();
                 props.history.replace("/");

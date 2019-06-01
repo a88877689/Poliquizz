@@ -9,6 +9,7 @@ import loader from "./reducers/loader";
 import token from "./reducers/token";
 import quizz from "./reducers/quizz";
 import exam from "./reducers/exam";
+import user from "./reducers/user";
 
 const store = createStore(
     combineReducers({
@@ -19,7 +20,8 @@ const store = createStore(
         loader,
         token,
         quizz,
-        exam
+        exam,
+        user
     }),
     (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose)(
         applyMiddleware(

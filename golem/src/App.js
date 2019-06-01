@@ -7,6 +7,7 @@ import Layout from "./layout/Layout";
 import * as sidebarActions from "./redux/actions/sidebar";
 import * as deviceActions from "./redux/actions/device";
 import * as tokenActions from "./redux/actions/token";
+import * as userActions from "./redux/actions/user";
 import mobileDevices from "./utils/mobileDevices";
 
 const App = () => {
@@ -34,7 +35,8 @@ const mapDispatchToProps = (dispatch) => {
     isMobile: () => dispatch(deviceActions.isMobile()),
     notMobile: () => dispatch(deviceActions.notMobile()),
     onCollapse: () => dispatch(sidebarActions.collapse()),
-    onLoadToken: () => dispatch(tokenActions.loadToken())
+    onLoadToken: () => dispatch(tokenActions.loadToken()),
+    onLoadUser: () => dispatch(userActions.loadUser())
   }
 }
 
@@ -46,6 +48,7 @@ export default compose(
   lifecycle({
     componentDidMount() {
       this.props.onLoadToken();
+      this.props.onLoadUser();
       if(mobileDevices.any()) {
         this.props.isMobile();
         this.props.onCollapse();

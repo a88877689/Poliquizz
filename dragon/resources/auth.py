@@ -17,4 +17,5 @@ class AuthResource(Resource):
         if not check(user.password, data['password']):
             return { 'message': 'Invalid credentials!' }, 401
         token = jwt.encode({ 'id': user.id }, 'thisissecret', algorithm='HS256')
-        return { 'message': 'Welcome!', 'token': token.decode('UTF-8') }, 200
+        user = { 'name': user.name, 'lastname': user.lastname, 'role': user.role }
+        return { 'message': 'Welcome!', 'token': token.decode('UTF-8'), 'user': user }, 200
