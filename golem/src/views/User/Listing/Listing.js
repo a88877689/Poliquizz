@@ -8,7 +8,7 @@ import { onSuccess, onError } from "./../../../notifications/notify";
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
 import Title from "./../../../components/Title/Title";
-import Table from "./../../../components/Table/Table";
+import Table from "./../../../containers/Table/Table";
 import * as loaderActions from "./../../../redux/actions/loader";
 
 const Listing = (props) => {

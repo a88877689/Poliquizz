@@ -130,7 +130,6 @@ export default compose(
         form: "update:exam",
         onSubmit: async (values, dispatch, props) => {
             try {
-                console.log(values)
                 props.onShowLoader();
                 const id = props.match.params.id;
                 const response = await updateUser(id, values);

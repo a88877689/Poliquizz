@@ -121,7 +121,6 @@ export default compose(
         form: "create:user",
         onSubmit: async (values, dispatch, props) => {
             try {
-                console.log(values)
                 props.onShowLoader();
                 const response = await createUser(values);
                 props.onHideLoader();

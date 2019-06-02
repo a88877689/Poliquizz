@@ -9,9 +9,7 @@ import { onSuccess, onError } from "./../../notifications/notify";
 import { Numeric } from "./../../components/Quizz/index";
 import * as loaderActions from "./../../redux/actions/loader";
 
-const NumericForm = (props) => {
-    const { handleSubmit } = props;
-    
+const NumericForm = (props) => {    
     return (
         <Numeric update={props.update} handleSubmit={props.handleSubmit} />
     );

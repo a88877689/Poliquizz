@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
 import Title from "./../../../components/Title/Title";
-import Table from "./../../../components/Table/Table";
+import Table from "./../../../containers/Table/Table";
 import { connect } from "react-redux";
 import { Button, Col, Row } from "react-bootstrap";
 import { createNotification } from 'react-redux-notify';
