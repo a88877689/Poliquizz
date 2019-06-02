@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { createNotification } from "react-redux-notify";
 import { onSuccess, onWarning, onError } from "../../notifications/notify";
+import { getXML } from "./../../api/xml";
 import * as loaderActions from "../../redux/actions/loader";
 
 const Table = (props) => {
@@ -24,6 +25,14 @@ const Table = (props) => {
                             props.onNotification(onError(message));
                             props.onHideLoader();
                         }
+                    }
+                } else if(column.Header === "XML" ) {
+                    try {
+                        await getXML(rowInfo.original.id);
+                    } catch(error) {
+                        let message = error.response ? error.response.data.message : "Oops! Something went wront";
+                        props.onNotification(onError(message));
+                        props.onHideLoader();
                     }
                 } else {
                     props.history.replace(`/${props.requested}/update/${rowInfo.original.id}`)

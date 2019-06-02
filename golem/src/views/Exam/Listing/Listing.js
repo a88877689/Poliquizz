@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { Button, Col, Row } from "react-bootstrap";
 import { createNotification } from 'react-redux-notify';
 import { examColumns } from "./../../../utils/tableColumns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getAllExams, deleteExam } from "./../../../api/exam";
 import { onSuccess, onError } from "./../../../notifications/notify";
 import * as loaderActions from "./../../../redux/actions/loader";
@@ -21,6 +22,20 @@ const Listing = (props) => {
                 onShowLoader();
                 const response = await getAllExams();
                 onNotification(onSuccess(response.data.message));
+                response.data.exams.map(exam => {
+                    exam.xml = (
+                        <a
+                            href={`${process.env.REACT_APP_API_URL}/xml/${exam.id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Button variant="primary">
+                                <FontAwesomeIcon icon="download" />
+                            </Button>
+                        </a>
+                    )
+                    return exam
+                });
                 setExamState(response.data.exams);
                 onHideLoader();
             } catch(error) {

@@ -54,13 +54,8 @@ const examColumns = [
     },
     {
         Header: "XML",
-        accessor: "",
-        width: 50,
-        Cell: () => (
-            <Button variant="primary">
-                <FontAwesomeIcon icon="download" />
-            </Button>
-        )
+        accessor: "xml",
+        width: 50
     },
     {
         Header: "",
