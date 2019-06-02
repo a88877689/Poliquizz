@@ -4,6 +4,7 @@ from resources import AuthResource
 from resources import UserResource
 from resources import ExamResource
 from resources import QuizzResource
+from resources import XMLResource
 
 
 api_bp = Blueprint('dragon', __name__)
@@ -17,3 +18,4 @@ api.add_resource(ExamResource, '/exam')
 api.add_resource(ExamResource, '/exam/<id>')
 api.add_resource(QuizzResource, '/quizz')
 api.add_resource(QuizzResource, '/quizz/<id>')
+api.add_resource(XMLResource, '/xml/<id>')

@@ -23,6 +23,7 @@ python-dotenv = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 flask-migrate = "*"
+dicttoxml = "*"
 
 [requires]
 python_version = "3.7"
