@@ -4,11 +4,11 @@ import { compose, lifecycle } from "recompose";
 import { connect } from "react-redux";
 import Login from "./views/Login/Login"
 import Layout from "./layout/Layout";
+import mobileDevices from "./utils/mobileDevices";
 import * as sidebarActions from "./redux/actions/sidebar";
 import * as deviceActions from "./redux/actions/device";
 import * as tokenActions from "./redux/actions/token";
 import * as userActions from "./redux/actions/user";
-import mobileDevices from "./utils/mobileDevices";
 
 const App = () => {
   return (

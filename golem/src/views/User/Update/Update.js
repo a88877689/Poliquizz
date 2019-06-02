@@ -3,14 +3,14 @@ import { compose, lifecycle } from "recompose";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Button, Col, Form } from 'react-bootstrap';
+import { updateUser } from "./../../../api/user";
+import { onSuccess, onError } from "./../../../notifications/notify";
+import { createNotification } from 'react-redux-notify';
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
-import { createNotification } from 'react-redux-notify';
 import Title from "./../../../components/Title/Title";
 import * as loaderActions from "./../../../redux/actions/loader";
 import * as userActions from "./../../../redux/actions/user";
-import { updateUser } from "./../../../api/user";
-import { onSuccess, onError } from "./../../../notifications/notify";
 
 const Update = (props) => {
     const { handleSubmit } = props;

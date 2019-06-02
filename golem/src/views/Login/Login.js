@@ -3,15 +3,15 @@ import { Field, reduxForm } from "redux-form";
 import { compose, lifecycle } from "recompose";
 import { connect } from "react-redux";
 import { Button, Col, Form } from "react-bootstrap";
-import LoadingOverlay from "react-loading-overlay";
-import CircleLoader from "react-spinners/CircleLoader";
 import { createNotification } from 'react-redux-notify';
 import { Notify } from 'react-redux-notify';
+import { login } from "./../../api/login";
+import { onSuccess, onError } from "./../../notifications/notify";
+import LoadingOverlay from "react-loading-overlay";
+import CircleLoader from "react-spinners/CircleLoader";
 import * as loaderActions from "./../../redux/actions/loader";
 import * as tokenActions from "./../../redux/actions/token";
 import * as userActions from "./../../redux/actions/user";
-import { login } from "./../../api/login";
-import { onSuccess, onError } from "./../../notifications/notify";
 
 const Login = (props) => {
     const { handleSubmit } = props;

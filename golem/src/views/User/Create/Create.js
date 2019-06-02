@@ -3,13 +3,13 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Button, Col, Form } from 'react-bootstrap';
+import { createUser } from "./../../../api/user";
+import { createNotification } from 'react-redux-notify';
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
-import { createNotification } from 'react-redux-notify';
 import Title from "./../../../components/Title/Title";
-import { createUser } from "./../../../api/user";
-import * as loaderActions from "./../../../redux/actions/loader";
 import { onSuccess, onError } from "./../../../notifications/notify";
+import * as loaderActions from "./../../../redux/actions/loader";
 
 const Create = (props) => {
     const { handleSubmit } = props;

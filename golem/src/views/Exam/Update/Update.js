@@ -3,21 +3,20 @@ import { compose, lifecycle } from "recompose";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Button, Col, Form, Tab, Tabs } from 'react-bootstrap';
+import { createNotification } from 'react-redux-notify';
+import { updateExam } from "./../../../api/exam";
+import { onSuccess, onError } from "./../../../notifications/notify";
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
-import { createNotification } from 'react-redux-notify';
 import Title from "./../../../components/Title/Title";
 import * as loaderActions from "./../../../redux/actions/loader";
 import * as examActions from "./../../../redux/actions/exam";
-import { updateExam } from "./../../../api/exam";
-import { onSuccess, onError } from "./../../../notifications/notify";
 import {
     MultiSelectForm,
     NumericForm,
     SelectMenuForm,
     TrueFalseForm
-} from "./../../../components/Quizz/index";
-
+} from "./../../../containers/Quizz/index";
 
 const Update = (props) => {
     const { handleSubmit } = props;
@@ -77,7 +76,7 @@ const Update = (props) => {
                     <Tab eventKey="selectMenu" title="Select Menu">
                         <SelectMenuForm id={props.match.params.id} update={false} />
                     </Tab>
-                    <Tab eventKey="multiSelect" title="Multi Select">
+                    <Tab eventKey="multiSelect" title="Multi-Select">
                         <MultiSelectForm id={props.match.params.id} update={false} />
                     </Tab>
                     <Tab eventKey="numeric" title="Numeric">

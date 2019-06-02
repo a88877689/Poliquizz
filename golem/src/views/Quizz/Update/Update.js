@@ -10,7 +10,7 @@ import {
     NumericForm,
     SelectMenuForm,
     TrueFalseForm
-} from "./../../../components/Quizz/index";
+} from "./../../../containers/Quizz/index";
 
 
 const Update = (props) => {

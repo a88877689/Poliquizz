@@ -2,55 +2,38 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Button, Col, Row } from "react-bootstrap";
 import { createNotification } from 'react-redux-notify';
+import { userColumns } from "./../../../utils/tableColumns";
+import { getAllUsers, deleteUser } from "./../../../api/user";
+import { onSuccess, onError } from "./../../../notifications/notify";
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
 import Title from "./../../../components/Title/Title";
 import Table from "./../../../components/Table/Table";
 import * as loaderActions from "./../../../redux/actions/loader";
-import { usersColumns } from "./../../../utils/tableColumns";
-import { getAllUsers } from "./../../../api/user";
-import { onSuccess, onWarning, onError } from "./../../../notifications/notify";
 
 const Listing = (props) => {
     let [ userState, setUserState ] = useState([]);
-    let { onShowLoader, onHideLoader, onCreateNotification } = props;
-
-    const fetchData = async () => {
-        try {
-            onShowLoader();
-            const response = await getAllUsers();
-            onCreateNotification(onSuccess(response.data.message));
-            setUserState(response.data.users);
-            onHideLoader();
-        } catch(error) {
-            let message = error.response ? error.response.data.message : "Oops! Something went wront";
-            onCreateNotification(onError(message));
-            onHideLoader();
-        }
-    }
+    let { onShowLoader, onHideLoader, onNotification } = props;
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                onShowLoader();
+                const response = await getAllUsers();
+                onNotification(onSuccess(response.data.message));
+                setUserState(response.data.users);
+                onHideLoader();
+            } catch(error) {
+                let message = error.response ? error.response.data.message : "Oops! Something went wront";
+                onNotification(onError(message));
+                onHideLoader();
+            }
+        }
         fetchData();
-    }, [onShowLoader, onHideLoader, onCreateNotification])
+    }, [onShowLoader, onHideLoader, onNotification])
 
     const onCreateNewUser = () => {
         props.history.replace("/user/create")
-    }
-
-    const onRowClick = (state, rowInfo, column, instance) => {
-        return {
-            onClick: e => {
-                if(column.Header === "") {
-                    if(rowInfo.original.role === props.user.role) {
-                        onCreateNotification(onWarning("Admin users can't be deleted."));
-                    } else {
-                        onCreateNotification(onSuccess("User succesfully deleted."));
-                    }
-                } else {
-                    props.history.replace(`/user/update/${rowInfo.original.id}`)
-                }
-            }
-        }
     }
 
     return (
@@ -67,7 +50,8 @@ const Listing = (props) => {
                     <Button
                         size="lg"
                         onClick={onCreateNewUser}
-                        className="golem-margin-left__medium golem-margin-top__small"
+                        className="golem-margin-left__medium
+                                   golem-margin-top__small"
                         variant="success"
                     >
                         Create New User
@@ -76,15 +60,18 @@ const Listing = (props) => {
             </Row>
             <Row>
                 <Col xs={12}>
-                    <div className="golem-margin__medium golem-text-align__center golem-font-size__twelve">
+                    <div className="golem-margin__medium 
+                                    golem-text-align__center
+                                    golem-font-size__twelve">
                         <LoadingOverlay
                             active={props.loading}
                             spinner={<CircleLoader color={"#EB2F64"} />}
                         >
                             <Table
                                 data={userState}
-                                columns={usersColumns}
-                                clickEvent={onRowClick}
+                                columns={userColumns}
+                                requested="user"
+                                deleteEndpoint={deleteUser}
                             />
                         </LoadingOverlay>
                     </div>
@@ -96,8 +83,7 @@ const Listing = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        ...state.loader,
-        ...state.user
+        ...state.loader
     }
 }
 
@@ -105,7 +91,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onShowLoader: () => dispatch(loaderActions.showLoader()),
         onHideLoader: () => dispatch(loaderActions.hideLoader()),
-        onCreateNotification: (config) => dispatch(createNotification(config))
+        onNotification: (config) => dispatch(createNotification(config))
     }
 }
 

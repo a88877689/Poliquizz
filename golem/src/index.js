@@ -1,12 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { Provider } from "react-redux";
 import store from "./redux/store";
-import * as serviceWorker from "./serviceWorker";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import "react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css";
+import { Provider } from "react-redux";
 import "react-redux-notify/dist/ReactReduxNotify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-table/react-table.css"
@@ -26,6 +23,7 @@ import {
     faUsers,
     faExclamation
 } from "@fortawesome/free-solid-svg-icons";
+import * as serviceWorker from "./serviceWorker";
 
 library.add(faHome);
 library.add(faChevronLeft);

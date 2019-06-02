@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import * as sidebarActions from "./../../redux/actions/sidebar";
 import CollapseButton from "./CollapseButton";
+import * as sidebarActions from "./../../redux/actions/sidebar";
 import DefaultImage from "./../../assets/default-image.gif";
 
 const Footer = (props) => {

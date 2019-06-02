@@ -1,11 +1,11 @@
-import NumericForm from "./Numeric/Form";
-import MultiSelectForm from "./MultiSelect/Form";
-import SelectMenuForm from "./SelectMenu/Form";
-import TrueFalseForm from "./TrueFalse/Form";
+import Numeric from "./Numeric";
+import MultiSelect from "./MultiSelect";
+import SelectMenu from "./SelectMenu";
+import TrueFalse from "./TrueFalse";
 
 export {
-    MultiSelectForm,
-    NumericForm,
-    SelectMenuForm,
-    TrueFalseForm
+    MultiSelect,
+    Numeric,
+    SelectMenu,
+    TrueFalse
 }

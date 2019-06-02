@@ -2,12 +2,12 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose, lifecycle } from 'recompose';
-import Sidebar from "./../components/Sidebar/Sidebar";
-import Header from "./../components/Header/Header";
 import { Notify } from 'react-redux-notify';
 import { CreateUser, ListingUser, UpdateUser } from "./../views/User/index";
 import { CreateExam, ListingExam, UpdateExam } from "./../views/Exam/index";
 import { ListingQuizz, UpdateQuizz } from "./../views/Quizz/index";
+import Sidebar from "./../components/Sidebar/Sidebar";
+import Header from "./../components/Header/Header";
 import Home from "./../views/Home/Home";
 import * as tokenActions from "./../redux/actions/token";
 
