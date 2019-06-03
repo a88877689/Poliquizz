@@ -60,19 +60,21 @@ const Listing = (props) => {
                     { pageName: "Exam" }
                 ]}
             />
-            <Row>
-                <Col>
-                    <Button
-                        size="lg"
-                        onClick={onCreateNewUser}
-                        className="golem-margin-left__medium
-                                   golem-margin-top__small"
-                        variant="success"
-                    >
-                        Create New Exam
-                    </Button>
-                </Col>
-            </Row>
+            {props.user.role !== "student" ?
+                <Row>
+                    <Col>
+                        <Button
+                            size="lg"
+                            onClick={onCreateNewUser}
+                            className="golem-margin-left__medium
+                                    golem-margin-top__small"
+                            variant="success"
+                        >
+                            Create New Exam
+                        </Button>
+                    </Col>
+                </Row>
+            : null}
             <Row>
                 <Col xs={12}>
                     <div className="golem-margin__medium 

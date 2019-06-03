@@ -20,15 +20,15 @@ const Layout = (props) => {
             <div className={sidebarClass}><Sidebar /></div>
             <div className="golem-main-container">
                 <Header />
-                <div className="golem-main-container">
+                <div className="golem-component-container">
                     <Switch>
                         {props.user.role === "admin" ? <Route path="/user/update/:id" component={UpdateUser} /> : null}
                         {props.user.role === "admin" ? <Route path="/user/create" component={CreateUser} /> : null}
                         {props.user.role === "admin" ? <Route path="/user" component={ListingUser} /> : null}
                         {props.user.role !== "student" ? <Route path="/quizz/update/:id" component={UpdateQuizz} /> : null}
                         {props.user.role !== "student" ? <Route path="/quizz" component={ListingQuizz} /> : null}
-                        <Route path="/exam/update/:id" component={UpdateExam} />
-                        <Route path="/exam/create" component={CreateExam} />
+                        {props.user.role !== "student" ? <Route path="/exam/update/:id" component={UpdateExam} /> : null}
+                        {props.user.role !== "student" ? <Route path="/exam/create" component={CreateExam} /> : null}
                         <Route path="/exam" component={ListingExam} />
                         <Route path="/" component={Home} />
                     </Switch>

@@ -7,7 +7,7 @@ const reducer = (state=initState, action) => {
         case "IS_MOBILE":
             return { ...state, isMobile: true };
         case "NOT_MOBILE":
-            return { ...state, isMobile: false};
+            return { ...state, isMobile: false };
         default:
             return state;
     }

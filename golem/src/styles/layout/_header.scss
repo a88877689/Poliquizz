@@ -1,4 +1,5 @@
 .golem-header {
+    animation: moveInTop 1.5s ease-out;
     background-color: $color-grey-light-2;
     display: flex;
     justify-content: flex-end;

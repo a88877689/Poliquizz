@@ -5,6 +5,7 @@
 }
 
 .golem-sidebar-container {
+    animation: moveInLeft-1 1.5s ease-out;
     background-color: $color-grey-dark-3;
     display: flex;
     flex-direction: column;
@@ -12,6 +13,7 @@
 }
 
 .golem-sidebar-collapse-container {
+    animation: moveInLeft-1 1.5s ease-out;
     background-color: $color-grey-dark-3;
     display: flex;
     flex-direction: column;
@@ -19,6 +21,15 @@
 }
 
 .golem-main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.golem-component-container {
+    animation: moveInRight-1 1.5s ease-out;
     display: flex;
     flex-direction: column;
     height: 100%;
