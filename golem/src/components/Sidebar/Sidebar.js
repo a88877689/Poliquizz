@@ -25,24 +25,18 @@ const Sidebar = (props) => (
                         {!props.isCollapsed ? <span>Exams</span> : null }
                     </Link>
                 </li>
-                <li className="golem-sidenav__item">
+                {props.user.role !== "student" ? <li className="golem-sidenav__item">
                     <Link to="/quizz" className="golem-sidenav__link">
                         <FontAwesomeIcon icon="question-circle" className="golem-sidenav__icon" />
                         {!props.isCollapsed ? <span>Quizz</span> : null }
                     </Link>
-                </li>
+                </li> : null}
                 {props.user.role === "admin" ? <li className="golem-sidenav__item">
                     <Link to="/user" className="golem-sidenav__link">
                         <FontAwesomeIcon icon="users" className="golem-sidenav__icon" />
                         {!props.isCollapsed ? <span>Users</span> : null }
                     </Link>
                 </li> : null}
-                <li className="golem-sidenav__item">
-                    <Link to="/" className="golem-sidenav__link">
-                        <FontAwesomeIcon icon="file-alt" className="golem-sidenav__icon" />
-                        {!props.isCollapsed ? <span>Documentation</span> : null }
-                    </Link>
-                </li>
             </ul>
 
             <Footer />

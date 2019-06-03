@@ -34,8 +34,12 @@ const Table = (props) => {
                         props.onNotification(onError(message));
                         props.onHideLoader();
                     }
+                } else if(column.Header === "Solve") {
+                    console.log("Solve Exam");
                 } else {
-                    props.history.replace(`/${props.requested}/update/${rowInfo.original.id}`)
+                    if(props.user.role !== "student") {
+                        props.history.replace(`/${props.requested}/update/${rowInfo.original.id}`);
+                    }
                 }
             }
         }
