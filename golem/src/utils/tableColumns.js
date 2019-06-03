@@ -58,6 +58,16 @@ const examColumns = [
         width: 50
     },
     {
+        Header: "Solve",
+        accessor: "",
+        width: 50,
+        Cell: () => (
+            <Button variant="success" disabled>
+                <FontAwesomeIcon icon="pencil-alt" />
+            </Button>
+        )
+    },
+    {
         Header: "",
         accessor: "",
         width: 50,
@@ -103,8 +113,41 @@ const quizzColumns = [
     }
 ];
 
+const studentExamColumns = [
+    {
+        Header: "ID",
+        accessor: "id",
+        width: 75
+    },
+    {
+        Header: "Name",
+        accessor: "name"
+    },
+    {
+        Header: "Date",
+        accessor: "date",
+        width: 200
+    },
+    {
+        Header: "XML",
+        accessor: "xml",
+        width: 50
+    },
+    {
+        Header: "Solve",
+        accessor: "",
+        width: 50,
+        Cell: () => (
+            <Button variant="success" disabled>
+                <FontAwesomeIcon icon="pencil-alt" />
+            </Button>
+        )
+    }
+];
+
 export {
     userColumns,
     examColumns,
-    quizzColumns
+    quizzColumns,
+    studentExamColumns
 }

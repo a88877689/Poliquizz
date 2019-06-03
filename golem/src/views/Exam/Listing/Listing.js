@@ -6,7 +6,7 @@ import Table from "./../../../containers/Table/Table";
 import { connect } from "react-redux";
 import { Button, Col, Row } from "react-bootstrap";
 import { createNotification } from 'react-redux-notify';
-import { examColumns } from "./../../../utils/tableColumns";
+import { examColumns, studentExamColumns } from "./../../../utils/tableColumns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getAllExams, deleteExam } from "./../../../api/exam";
 import { onSuccess, onError } from "./../../../notifications/notify";
@@ -84,7 +84,7 @@ const Listing = (props) => {
                         >
                             <Table
                                 data={examState}
-                                columns={examColumns}
+                                columns={props.user.role !== "student" ? examColumns : studentExamColumns}
                                 requested="exam"
                                 deleteEndpoint={deleteExam}
                             />
@@ -98,7 +98,8 @@ const Listing = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        ...state.loader
+        ...state.loader,
+        ...state.user
     }
 }
 

@@ -25,11 +25,11 @@ const Layout = (props) => {
                         {props.user.role === "admin" ? <Route path="/user/update/:id" component={UpdateUser} /> : null}
                         {props.user.role === "admin" ? <Route path="/user/create" component={CreateUser} /> : null}
                         {props.user.role === "admin" ? <Route path="/user" component={ListingUser} /> : null}
+                        {props.user.role !== "student" ? <Route path="/quizz/update/:id" component={UpdateQuizz} /> : null}
+                        {props.user.role !== "student" ? <Route path="/quizz" component={ListingQuizz} /> : null}
                         <Route path="/exam/update/:id" component={UpdateExam} />
                         <Route path="/exam/create" component={CreateExam} />
                         <Route path="/exam" component={ListingExam} />
-                        <Route path="/quizz/update/:id" component={UpdateQuizz} />
-                        <Route path="/quizz" component={ListingQuizz} />
                         <Route path="/" component={Home} />
                     </Switch>
                 </div>
