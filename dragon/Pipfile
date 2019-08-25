@@ -4,10 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pep8 = "*"
 flake8 = "*"
 mypy = "*"
-autopep8 = "*"
-pylint-flask = "*"
+pydocstyle = "*"
+bandit = "*"
+black = "*"
 pylint = "*"
 
 [packages]
@@ -24,6 +26,10 @@ flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 flask-migrate = "*"
 dicttoxml = "*"
+uwsgi = "*"
 
 [requires]
 python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true

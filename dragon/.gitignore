@@ -3,3 +3,6 @@
 .env
 migrations
 /xml/*.xml
+.mypy_cache/*
+.vscode
+__pycache__

@@ -11,7 +11,7 @@ api_bp = Blueprint('dragon', __name__)
 api = Api(api_bp)
 
 
-api.add_resource(AuthResource, '/login')
+api.add_resource(AuthResource, '/auth')
 api.add_resource(UserResource, '/user')
 api.add_resource(UserResource, '/user/<id>')
 api.add_resource(ExamResource, '/exam')

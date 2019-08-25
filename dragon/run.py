@@ -1,20 +1,17 @@
 from flask import Flask
 from flask_cors import CORS
-from app import api_bp
+
 from models import db
+from views import api_bp
 from utils import compere
 
-
-def dragon(config_filename: str):
-    app = Flask(__name__)
-    app.config.from_object(config_filename)
-    app.register_blueprint(api_bp, url_prefix='')
-    db.init_app(app)
-    CORS(app)
-    return app
+app = Flask(__name__)
+app.config.from_object("config")
+app.register_blueprint(api_bp, url_prefix="")
+db.init_app(app)
+CORS(app)
 
 
 if __name__ == '__main__':
-    app = dragon('config')
     compere()
     app.run(debug=True)
