@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Button, Col, Form } from "react-bootstrap";
 import { createNotification } from 'react-redux-notify';
 import { Notify } from 'react-redux-notify';
-import { login } from "./../../api/login";
+import { auth } from "./../../api/auth";
 import { onSuccess, onError } from "./../../notifications/notify";
 import LoadingOverlay from "react-loading-overlay";
 import CircleLoader from "react-spinners/CircleLoader";
@@ -105,7 +105,7 @@ export default compose(
         onSubmit: async (values, dispatch, props) => {
             try {
                 props.onShowLoader();
-                const response = await login(values);
+                const response = await auth(values);
                 props.onPersistToken(response.data.token);
                 props.onPersistUser(response.data.user);
                 props.onCreateNotification(onSuccess(response.data.message));

@@ -1,8 +1,8 @@
 import instance from "./index";
 
-export function login(data) {
+export function auth(data) {
     return instance({
-        url: "/login",
+        url: "/auth",
         method: "post",
         data
     })
