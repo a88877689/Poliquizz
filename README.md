@@ -8,37 +8,37 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-To run this software you basically only need python3.7, NPM and MySQL installed on your machine. 
+To run this software you basically only need python3.7, NPM and MySQL installed on your machine.
 
 ### Installing
 
 I use pipenv and npm as packge managers for the backend and frontend projects respectively, let's get started with dragon:
 
-```
->>> pip install pipenv
->>> cd Poliquizz/dragon
->>> pipenv install
+```bash
+pip install pipenv
+cd Poliquizz/dragon
+pipenv install
 ```
 
 The first command will help you to install pipenv which is a package manager and to install the dependencies for dragon you just need to run the last command. Once you have installed all the dependencies you have to make the migrations for the database, I will assume that you have already a database on your local with the name "lightning", so let's make those migrations:
 
-```
->>> pipenv run python migrate.py lightning init
->>> pipenv run python migrate.py lightning migrate
->>> pipenv run python migrate.py lightning upgrade
+```bash
+pipenv run python migrate.py lightning init
+pipenv run python migrate.py lightning migrate
+pipenv run python migrate.py lightning upgrade
 ```
 
 Finally, let's run the API:
 
-```
->>> pipenv run python run.py
+```bash
+pipenv run python run.py
 ```
 
 For golem it will be more easier, you only need to have npm installed in your machine and run:
 
-```
->>> npm install
->>> npm start
+```bash
+npm install
+npm start
 ```
 
 ## Running the tests
